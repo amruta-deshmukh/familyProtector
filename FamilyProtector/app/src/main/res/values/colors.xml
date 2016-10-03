@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+
+  <!--  <color name="dark_green">#3EC7F5</color>
+    <color name="colorPrimaryDark">#319fc4</color>
+    <color name="colorPrimary">#3EC7F5</color>
+    <color name="black">#000000</color>-->
+    <item name="primaryColor"     type="color">#3EC7F5</item>
+    <item name="primaryColorDark" type="color">#FF319fc4</item>
+    <item name="accentColor"      type="color">#3EC7F5</item>
+    <item name="white"            type="color">#FFFFFF</item>
+    <item name="black"            type="color">#000000</item>
+    <item name="orange"           type="color">#F48A23</item>
+    <item name="lightBlue"        type="color">#CBFCF9</item>
+
+
+</resources>

@@ -1,0 +1,51 @@
+<resources>
+
+    <!-- Base application theme.-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+         Customize your theme here.
+        <item name="colorPrimary">#3EC7F5</item>
+        <item name="colorPrimaryDark">#319fc4</item>
+        <item name="colorAccent">#3EC7F5</item>
+        <item name="colorButtonNormal">#3EC7F5</item>
+
+    </style>
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/primaryColor</item>
+        <item name="android:colorPrimaryDark">@color/primaryColorDark</item>
+        <item name="android:colorAccent">@color/accentColor</item>
+        <item name="android:colorButtonNormal">@color/primaryColor</item>
+
+    </style>
+    <style name="AppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorPrimaryDark">@color/orange</item>
+       <!-- <item name="android:colorPrimary">@color/primaryColor</item>
+        <item name="android:colorPrimaryDark">@color/primaryColor</item>
+        <item name="android:colorAccent">@color/accentColor</item>
+        <item name="android:colorButtonNormal">@color/primaryColor</item>-->
+
+    </style>
+    <style name="AppTheme.Fab" parent="Widget.Design.FloatingActionButton">
+        <item name="colorButtonNormal">@color/primaryColor  </item>
+    </style>
+
+
+</resources>
+
+    <!--
+        <style name="AppTheme.Base" parent="Theme.AppCompat.NoActionBar">
+            <item name="android:colorPrimary">@color/primaryColor</item>
+            <item name="android:colorPrimaryDark">@color/primaryColorDark</item>
+            <item name="android:colorAccent">@color/accentColor</item>
+            <item name="android:windowTranslucentStatus">true</item>
+
+        </style>
+
+        <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+          Customize your theme here.
+        </style>
+        -->
+
+    <!--
+        Here we set custom colors for the Application Theme.
+     -->
