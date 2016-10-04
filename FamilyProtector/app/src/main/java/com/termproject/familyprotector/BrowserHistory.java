@@ -12,6 +12,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.safetynet.SafetyNet;
 
+import java.util.Calendar;
+
 public class BrowserHistory extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.ConnectionCallbacks,
 GoogleApiClient.OnConnectionFailedListener{
 
@@ -32,22 +34,34 @@ GoogleApiClient.OnConnectionFailedListener{
     public void onClick(View view) {
 
 
-        String[] proj = new String[]{Browser.BookmarkColumns.TITLE, Browser.BookmarkColumns.URL};
-        String sel = Browser.BookmarkColumns.BOOKMARK + " = 0"; // 0 = history, 1 = bookmark
-        Cursor mCur = getContentResolver().query(Browser.BOOKMARKS_URI, proj, sel, null, null);
+        String[] proj = new String[]{Browser.BookmarkColumns.TITLE, Browser.BookmarkColumns.URL,
+        Browser.BookmarkColumns.DATE};
+        Calendar ci = Calendar.getInstance();
+        long endTime = ci.getTimeInMillis();
+        ci.add(Calendar.HOUR, -1);
+        long startTime = ci.getTimeInMillis();
+//        Log.v("Start+end", startTime+ " + "+ endTime);
+        String[] time = new String[] {String.valueOf(startTime),String.valueOf(endTime)};
+        String sel = Browser.BookmarkColumns.BOOKMARK + " = 0" + " AND "+ Browser.BookmarkColumns.DATE
+                + " BETWEEN ? AND ?"; // 0 = history, 1 = bookmark
+        Cursor mCur = getContentResolver().query(Browser.BOOKMARKS_URI, proj, sel, time, null);
         mCur.moveToFirst();
         @SuppressWarnings("unused")
         String title = "";
         @SuppressWarnings("unused")
         String url = "";
+        @SuppressWarnings("unused")
+        String date = "";
         if (mCur.moveToFirst() && mCur.getCount() > 0) {
             boolean cont = true;
             while (mCur.isAfterLast() == false && cont) {
                 title = mCur.getString(mCur.getColumnIndex(Browser.BookmarkColumns.TITLE));
                 url = mCur.getString(mCur.getColumnIndex(Browser.BookmarkColumns.URL));
+                date = mCur.getString(mCur.getColumnIndex(Browser.BookmarkColumns.DATE));
                 // Do something with title and url
                 Log.v("title",title);
                 Log.v("url",url);
+                Log.v("date",date);
 
                 mCur.moveToNext();
             }
