@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class ChildDetailActivity extends AppCompatActivity{
+public class ChildDetailActivity extends AppCompatActivity {
 
     String childNameStr;
 
@@ -22,7 +22,7 @@ public class ChildDetailActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_detail);
-        mTabLayout = (TabLayout)findViewById(R.id.child_detail_tab_layout);
+        mTabLayout = (TabLayout) findViewById(R.id.child_detail_tab_layout);
         mTabLayout.addTab(mTabLayout.newTab().setText("Alerts"));
         mTabLayout.addTab(mTabLayout.newTab().setText("Rules"));
         mTabLayout.setTabTextColors(Color.WHITE, Color.BLACK);
@@ -36,9 +36,9 @@ public class ChildDetailActivity extends AppCompatActivity{
 //        actionBar.setHomeAsUpIndicator(resize(drawable));
 
         final ViewPager mViewPager = (ViewPager) findViewById(R.id.child_detail_pager);
-       ChildDetailPagerAdapter mPagerAdapter = new ChildDetailPagerAdapter(getSupportFragmentManager(),mTabLayout.getTabCount());
+        ChildDetailPagerAdapter mPagerAdapter = new ChildDetailPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
         Intent intent = getIntent();
-        if(intent !=null && intent.hasExtra(Intent.EXTRA_TEXT)) {
+        if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             childNameStr = intent.getStringExtra(Intent.EXTRA_TEXT);
             userLocalStore.setChildDetails(childNameStr);
 
@@ -82,13 +82,9 @@ public class ChildDetailActivity extends AppCompatActivity{
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.action_profile:
-                startActivity(new Intent(this,ChildProfileSettings.class));
+                startActivity(new Intent(this, ChildProfileSettings.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
 }

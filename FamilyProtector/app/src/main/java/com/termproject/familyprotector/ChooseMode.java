@@ -51,7 +51,4 @@ public class ChooseMode extends AppCompatActivity implements View.OnClickListene
 
     }
 
-
-
-
 }

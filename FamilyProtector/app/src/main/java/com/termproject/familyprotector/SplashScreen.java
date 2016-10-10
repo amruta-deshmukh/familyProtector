@@ -46,7 +46,7 @@ public class SplashScreen extends AppCompatActivity {
                         }
                     }
                     else{
-                        Intent intent = new Intent(SplashScreen.this, WelcomePage.class);
+                        Intent intent = new Intent(SplashScreen.this, WelcomePageTutorial.class);
                         startActivity(intent);
 
                     }

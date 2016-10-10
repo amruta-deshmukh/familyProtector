@@ -14,17 +14,15 @@ public class UserLocalStore {
         try {
 
             userLocalDatabase = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
-           // Log.v("UserLocalStore","done with initialize");
         }
         catch (Exception e){
-           // Log.v("UserLocalStore",e.toString());
+            Log.v("UserLocalStore",e.toString());
+            e.printStackTrace();
         }
 
     }
 
     public void storeUserData(User user){
-//        Log.v("storeUserData",User.username+" "+User.password);
-
         try {
             SharedPreferences.Editor spEditor = userLocalDatabase.edit();
 
@@ -33,7 +31,7 @@ public class UserLocalStore {
             spEditor.commit();
         }
         catch (Exception e){
-            Log.v("UserLocalStore",e.toString());
+            Log.v("UserLocalStore", e.toString());
 
         }
     }
@@ -63,7 +61,7 @@ public class UserLocalStore {
         spEditor.commit();
     }
     public String getAppMode(){
-        String appMode = userLocalDatabase.getString("appMode","");
+        String appMode = userLocalDatabase.getString("appMode", "");
         return appMode;
     }
     public void setChildDetails(String childName){
@@ -72,7 +70,7 @@ public class UserLocalStore {
         spEditor.commit();
     }
     public String getChildDetails(){
-        String childName = userLocalDatabase.getString("childName","");
+        String childName = userLocalDatabase.getString("childName", "");
         return childName;
     }
     public void setLocationAddress(String addressString){
@@ -81,7 +79,7 @@ public class UserLocalStore {
         spEditor.commit();
     }
     public String getLocationAddress(){
-        String addressStr = userLocalDatabase.getString("addressString","");
+        String addressStr = userLocalDatabase.getString("addressString", "");
         return addressStr;
     }
 
@@ -142,6 +140,25 @@ public class UserLocalStore {
         int ruleLocationID = userLocalDatabase.getInt("latestLocationId", 0);
         return ruleLocationID;
     }
+    public void setTutorialViewed(boolean viewed){
+        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
+        spEditor.putBoolean("tutorialViewed", viewed);
+        spEditor.commit();
+    }
+    public boolean getTutorialViewed(){
+        boolean tutorialViewed = userLocalDatabase.getBoolean("tutorialViewed", false);
+        return tutorialViewed;
+    }
+    public void setUserRegistered(boolean registered){
+        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
+        spEditor.putBoolean("registered", registered);
+        spEditor.commit();
+    }
+    public boolean getUserRegistered(){
+        boolean registered = userLocalDatabase.getBoolean("registered", false);
+        return registered;
+    }
+
 
 
     public void clearUserData(){

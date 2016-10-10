@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -33,6 +36,7 @@ public class ChildRuleFragment extends Fragment {
     RecyclerView.LayoutManager mLayoutManager;
     protected String[] mDataset;
     private User user;
+    Spinner childRuleSpinner;
 
 
     @Override
@@ -43,7 +47,7 @@ public class ChildRuleFragment extends Fragment {
         user = userLocalStore.getLoggedInUser();
         childName = userLocalStore.getChildDetails();
         initDataset();
-        getChildRulesFromParse();
+//        getChildRulesFromParse();
     }
 
     @Override
@@ -53,6 +57,12 @@ public class ChildRuleFragment extends Fragment {
         mRecyclerView = (RecyclerView)view.findViewById(R.id.child_rule_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         addRuleFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.add_rule_floating_action_button);
+        childRuleSpinner = (Spinner)view.findViewById(R.id.rule_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+                R.array.child_rule_array, R.layout.spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        childRuleSpinner.setAdapter(adapter);
+        childRuleSpinner.setOnItemSelectedListener(new SpinnerItemSelectedListener());
         addRuleFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MapsActivity.class);
@@ -97,6 +107,23 @@ public class ChildRuleFragment extends Fragment {
 
             }
         });
+    }
+
+    public class SpinnerItemSelectedListener implements AdapterView.OnItemSelectedListener{
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            String selected = parent.getItemAtPosition(pos).toString();
+            if(selected.equals("Location")){
+                getChildRulesFromParse();
+
+            }
+            else if (selected.equals("Web Access")){
+
+            }
+        }
+
+        public void onNothingSelected(AdapterView parent) {
+            // Do nothing.
+        }
     }
 
 }

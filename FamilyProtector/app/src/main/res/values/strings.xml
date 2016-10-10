@@ -20,6 +20,11 @@
     <string name="title_activity_child_location_rule_save">ChildLocationRuleSaveActivity</string>
     <string name="title_activity_help">Help</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_confirmation">Confirmation</string>
+    <string name="title_activity_child_profile_parent_settings">ChildProfileParentSettings</string>
+    <string name="title_activity_child_rule_detail">ChildRuleDetailActivity</string>
+    <string name="title_activity_browser_history">BrowserHistory</string>
+
 
 
     <!-- Action Strings -->
@@ -35,6 +40,8 @@
     <string name="birth_date">Birth Day</string>
     <string name="child_home_setup_text">Welcome to the Family Protector android app. \n \n     This application help you stay safe.
     It will help your parents to track your location. \n \n             Thank you for your co-operation!!</string>
+
+    <string name="btn_get_started">Let\'s Start</string>
 
 <!-- Preference Screen Strings-->
     <string name="pref_child_name_key" translatable = "false">childNamePref</string>
@@ -91,7 +98,7 @@
     <string name="logout">Logout</string>
     <string name="my_family">My Family</string>
     <string name="choose_child_phone">Who does the phone belong to?</string>
-    <string name="login_link">Already a member? Sign In</string>
+    <string name="login_link">Already a member? <u>Sign In</u></string>
     <string name="choose_child_text1">Please choose</string>
     <string name="choose_child_text2">who this device belongs to.</string>
     <string name="profile_settings">Profile Settings</string>
@@ -141,10 +148,15 @@
     <string name="confirmation">Please provide valid credentials in order to logout.</string>
 
     <string name="setting_text">Come back later for more options!!</string>
-    <string name="title_activity_confirmation">Confirmation</string>
-    <string name="title_activity_child_profile_parent_settings">ChildProfileParentSettings</string>
-    <string name="title_activity_child_rule_detail">ChildRuleDetailActivity</string>
-    <string name="title_activity_browser_history">BrowserHistory</string>
+
+
+
+    <string-array name="child_rule_array">
+        <item>See rules for...</item>
+        <item>Location</item>
+        <item>Web Access</item>
+    </string-array>
+    <string name="title_activity_welcome_page_tutorial">WelcomePageTutorial</string>
 
 
 </resources>

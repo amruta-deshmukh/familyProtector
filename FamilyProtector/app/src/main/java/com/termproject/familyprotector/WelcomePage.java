@@ -55,7 +55,7 @@ public class WelcomePage extends AppCompatActivity implements View.OnClickListen
 //            }
 //        }
 //        else{
-            Intent intent = new Intent(this, BrowserHistory.class);
+            Intent intent = new Intent(this, Register.class);
             startActivity(intent);
 
 //        }

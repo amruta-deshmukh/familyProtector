@@ -2,7 +2,6 @@ package com.termproject.familyprotector;
 
 
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Browser;
@@ -15,10 +14,9 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 
@@ -116,6 +114,7 @@ public class BrowserHistory extends AppCompatActivity implements View.OnClickLis
             String encodedURL = params[0].encodedURL;
             String authCredentials = params[0].authCredentials;
             String output = null;
+            StringBuffer buffer = new StringBuffer();
 
             try{
                 final String WEBSITE_CATEGORY_API_BASE_URL = "https://api.webshrinker.com/categories/v2/";
@@ -125,36 +124,83 @@ public class BrowserHistory extends AppCompatActivity implements View.OnClickLis
                 final String HEADER_VALUE = " Basic "+authCredentials;
                 Log.v("header value", HEADER_VALUE);
 
-                Uri builtUri = Uri.parse(WEBSITE_CATEGORY_API_WITH_URL).buildUpon()
-                        .build();
-                URL url = new URL(builtUri.toString());
-
-                urlConnection = (HttpsURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
+//                Uri builtUri = Uri.parse(WEBSITE_CATEGORY_API_WITH_URL).buildUpon()
+//                        .build();
+//                URL url = new URL(builtUri.toString());
+//
+//
+//                HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+//                    @Override
+//                    public boolean verify(String hostname, SSLSession session) {
+//                        return true;
+//                    }
+//                };
+//
+//
+//
+//
+//
+//                urlConnection = (HttpsURLConnection) url.openConnection();
+//
+//                SSLContext context = SSLContext.getInstance("TLS");
+//                TrustManager tm[] = {new X509TrustManager() {
+//                    @Override
+//                    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+//
+//                    }
+//
+//                    @Override
+//                    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+//
+//                    }
+//
+//                    @Override
+//                    public X509Certificate[] getAcceptedIssuers() {
+//                        return new X509Certificate[0];
+//                    }
+//                }};
+//                context.init(null, tm, null);
+//                SSLSocketFactory preferredCipherSuiteSSLSocketFactory = new PreferredCipherSuiteSSLSocketFactory(context.getSocketFactory());
+//                urlConnection.setSSLSocketFactory(preferredCipherSuiteSSLSocketFactory);
+//
+//
+//                urlConnection.setRequestMethod("GET");
 //                urlConnection.setRequestProperty(HEADER_PARAM, HEADER_VALUE);
-                urlConnection.connect();
-                Log.v("connected", builtUri.toString());
+//                urlConnection.setHostnameVerifier(hostnameVerifier);
+//                urlConnection.connect();
+//                Log.v("connected", builtUri.toString());
+//
+//                InputStream inputStream = urlConnection.getInputStream();
+//
+//                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+//
+//
+//                while ((output = reader.readLine()) != null) {
+//                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+//                    // But it does make debugging a *lot* easier if you print out the completed
+//                    // buffer for debugging.
+//                    buffer.append(output + "\n");
+//                }
+                buffer = buffer.append("{\"data\":[{\"categories\":[\"informationtech\",\"business\"],\"url\":\"http:\\/\\/webshrinker.com\\/\"}]}");
 
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
+                JSONObject jsonObject = new JSONObject(buffer.toString());
+                JSONArray dataArr = jsonObject.getJSONArray("data");
+                JSONArray categoryArr = dataArr.getJSONObject(0).getJSONArray("categories");
 
-                while ((output = reader.readLine()) != null) {
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But it does make debugging a *lot* easier if you print out the completed
-                    // buffer for debugging.
-                    buffer.append(output + "\n");
-                }
+                Log.v("category", categoryArr.length()+"");
+//                JSONArray categoryArr = dataArr.getJSONArray(0);
 
             }catch (Exception e){
                 Log.e("API error",e.toString());
+                e.printStackTrace();
             }
-            return output;
+            return buffer.toString();
         }
 
         @Override
         protected void onPostExecute(String output) {
+            Log.v("output", output);
             apiOutput.setText(output);
 
         }
