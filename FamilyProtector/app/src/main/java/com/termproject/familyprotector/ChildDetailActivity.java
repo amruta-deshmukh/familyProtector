@@ -25,9 +25,15 @@ public class ChildDetailActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.child_detail_tab_layout);
         mTabLayout.addTab(mTabLayout.newTab().setText("Alerts"));
         mTabLayout.addTab(mTabLayout.newTab().setText("Rules"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("Current\nLoc"));
         mTabLayout.setTabTextColors(Color.WHITE, Color.BLACK);
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         userLocalStore = new UserLocalStore(this);
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
+            childNameStr = intent.getStringExtra(Intent.EXTRA_TEXT);
+            userLocalStore.setChildDetails(childNameStr);
+        }
         String childNameTitle = userLocalStore.getChildDetails();
         setTitle(childNameTitle + " Details");
 
@@ -37,13 +43,6 @@ public class ChildDetailActivity extends AppCompatActivity {
 
         final ViewPager mViewPager = (ViewPager) findViewById(R.id.child_detail_pager);
         ChildDetailPagerAdapter mPagerAdapter = new ChildDetailPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-            childNameStr = intent.getStringExtra(Intent.EXTRA_TEXT);
-            userLocalStore.setChildDetails(childNameStr);
-
-        }
-
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

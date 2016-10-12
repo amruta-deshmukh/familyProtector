@@ -20,6 +20,9 @@ public class ChildDetailPagerAdapter extends FragmentStatePagerAdapter{
                 case 1:
                     ChildRuleFragment childRuleFragment = new ChildRuleFragment();
                     return childRuleFragment;
+                case 2:
+                    ChildCurrentLocationFragment childCurrentLocationFragment = new ChildCurrentLocationFragment();
+                    return childCurrentLocationFragment;
                 default:
                     return null;
             }

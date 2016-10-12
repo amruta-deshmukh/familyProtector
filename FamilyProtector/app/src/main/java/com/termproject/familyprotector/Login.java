@@ -76,7 +76,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         query.whereEqualTo("password", password);
 
 
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
+        query.getFirstInBackground( new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
                 if (parseObject == null) {

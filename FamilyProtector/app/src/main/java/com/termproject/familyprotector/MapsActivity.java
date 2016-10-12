@@ -288,10 +288,14 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
 
                 JSONObject jsonObject = new JSONObject(buffer.toString());
                 JSONArray resultsArr = jsonObject.getJSONArray("results");
-                location.put("addressStr", resultsArr.getJSONObject(0).getString("formatted_address"));
-                JSONObject locationObject = resultsArr.getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
-                location.put("lat", locationObject.getString("lat"));
-                location.put("lng", locationObject.getString("lng"));
+                if (resultsArr.length() == 1) {
+                    location.put("addressStr", resultsArr.getJSONObject(0).getString("formatted_address"));
+                    JSONObject locationObject = resultsArr.getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
+                    location.put("lat", locationObject.getString("lat"));
+                    location.put("lng", locationObject.getString("lng"));
+
+                }
+
 
             } catch (Exception e) {
                 Log.v("ERROR", e.toString());

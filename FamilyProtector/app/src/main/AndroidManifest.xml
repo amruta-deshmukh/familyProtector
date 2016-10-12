@@ -65,7 +65,7 @@
             android:label="@string/title_activity_register"
             android:noHistory="true"
             android:parentActivityName=".WelcomePage"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".WelcomePage"
             android:label="@string/app_name" >
@@ -81,7 +81,6 @@
             android:name=".AddChildDetails"
             android:label="@string/title_activity_add_child_details"
             android:noHistory="true" />
-
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login"
@@ -200,6 +199,10 @@
             android:label="@string/title_activity_browser_history" >
         </activity>
 
+        <service
+            android:name=".CurrentLocationWriterService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>
