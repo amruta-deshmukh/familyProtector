@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="8">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="@string/website_category_text_string"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/primaryColor" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_web_cat"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/relative_cat_gambling"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_gambling"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_gambling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_cat_hacking"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_hacking"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_hacking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_cat_social"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_social"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_social"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_cat_chat"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_chat"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_cat_media_sharing"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_media_sharing"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_media_sharing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_adult"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_adult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_cat_abortion"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_abortion"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_abortion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_cat_drugs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_drugs"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_drugs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_cat_alcohol_and_tobacco"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_alcohol_and_tobacco"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_alcohol_and_tobacco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_cat_weapons"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_weapons"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_weapons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_cat_proxyandfilteravoidance"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_proxyandfilteravoidance"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_proxyandfilteravoidance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_cat_illegalcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_illegalcontent"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_illegalcontent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_shopping"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_shopping"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_newsandmedia"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_newsandmedia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_games"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_games"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_cat_virtual_reality"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cat_virtual_reality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_32dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_save_buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/rule_website_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"
+            android:text="@string/button_save_text" />
+    </LinearLayout>
+
+</LinearLayout>

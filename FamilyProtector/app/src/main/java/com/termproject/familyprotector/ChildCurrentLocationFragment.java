@@ -2,7 +2,6 @@ package com.termproject.familyprotector;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +56,6 @@ public class ChildCurrentLocationFragment extends Fragment {
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
-                Log.v("inside map","inside map setup");
                 googleMap = mMap;
 //                googleMap.setMyLocationEnabled(true);
                 // create marker
@@ -66,7 +64,6 @@ public class ChildCurrentLocationFragment extends Fragment {
                     public void done(ParseObject parseObject, ParseException e) {
                         if (e == null) {
                             if (parseObject != null) {
-                                Log.v("entry available","inside parseobject not null");
                                 currLocLatLng = (ParseGeoPoint) parseObject.get("currentLocGeo");
                                 latitude = currLocLatLng.getLatitude();
                                 longitude = currLocLatLng.getLongitude();
@@ -80,7 +77,6 @@ public class ChildCurrentLocationFragment extends Fragment {
                                         .newCameraPosition(cameraPosition));
                             }
                         } else {
-                            Log.v("entry not available","inside error null");
                             latitude = 37.7238566;
                             longitude = -122.4762807;
                             MarkerOptions marker = new MarkerOptions().position(

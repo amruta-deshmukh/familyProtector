@@ -92,12 +92,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         });
 
     }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(this, WelcomePage.class));
 
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

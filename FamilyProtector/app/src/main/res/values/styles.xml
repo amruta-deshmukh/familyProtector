@@ -29,6 +29,20 @@
         <item name="colorButtonNormal">@color/primaryColor  </item>
     </style>
 
+    <style name="FloatingActionButtonRules" parent="android:Widget.Material.Button">
+        <item name="android:background">@drawable/fab_background_style</item>
+        <item name="android:stateListAnimator">@animator/fab_state_list_animator</item>
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+    </style>
+
+
+    <style name="FloatingActionButtonRules.Options">
+        <item name="android:layout_width">46dp</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
 
 </resources>
 

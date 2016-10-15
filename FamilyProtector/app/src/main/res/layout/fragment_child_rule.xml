@@ -25,13 +25,15 @@
         android:layout_below="@id/rule_spinner"
         android:layout_alignParentStart="true" />
 
-    <android.support.design.widget.FloatingActionButton
+    <include layout="@layout/fab_expand_layout" />
+
+    <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/add_rule_floating_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add_rule" />
+        android:src="@drawable/ic_add_rule" />-->
 
 </RelativeLayout>

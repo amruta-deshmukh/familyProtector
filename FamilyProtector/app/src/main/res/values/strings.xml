@@ -24,7 +24,12 @@
     <string name="title_activity_child_profile_parent_settings">ChildProfileParentSettings</string>
     <string name="title_activity_child_rule_detail">ChildRuleDetailActivity</string>
     <string name="title_activity_browser_history">BrowserHistory</string>
-
+    <string name="title_activity_welcome_page_tutorial">WelcomePageTutorial</string>
+    <string name="title_activity_fab_button_test">FabButtonTest</string>
+    <string name="title_activity_child_website_category_selection">ChildWebsiteCategorySelection</string>
+    <string name="title_activity_child_home_screen_after_setup">ChildHomeScreenAfterSetup</string>
+    <string name="title_activity_child_profile_settings">ChildProfileSettings</string>
+    <string name="title_activity_child_alert_detail">ChildAlertDetailActivity</string>
 
 
     <!-- Action Strings -->
@@ -38,21 +43,17 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="birth_date">Birth Day</string>
-    <string name="child_home_setup_text">Welcome to the Family Protector android app. \n \n     This application help you stay safe.
-    It will help your parents to track your location. \n \n             Thank you for your co-operation!!</string>
-
     <string name="btn_get_started">Let\'s Start</string>
 
-<!-- Preference Screen Strings-->
-    <string name="pref_child_name_key" translatable = "false">childNamePref</string>
+    <!-- Preference Screen Strings-->
+    <string name="pref_child_name_key" translatable="false">childNamePref</string>
     <string name="pref_child_name_default" translatable="false">Child name</string>
-    <string name="pref_child_gender_key" translatable = "false">genderPref</string>
-    <string name="pref_child_gender_male" translatable = "false">Male</string>
-    <string name="pref_child_gender_female" translatable = "false">Female</string>
-    <string name="pref_child_gender_label_male" translatable = "false">Male</string>
-    <string name="pref_child_gender_label_female" translatable = "false">Female</string>
+    <string name="pref_child_gender_key" translatable="false">genderPref</string>
+    <string name="pref_child_gender_male" translatable="false">Male</string>
+    <string name="pref_child_gender_female" translatable="false">Female</string>
+    <string name="pref_child_gender_label_male" translatable="false">Male</string>
+    <string name="pref_child_gender_label_female" translatable="false">Female</string>
     <string name="pref_child_birthdate_key">btnDateFilter</string>
-
 
 
     <string name="geofence_not_available">Geofence service is not available now</string>
@@ -74,16 +75,13 @@
     <string name="geofence_transition_notification_text">Click notification to return to app</string>
 
 
-
-
     <string name="add_geofences">Add geofences</string>
     <string name="remove_geofences">Remove geofences</string>
     <string name="geofences_added">Geofences added</string>
     <string name="geofences_removed">Geofences removed</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
 
     <string name="hello_world">Hello world!</string>
@@ -133,30 +131,50 @@
     <string name="dialog_location_hint">E.g. school, home</string>
     <string name="dialog_perimeter_hint">Enter a radius for location</string>
     <string name="dialog_distance_units">meters</string>
-    <string name="title_activity_child_home_screen_after_setup">ChildHomeScreenAfterSetup</string>
-    <string name="title_activity_child_profile_settings">ChildProfileSettings</string>
-    <string name="title_activity_child_alert_detail">ChildAlertDetailActivity</string>
     <string name="action_share">Share</string>
     <string name="title_activity_about">AboutActivity</string>
+
+
+    <!--Text Strings-->
+    <string name="help_text">Please contact the author or the app for any issues. \n\nYou can email at amruta1209@gmail.com. \n\nWe will look into your concerns
+    and try to provide help asap.</string>
+
+    <string name="confirmation">Please provide valid credentials in order to logout.</string>
+    <string name="setting_text">Come back later for more options!!</string>
+    <string name="child_home_setup_text">Welcome to the Family Protector android app. \n \n     This application help you stay safe.
+    It will help your parents to track your location. \n \n             Thank you for your co-operation!!</string>
+
     <string name="about_text">Safety and security are top concerns for families everywhere. When it comes to safety and security, nothing is more important than protecting
         our most precious and vulnerable asset - our children. \n\nAt Family Protector, we
         have decades of experience developing and applying technologies that
         keep families safe and secure where they live, work and travel.</string>
 
-    <string name="help_text">Please contact the author or the app for any issues. \n\nYou can email at amruta1209@gmail.com. \n\nWe will look into your concerns
-    and try to provide help asap.</string>
-    <string name="confirmation">Please provide valid credentials in order to logout.</string>
+    <string name="website_category_text_string">Notify me for categories:</string>
+    <string name="text_cat_gambling">Gambling</string>
+    <string name="text_cat_hacking">Hacking</string>
+    <string name="text_cat_social">Social Networking</string>
+    <string name="text_cat_chat">Chat and Messaging</string>
+    <string name="text_cat_media_sharing">Media Sharing</string>
+    <string name="text_cat_adult">Adult Websites</string>
+    <string name="text_cat_abortion">Abortion Websites</string>
+    <string name="text_cat_drugs">Drugs Websites</string>
+    <string name="text_cat_alcohol_and_tobacco">Alcohol &amp; Tobacco Websites</string>
+    <string name="text_cat_weapons">Guns and Weapons Websites</string>
+    <string name="text_cat_proxyandfilteravoidance">Proxy &amp; Firewall Avoidance sites</string>
+    <string name="text_cat_illegalcontent">Illegal Content</string>
+    <string name="text_cat_newsandmedia">News &amp; Media</string>
+    <string name="text_cat_shopping">Shopping</string>
+    <string name="text_cat_games">Games</string>
+    <string name="text_cat_virtual_reality">Virtual Reality</string>
 
-    <string name="setting_text">Come back later for more options!!</string>
 
 
-
+    <!--String Arrays-->
     <string-array name="child_rule_array">
         <item>See rules for...</item>
         <item>Location</item>
         <item>Web Access</item>
     </string-array>
-    <string name="title_activity_welcome_page_tutorial">WelcomePageTutorial</string>
 
 
 </resources>

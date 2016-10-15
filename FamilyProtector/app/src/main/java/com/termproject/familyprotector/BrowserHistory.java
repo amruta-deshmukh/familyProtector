@@ -2,6 +2,7 @@ package com.termproject.familyprotector;
 
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Browser;
@@ -12,21 +13,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Calendar;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 public class BrowserHistory extends AppCompatActivity implements View.OnClickListener{
 
     private Button getHistory;
     private TextView apiOutput;
-    GoogleApiClient mGoogleApiClient;
     HttpsURLConnection urlConnection = null;
 
     @Override
@@ -38,7 +48,8 @@ public class BrowserHistory extends AppCompatActivity implements View.OnClickLis
 
         getHistory.setOnClickListener(this);
 
-        String encodedURL = encodingStrToBase64("webshrinker.com");
+//        String encodedURL = encodingStrToBase64("https://www.bovada.lv/");
+        String encodedURL = encodingStrToBase64("adultfriendfinder.com");
         String authCredentials = encodingStrToBase64("txV7oMZEZ2cUrziueVtk:eCdjAaLnJVbrKz29Swnp");
         WebSiteLookUpParams webLookupParams = new WebSiteLookUpParams(encodedURL, authCredentials);
         WebsiteCategoryLookUp websiteCategoryLookUp = new WebsiteCategoryLookUp();
@@ -124,64 +135,60 @@ public class BrowserHistory extends AppCompatActivity implements View.OnClickLis
                 final String HEADER_VALUE = " Basic "+authCredentials;
                 Log.v("header value", HEADER_VALUE);
 
-//                Uri builtUri = Uri.parse(WEBSITE_CATEGORY_API_WITH_URL).buildUpon()
-//                        .build();
-//                URL url = new URL(builtUri.toString());
-//
-//
-//                HostnameVerifier hostnameVerifier = new HostnameVerifier() {
-//                    @Override
-//                    public boolean verify(String hostname, SSLSession session) {
-//                        return true;
-//                    }
-//                };
-//
-//
-//
-//
-//
-//                urlConnection = (HttpsURLConnection) url.openConnection();
-//
-//                SSLContext context = SSLContext.getInstance("TLS");
-//                TrustManager tm[] = {new X509TrustManager() {
-//                    @Override
-//                    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
-//
-//                    }
-//
-//                    @Override
-//                    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
-//
-//                    }
-//
-//                    @Override
-//                    public X509Certificate[] getAcceptedIssuers() {
-//                        return new X509Certificate[0];
-//                    }
-//                }};
-//                context.init(null, tm, null);
-//                SSLSocketFactory preferredCipherSuiteSSLSocketFactory = new PreferredCipherSuiteSSLSocketFactory(context.getSocketFactory());
-//                urlConnection.setSSLSocketFactory(preferredCipherSuiteSSLSocketFactory);
-//
-//
-//                urlConnection.setRequestMethod("GET");
-//                urlConnection.setRequestProperty(HEADER_PARAM, HEADER_VALUE);
-//                urlConnection.setHostnameVerifier(hostnameVerifier);
-//                urlConnection.connect();
-//                Log.v("connected", builtUri.toString());
-//
-//                InputStream inputStream = urlConnection.getInputStream();
-//
-//                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-//
-//
-//                while ((output = reader.readLine()) != null) {
-//                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-//                    // But it does make debugging a *lot* easier if you print out the completed
-//                    // buffer for debugging.
-//                    buffer.append(output + "\n");
-//                }
-                buffer = buffer.append("{\"data\":[{\"categories\":[\"informationtech\",\"business\"],\"url\":\"http:\\/\\/webshrinker.com\\/\"}]}");
+                Uri builtUri = Uri.parse(WEBSITE_CATEGORY_API_WITH_URL).buildUpon()
+                        .build();
+                URL url = new URL(builtUri.toString());
+
+
+                HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+                    @Override
+                    public boolean verify(String hostname, SSLSession session) {
+                        return true;
+                    }
+                };
+
+                urlConnection = (HttpsURLConnection) url.openConnection();
+
+                SSLContext context = SSLContext.getInstance("TLS");
+                TrustManager tm[] = {new X509TrustManager() {
+                    @Override
+                    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+                    }
+
+                    @Override
+                    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+                    }
+
+                    @Override
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return new X509Certificate[0];
+                    }
+                }};
+                context.init(null, tm, null);
+                SSLSocketFactory preferredCipherSuiteSSLSocketFactory = new PreferredCipherSuiteSSLSocketFactory(context.getSocketFactory());
+                urlConnection.setSSLSocketFactory(preferredCipherSuiteSSLSocketFactory);
+
+
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setRequestProperty(HEADER_PARAM, HEADER_VALUE);
+                urlConnection.setHostnameVerifier(hostnameVerifier);
+                urlConnection.connect();
+                Log.v("connected", builtUri.toString());
+
+                InputStream inputStream = urlConnection.getInputStream();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+
+                while ((output = reader.readLine()) != null) {
+                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+                    // But it does make debugging a *lot* easier if you print out the completed
+                    // buffer for debugging.
+                    buffer.append(output + "\n");
+                }
+//                buffer = buffer.append("{\"data\":[{\"categories\":[\"informationtech\",\"business\"],\"url\":\"http:\\/\\/webshrinker.com\\/\"}]}");
 
 
                 JSONObject jsonObject = new JSONObject(buffer.toString());

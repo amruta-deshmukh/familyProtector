@@ -24,12 +24,16 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -43,7 +47,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
-public class MapsActivity extends AppCompatActivity implements View.OnClickListener,GoogleMap.OnMapLongClickListener {
+public class MapsActivity extends AppCompatActivity implements
+        View.OnClickListener,GoogleMap.OnMapLongClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     GPSTracker gps;
@@ -59,6 +64,9 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
     String queryParam;
     UserLocalStore userLocalStore;
     Button continueButton;
+    GoogleApiClient mGoogleApiClient;
+
+
 
 
     @Override
@@ -68,6 +76,11 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_action_button);
         continueButton = (Button) findViewById(R.id.rule_location_continue_button);
         userLocalStore = new UserLocalStore(this);
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, 0, this)
+                .addApi(Places.GEO_DATA_API)
+                .build();
 
         gps = new GPSTracker(this);
         if (gps.canGetLocationCheck()) {
@@ -200,9 +213,7 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
-            public boolean onQueryTextChange(String newText) {
-                return true;
-            }
+            public boolean onQueryTextChange(String queryText) {return true;}
 
             public boolean onQueryTextSubmit(String query) {
                 Log.v("LISTENER", "OnQuerySubmit called - " + query);
@@ -215,6 +226,12 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         };
         searchView.setOnQueryTextListener(queryTextListener);
         return true;
+    }
+
+    private void getAutocompleteResults(String queryText) {
+        LatLng latLng = new LatLng(latitude,longitude);
+        LatLngBounds latLngBounds = new LatLngBounds(new LatLng(32.5342622,-124.415165),new LatLng(42.0095169,-114.1313927));
+
     }
 
     public static void hideSoftKeyboard(Activity activity) {
@@ -244,10 +261,12 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    /* Async Task to search for places in google maps
-    *
-    *
-     */
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.e("API client error", connectionResult.getErrorCode()+":"+connectionResult.getErrorMessage());
+    }
+
+    // Async Task to search for places in google maps
 
     public class MapSearchTask extends AsyncTask<String, Void, HashMap<String, String>> {
 

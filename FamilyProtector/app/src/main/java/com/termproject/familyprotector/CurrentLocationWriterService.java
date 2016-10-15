@@ -25,7 +25,7 @@ public class CurrentLocationWriterService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.v("Handle Intent", "inside handle intent");
+
         Context context = getApplicationContext();
         userLocalStore = new UserLocalStore(context);
 
@@ -48,8 +48,6 @@ public class CurrentLocationWriterService extends IntentService {
         ParseQuery<ParseObject> queryClass = ParseQuery.getQuery("childCurrentLocation");
         queryClass.whereEqualTo("userName", userName);
         queryClass.whereEqualTo("childName", childName);
-
-
 
         queryClass.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override

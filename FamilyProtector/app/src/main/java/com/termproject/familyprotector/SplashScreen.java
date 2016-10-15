@@ -26,7 +26,7 @@ public class SplashScreen extends AppCompatActivity {
                         String appMode = userLocalStore.getAppMode();
                         if(appMode.equals("parent")) {
                             user = userLocalStore.getLoggedInUser();
-                            Intent intent = new Intent(SplashScreen.this, ParentHomeScreen.class);
+                            Intent intent = new Intent(SplashScreen.this, BrowserHistory.class);
                             startActivity(intent);
                         }
                         else if (appMode.equals("child")){
@@ -54,35 +54,6 @@ public class SplashScreen extends AppCompatActivity {
             }
         };
         timerThread.start();
-
-//        if (value) {
-//            String appMode = userLocalStore.getAppMode();
-//            if(appMode.equals("parent")) {
-//                user = userLocalStore.getLoggedInUser();
-//                Intent intent = new Intent(this, ParentHomeScreen.class);
-//                startActivity(intent);
-//            }
-//            else if (appMode.equals("child")){
-//                user = userLocalStore.getLoggedInUser();
-//                if(!(userLocalStore.getChildForThisPhone().trim().equals(""))){
-//                    Intent intent = new Intent(this, ChildHomeScreenAfterSetup.class);
-//                    startActivity(intent);
-//                }
-//                else{
-//                    Intent intent = new Intent(this, ChildHomeScreen.class);
-//                    startActivity(intent);
-//                }
-//            }
-//            else {
-//                Intent intent = new Intent(this, ChooseMode.class);
-//                startActivity(intent);
-//            }
-//        }
-//        else{
-//            Intent intent = new Intent(this, WelcomePage.class);
-//            startActivity(intent);
-//
-//        }
 
 
     }
