@@ -190,10 +190,6 @@
             android:name=".ChildRuleDetailActivity"
             android:label="@string/title_activity_child_rule_detail"
             android:parentActivityName=".ChildDetailActivity" />
-        <activity
-            android:name=".BrowserHistory"
-            android:label="@string/title_activity_browser_history" >
-        </activity>
 
         <service
             android:name=".CurrentLocationWriterService"

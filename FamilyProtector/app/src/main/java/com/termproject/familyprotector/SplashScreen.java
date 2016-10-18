@@ -26,7 +26,7 @@ public class SplashScreen extends AppCompatActivity {
                         String appMode = userLocalStore.getAppMode();
                         if(appMode.equals("parent")) {
                             user = userLocalStore.getLoggedInUser();
-                            Intent intent = new Intent(SplashScreen.this, BrowserHistory.class);
+                            Intent intent = new Intent(SplashScreen.this, ParentHomeScreen.class);
                             startActivity(intent);
                         }
                         else if (appMode.equals("child")){

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -32,6 +33,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
         }
         if (alarmType != null) {
+            Log.v("alarmType",alarmType);
             if (alarmType.equals("geofence")) {
                 Intent geofenceService = new Intent(context, GeofenceCreationService.class);
                 startWakefulService(context, geofenceService);
@@ -39,8 +41,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
                 Intent currentLocationService = new Intent(context, CurrentLocationWriterService.class);
                 startWakefulService(context, currentLocationService);
             } else if (alarmType.equals("webCat")){
-//                Intent currentLocationService = new Intent(context, CurrentLocationWriterService.class);
-//                startWakefulService(context, currentLocationService);
+                Intent webHistoryService = new Intent(context, WebHistoryCheckService.class);
+                startWakefulService(context, webHistoryService);
             }
         }
 
@@ -71,9 +73,9 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         Calendar currLocServiceCalendar = Calendar.getInstance();
         currLocServiceCalendar.setTimeInMillis(System.currentTimeMillis());
         currLocServiceCalendar.set(Calendar.HOUR_OF_DAY, 14);
-        currLocServiceCalendar.set(Calendar.MINUTE, 00);
+        currLocServiceCalendar.set(Calendar.MINUTE, 01);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, currLocServiceCalendar.getTimeInMillis(),
-                10 * 60 * 1000, currentLocAlarmIntent);
+                1 * 60 * 1000, currentLocAlarmIntent);
 
         //----------------Web Category Alarm --------------------------------
         //setting the intent for website category alarm
@@ -84,9 +86,9 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         Calendar webCatServiceCalendar = Calendar.getInstance();
         webCatServiceCalendar.setTimeInMillis(System.currentTimeMillis());
         webCatServiceCalendar.set(Calendar.HOUR_OF_DAY, 14);
-        webCatServiceCalendar.set(Calendar.MINUTE, 00);
+        webCatServiceCalendar.set(Calendar.MINUTE, 02);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, webCatServiceCalendar.getTimeInMillis(),
-                1 * 60 * 1000, webCatAlarmIntent);
+                10 * 60 * 1000, webCatAlarmIntent);
 
 
         ComponentName receiver = new ComponentName(context, BootReceiver.class);

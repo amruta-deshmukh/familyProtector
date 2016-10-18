@@ -17,6 +17,7 @@ public class CurrentLocationWriterService extends IntentService {
     GPSTracker gps;
     double latitude, longitude;
     UserLocalStore userLocalStore;
+    private boolean done = false;
 
 
     public CurrentLocationWriterService() {
@@ -37,10 +38,14 @@ public class CurrentLocationWriterService extends IntentService {
             Log.v("got longitude", longitude + "");
         }
         writeLatLngToParse();
+        while (!done) {
+
+        }
+
     }
 
 
-    private void writeLatLngToParse(){
+    private void writeLatLngToParse() {
         User user = userLocalStore.getLoggedInUser();
         final String childName = userLocalStore.getChildForThisPhone();
         final String userName = user.getUsername();
@@ -58,8 +63,7 @@ public class CurrentLocationWriterService extends IntentService {
                         parseObject.put("currentLocGeo", currLocLatLng);
                         parseObject.saveInBackground();
                     }
-                }
-                else{
+                } else {
                     Log.v("error is not null", "error is not null");
                     ParseObject childCurrentLocation = new ParseObject("childCurrentLocation");
 
@@ -71,10 +75,6 @@ public class CurrentLocationWriterService extends IntentService {
 
             }
         });
-
-
-
-            }
-
-
-        }
+        done = true;
+    }
+}
