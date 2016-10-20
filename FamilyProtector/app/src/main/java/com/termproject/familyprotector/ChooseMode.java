@@ -12,10 +12,12 @@ public class ChooseMode extends AppCompatActivity implements View.OnClickListene
 
     private Button buttonParentMode,buttonChildMode;
     UserLocalStore userLocalStore;
+    private PolicyManager policyManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choosemode);
+        policyManager = new PolicyManager(this);
 
         init();
         userLocalStore = new UserLocalStore(this);
@@ -46,6 +48,22 @@ public class ChooseMode extends AppCompatActivity implements View.OnClickListene
                 userLocalStore.setAppMode("child");
                 installation.put("email", "child:" + storedUser.getUsername());
                 installation.saveInBackground();
+
+                //in order to activate policy manger
+//                if (!policyManager.isAdminActive()) {
+//                    Intent activateDeviceAdmin = new Intent(
+//                            DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+//                    activateDeviceAdmin.putExtra(
+//                            DevicePolicyManager.EXTRA_DEVICE_ADMIN,
+//                            policyManager.getAdminComponent());
+//                    activateDeviceAdmin
+//                            .putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+//                                    "After activating Device Admin for the child mode, " +
+//                                            "the application can't be uninstalled. In case child disables device admin," +
+//                                            "you will receive a notification for the same.");
+//                    startActivityForResult(activateDeviceAdmin,
+//                            PolicyManager.DPM_ACTIVATION_REQUEST_CODE);
+//                }
                 startActivity(new Intent(this,ChildHomeScreen.class));
         }
 

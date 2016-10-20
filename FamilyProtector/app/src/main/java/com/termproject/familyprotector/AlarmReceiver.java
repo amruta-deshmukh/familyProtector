@@ -35,14 +35,14 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         if (alarmType != null) {
             Log.v("alarmType",alarmType);
             if (alarmType.equals("geofence")) {
-                Intent geofenceService = new Intent(context, GeofenceCreationService.class);
-                startWakefulService(context, geofenceService);
+//                Intent geofenceService = new Intent(context, GeofenceCreationService.class);
+//                startWakefulService(context, geofenceService);
             } else if (alarmType.equals("currLoc")) {
-                Intent currentLocationService = new Intent(context, CurrentLocationWriterService.class);
-                startWakefulService(context, currentLocationService);
+//                Intent currentLocationService = new Intent(context, CurrentLocationWriterService.class);
+//                startWakefulService(context, currentLocationService);
             } else if (alarmType.equals("webCat")){
-                Intent webHistoryService = new Intent(context, WebHistoryCheckService.class);
-                startWakefulService(context, webHistoryService);
+//                Intent webHistoryService = new Intent(context, WebHistoryCheckService.class);
+//                startWakefulService(context, webHistoryService);
             }
         }
 

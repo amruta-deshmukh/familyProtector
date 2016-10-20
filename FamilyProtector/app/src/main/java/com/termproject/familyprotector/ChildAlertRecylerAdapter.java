@@ -23,6 +23,7 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
     private List<ParseObject> mChildAlerts;
     private String mChildName;
     private Context context;
+    private String alertType;
 
     public static class ChildAlertViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
@@ -44,11 +45,12 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
         }
     }
 
-    public ChildAlertRecylerAdapter(Context context, List<ParseObject> childAlerts, String childName) {
+    public ChildAlertRecylerAdapter(Context context, List<ParseObject> childAlerts, String childName, String alertType) {
 
         this.context = context;
-        mChildAlerts = childAlerts;
-        mChildName = childName;
+        this.mChildAlerts = childAlerts;
+        this.mChildName = childName;
+        this.alertType = alertType;
 
     }
 
@@ -64,6 +66,8 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
     @Override
     public void onBindViewHolder(ChildAlertViewHolder holder, int position) {
 
+        if(alertType.equals("loc")) {
+
             ParseObject alert = mChildAlerts.get(position);
             Date date = alert.getCreatedAt();
             SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
@@ -75,35 +79,67 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
             // Get element from your dataset at this position and replace the contents of the view
             // with that element
             holder.getTextView().setText(mChildName + " " + mChildAlerts.get(position).getString("alert") +
-                    " on " + dateStr+ " at "+ timeStr+ " hrs.");
-        holder.getTextView().setTag(holder);
+                    " on " + dateStr + " at " + timeStr + " hrs.");
+            holder.getTextView().setTag(holder);
 
 
-        View.OnClickListener clickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ChildAlertViewHolder rowHolder = (ChildAlertViewHolder) view.getTag();
-                int position = rowHolder.getPosition();
+            View.OnClickListener clickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChildAlertViewHolder rowHolder = (ChildAlertViewHolder) view.getTag();
+                    int position = rowHolder.getPosition();
 
-                ParseObject alert = mChildAlerts.get(position);
-                String alertId = alert.getString("ruleIdStr");
-                String []alertLocationArr = alert.getString("alert").split(" ");
-                String alertLocation = "";
-                for (int i = 1; i<alertLocationArr.length;i++){
-                    alertLocation = alertLocation + alertLocationArr[i];
+                    ParseObject alert = mChildAlerts.get(position);
+                    String alertId = alert.getString("ruleIdStr");
+                    String[] alertLocationArr = alert.getString("alert").split(" ");
+                    String alertLocation = "";
+                    for (int i = 1; i < alertLocationArr.length; i++) {
+                        alertLocation = alertLocation + alertLocationArr[i];
 
+                    }
+                    Intent intent = new Intent(context, ChildAlertDetailActivity.class).putExtra("dateStr", dateStr);
+                    intent.putExtra("alertAddress", alert.getString("alertAddress"));
+                    intent.putExtra("timeStr", timeStr);
+                    intent.putExtra("location", alertLocation);
+                    context.startActivity(intent);
                 }
-                //    Toast.makeText(getActivity(),forecast,Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context,ChildAlertDetailActivity.class).putExtra("dateStr",dateStr);
-                intent.putExtra("alertAddress",alert.getString("alertAddress"));
-                intent.putExtra("timeStr",timeStr);
-                intent.putExtra("location",alertLocation);
-                context.startActivity(intent);
-            }
-        };
+            };
 
-        //Handle click event on both title and image click
-        holder.getTextView().setOnClickListener(clickListener);
+            //Handle click event on both title and image click
+            holder.getTextView().setOnClickListener(clickListener);
+        }
+
+        else if(alertType.equals("web")) {
+
+            ParseObject alert = mChildAlerts.get(position);
+
+
+            // Get element from your dataset at this position and replace the contents of the view
+            // with that element
+            holder.getTextView().setText(mChildName + " visited \"" + alert.getString("urlName") +
+                    "\" on " + alert.getString("visitedDate") + " at " + alert.getString("visitedTime"));
+            holder.getTextView().setTag(holder);
+
+
+            View.OnClickListener clickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChildAlertViewHolder rowHolder = (ChildAlertViewHolder) view.getTag();
+                    int position = rowHolder.getPosition();
+
+                    ParseObject alert = mChildAlerts.get(position);
+                    Intent intent = new Intent(context, ChildWebAlertDetailActivity.class);
+                    intent.putExtra("urlName", alert.getString("urlName"));
+                    intent.putExtra("categoriesList", alert.getString("categoriesList"));
+                    intent.putExtra("visitedDate", alert.getString("visitedDate"));
+                    intent.putExtra("visitedTime", alert.getString("visitedTime"));
+                    context.startActivity(intent);
+                }
+            };
+
+            //Handle click event on both title and image click
+            holder.getTextView().setOnClickListener(clickListener);
+        }
 
     }
 

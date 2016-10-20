@@ -167,6 +167,14 @@
     <string name="text_cat_games">Games</string>
     <string name="text_cat_virtual_reality">Virtual Reality</string>
 
+    <string name="text_please_select_alerts">Please select to see the either \nlocation alerts or web access alerts.</string>
+    <string name="text_please_select_rules">Please select to see the either \nlocation rules or web access rules
+    \n set for the child.</string>
+    <string name="url_name">Url :</string>
+    <string name="url_categories">Categories :</string>
+    <string name="url_visited_date">Date visited :</string>
+    <string name="url_visited_time">Time visited :</string>
+
 
 
     <!--String Arrays-->
@@ -175,6 +183,14 @@
         <item>Location</item>
         <item>Web Access</item>
     </string-array>
+
+    <string-array name="child_alert_array">
+        <item>See alerts for...</item>
+        <item>Location</item>
+        <item>Web Access</item>
+    </string-array>
+    <string name="title_activity_child_web_alert_detail">ChildWebAlertDetailActivity</string>
+    <string name="title_activity_test_for_device_admin">TestForDeviceAdmin</string>
 
 
 </resources>

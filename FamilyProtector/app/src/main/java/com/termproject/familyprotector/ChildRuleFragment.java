@@ -21,12 +21,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -51,6 +54,7 @@ public class ChildRuleFragment extends Fragment {
     private float offset1;
     private float offset2;
     private static final String TRANSLATION_Y = "translationY";
+    private TextView noRuleSelected;
 
 
     @Override
@@ -76,6 +80,8 @@ public class ChildRuleFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         childRuleSpinner.setAdapter(adapter);
         childRuleSpinner.setOnItemSelectedListener(new SpinnerItemSelectedListener());
+        noRuleSelected = (TextView)view.findViewById(R.id.no_rule_selected);
+        noRuleSelected.setVisibility(View.VISIBLE);
 
         buildFab(view);
 //        addRuleFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +104,7 @@ public class ChildRuleFragment extends Fragment {
 
 
     private void getChildRulesFromParse() {
+        final String ruleType = "loc";
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ChildRuleLocation");
         query.whereEqualTo("userName", user.getUsername());
         query.whereEqualTo("childName", childName);
@@ -107,32 +114,118 @@ public class ChildRuleFragment extends Fragment {
             public void done(List<ParseObject> childRulesFromParse, ParseException e) {
                 if (e == null) {
                     if (childRulesFromParse.size() > 0) {
-                        mAdapter = new ChildRuleRecyclerAdapter(getActivity(),childRulesFromParse, childName);
+                        mAdapter = new ChildRuleRecyclerAdapter(getActivity(), childRulesFromParse, childName, ruleType, null);
                         // Set CustomAdapter as the adapter for RecyclerView.
                         mRecyclerView.setAdapter(mAdapter);
 
-                    }
-                    else {
+                    } else {
+                        Log.v("error", "size of parseObject list is less than 0");
 
                     }
-                }
-                else {
-                    Log.e("Child Rule Fragment", "error in fetching"+e.toString());
+                } else {
+                    Log.e("Child Rule Fragment", "error in fetching" + e.toString());
+                    e.printStackTrace();
                 }
 
             }
         });
     }
 
+    private void getChildWebRulesFromParse(){
+        final String ruleType = "web";
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ChildRuleWebsite");
+        query.whereEqualTo("userName", user.getUsername());
+        query.whereEqualTo("childName", childName);
+
+        final List<String> childWebsiteCategories = new ArrayList<String>();
+
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (e == null) {
+                    if (parseObject != null) {
+
+                        if (parseObject.getString("gambling").equals("Yes")) {
+                            childWebsiteCategories.add("Gambling");
+                        }
+                        if (parseObject.getString("hacking").equals("Yes")) {
+                            childWebsiteCategories.add("Hacking");
+                        }
+                        if (parseObject.getString("social").equals("Yes")) {
+                            childWebsiteCategories.add("Social Networking");
+                        }
+                        if (parseObject.getString("chat").equals("Yes")) {
+                            childWebsiteCategories.add("Chat and Messaging");
+                        }
+                        if (parseObject.getString("mediaSharing").equals("Yes")) {
+                            childWebsiteCategories.add("Media Sharing");
+                        }
+                        if (parseObject.getString("adult").equals("Yes")) {
+                            childWebsiteCategories.add("Adult");
+                        }
+                        if (parseObject.getString("abortion").equals("Yes")) {
+                            childWebsiteCategories.add("Abortion");
+                        }
+                        if (parseObject.getString("drugs").equals("Yes")) {
+                            childWebsiteCategories.add("Drugs");
+                        }
+                        if (parseObject.getString("alcohol").equals("Yes")) {
+                            childWebsiteCategories.add("Alcohol & Tobacco");
+                        }
+                        if (parseObject.getString("weapons").equals("Yes")) {
+                            childWebsiteCategories.add("Weapons");
+                        }
+                        if (parseObject.getString("proxy").equals("Yes")) {
+                            childWebsiteCategories.add("Proxy & Web Filter Avoidance");
+                        }
+                        if (parseObject.getString("illegal").equals("Yes")) {
+                            childWebsiteCategories.add("Illegal Content");
+                        }
+                        if (parseObject.getString("newsMedia").equals("Yes")) {
+                            childWebsiteCategories.add("News & Media");
+                        }
+                        if (parseObject.getString("shopping").equals("Yes")) {
+                            childWebsiteCategories.add("Shopping");
+                        }
+                        if (parseObject.getString("games").equals("Yes")) {
+                            childWebsiteCategories.add("Games");
+                        }
+                        if (parseObject.getString("virtualReality").equals("Yes")) {
+                            childWebsiteCategories.add("Virtual Reality");
+                        }
+
+                        Log.v("done with parse fetching", "all boolean values set");
+
+                        mAdapter = new ChildRuleRecyclerAdapter(getActivity(), null, childName, ruleType, childWebsiteCategories);
+                        // Set CustomAdapter as the adapter for RecyclerView.
+                        mRecyclerView.setAdapter(mAdapter);
+                    }
+                }
+
+
+            }
+        });
+
+    }
+
     public class SpinnerItemSelectedListener implements AdapterView.OnItemSelectedListener{
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             String selected = parent.getItemAtPosition(pos).toString();
             if(selected.equals("Location")){
+                noRuleSelected.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
                 getChildRulesFromParse();
 
             }
             else if (selected.equals("Web Access")){
+                noRuleSelected.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                getChildWebRulesFromParse();
 
+            }
+            else if (selected.equals("See rules for...")){
+                mRecyclerView.setVisibility(View.GONE);
+                noRuleSelected.setVisibility(View.VISIBLE);
             }
         }
 

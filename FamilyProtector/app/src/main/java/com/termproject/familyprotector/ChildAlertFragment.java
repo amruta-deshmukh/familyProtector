@@ -9,6 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -30,6 +34,8 @@ public class ChildAlertFragment extends Fragment {
     RecyclerView.LayoutManager mLayoutManager;
     protected String[] mDataset;
     private User user;
+    Spinner childAlertSpinner;
+    TextView noAlertSelected;
 
 
     @Override
@@ -40,7 +46,7 @@ public class ChildAlertFragment extends Fragment {
         user = userLocalStore.getLoggedInUser();
         childName = userLocalStore.getChildDetails();
         initDataset();
-        getChildAlertFromParse();
+//        getChildLocationAlertFromParse();
     }
 
     @Override
@@ -49,6 +55,15 @@ public class ChildAlertFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_child_alert, container, false);
         mRecyclerView = (RecyclerView)view.findViewById(R.id.child_alert_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        childAlertSpinner = (Spinner)view.findViewById(R.id.alert_spinner);
+        noAlertSelected = (TextView)view.findViewById(R.id.no_alert_selected);
+        noAlertSelected.setVisibility(View.VISIBLE);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+                R.array.child_alert_array, R.layout.spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        childAlertSpinner.setAdapter(adapter);
+        childAlertSpinner.setOnItemSelectedListener(new SpinnerItemSelectedListener());
         return view;
     }
 
@@ -59,7 +74,8 @@ public class ChildAlertFragment extends Fragment {
         }
     }
 
-    private void getChildAlertFromParse() {
+    private void getChildLocationAlertFromParse() {
+        final String alertType = "loc";
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ChildAlerts");
         query.whereEqualTo("userName", user.getUsername());
         query.whereEqualTo("childName", childName);
@@ -73,7 +89,7 @@ public class ChildAlertFragment extends Fragment {
 
 
                     if (childAlertsFromParse.size() > 0) {
-                        mAdapter = new ChildAlertRecylerAdapter(getActivity(), childAlertsFromParse, childName);
+                        mAdapter = new ChildAlertRecylerAdapter(getActivity(), childAlertsFromParse, childName, alertType);
                         // Set CustomAdapter as the adapter for RecyclerView.
                         mRecyclerView.setAdapter(mAdapter);
 
@@ -88,6 +104,67 @@ public class ChildAlertFragment extends Fragment {
 
             }
         });
+    }
+
+
+    private void getChildWebAlertFromParse(){
+
+        final String alertType = "web";
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ChildWebsiteAlerts");
+        query.whereEqualTo("userName", user.getUsername());
+        query.whereEqualTo("childName", childName);
+        query.orderByDescending("createdAt");
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> childAlertsFromParse, ParseException e) {
+
+                if (e == null) {
+
+
+                    if (childAlertsFromParse.size() > 0) {
+                        mAdapter = new ChildAlertRecylerAdapter(getActivity(), childAlertsFromParse, childName, alertType);
+                        // Set CustomAdapter as the adapter for RecyclerView.
+                        mRecyclerView.setAdapter(mAdapter);
+
+                    } else {
+
+                    }
+                } else {
+                    Log.d("childAlertfragment", "Error in fetching data from parse" + e.toString());
+                }
+
+            }
+        });
+
+    }
+
+    public class SpinnerItemSelectedListener implements AdapterView.OnItemSelectedListener{
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            String selected = parent.getItemAtPosition(pos).toString();
+            if(selected.equals("Location")){
+                noAlertSelected.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                getChildLocationAlertFromParse();
+
+            }
+            else if (selected.equals("Web Access")){
+                noAlertSelected.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                getChildWebAlertFromParse();
+
+            }
+            else if (selected.equals("See alerts for...")){
+                mRecyclerView.setVisibility(View.GONE);
+                noAlertSelected.setVisibility(View.VISIBLE);
+
+
+
+            }
+        }
+
+        public void onNothingSelected(AdapterView parent) {
+            // Do nothing.
+        }
     }
 
 

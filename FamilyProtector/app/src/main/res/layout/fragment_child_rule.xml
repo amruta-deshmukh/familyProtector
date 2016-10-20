@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         style="@style/Widget.AppCompat.Spinner.Underlined"
          />
 
@@ -25,15 +25,15 @@
         android:layout_below="@id/rule_spinner"
         android:layout_alignParentStart="true" />
 
+    <TextView
+        android:id="@+id/no_rule_selected"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/text_please_select_rules" />
+
     <include layout="@layout/fab_expand_layout" />
 
-    <!--<android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_rule_floating_action_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add_rule" />-->
 
 </RelativeLayout>
