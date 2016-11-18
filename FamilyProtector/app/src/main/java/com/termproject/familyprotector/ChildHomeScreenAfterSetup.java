@@ -1,6 +1,7 @@
 package com.termproject.familyprotector;
 
 import android.app.ProgressDialog;
+import android.app.admin.DevicePolicyManager;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -23,17 +24,35 @@ public class ChildHomeScreenAfterSetup extends AppCompatActivity {
     private Toolbar mToolBar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    private PolicyManager policyManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        policyManager = new PolicyManager(this);
         userLocalStore = new UserLocalStore(this);
         setTitle("Child Mode");
         String genderStr = userLocalStore.getChildForThisPhoneGender();
         setContentView(R.layout.activity_child_home_screen_after_setup);
-        alarm.setAlarm(this);
-        Progress progress = new Progress(ChildHomeScreenAfterSetup.this);
-        progress.execute();
+        alarm.setAlarm(this, "child");
+        if (!policyManager.isAdminActive()) {
+            Intent activateDeviceAdmin = new Intent(
+                    DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+            activateDeviceAdmin.putExtra(
+                    DevicePolicyManager.EXTRA_DEVICE_ADMIN,
+                    policyManager.getAdminComponent());
+            activateDeviceAdmin
+                    .putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                            "Click on Activate button to protect \"Family Protector\" application from uninstalling! \n\n\n\n" +
+                                    "If your child tries to disable the device administration rights " +
+                                    "for \"Family Protector\", you will receive a notification for the same.");
+            startActivityForResult(activateDeviceAdmin,
+                    PolicyManager.DPM_ACTIVATION_REQUEST_CODE);
+        }
+
+
+//        Progress progress = new Progress(this);
+//        progress.execute();
 
         //setting up the UI elements
         childIconText= (TextView)findViewById(R.id.child_for_text);
@@ -99,6 +118,14 @@ public class ChildHomeScreenAfterSetup extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Progress progress = new Progress(this);
+        progress.execute();
+
+    }
+
     public class Progress extends AsyncTask<Void,Void,Void>{
         private ProgressDialog dialog;
 
@@ -115,7 +142,7 @@ public class ChildHomeScreenAfterSetup extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

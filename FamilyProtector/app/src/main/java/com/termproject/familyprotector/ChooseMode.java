@@ -12,12 +12,11 @@ public class ChooseMode extends AppCompatActivity implements View.OnClickListene
 
     private Button buttonParentMode,buttonChildMode;
     UserLocalStore userLocalStore;
-    private PolicyManager policyManager;
+    AlarmReceiver alarm =  new AlarmReceiver();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choosemode);
-        policyManager = new PolicyManager(this);
 
         init();
         userLocalStore = new UserLocalStore(this);
@@ -39,9 +38,10 @@ public class ChooseMode extends AppCompatActivity implements View.OnClickListene
         switch(view.getId()){
             case R.id.button_parent_mode:
                 userLocalStore.setAppMode("parent");
+                installation.put("email", "parent:" + storedUser.getUsername());
 
-                installation.put("email", "parent:"+storedUser.getUsername());
                 installation.saveInBackground();
+                alarm.setAlarm(this,"parent");
                 startActivity(new Intent(this, ParentHomeScreen.class));
                 break;
             case R.id.button_child_mode:

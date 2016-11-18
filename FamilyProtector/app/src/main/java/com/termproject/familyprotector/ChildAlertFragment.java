@@ -19,6 +19,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,13 +37,15 @@ public class ChildAlertFragment extends Fragment {
     private User user;
     Spinner childAlertSpinner;
     TextView noAlertSelected;
+    private NotificationDBHelper dbHelper;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity();
-        userLocalStore = new UserLocalStore(getActivity());
+        userLocalStore = new UserLocalStore(context);
+        dbHelper = new NotificationDBHelper(context);
         user = userLocalStore.getLoggedInUser();
         childName = userLocalStore.getChildDetails();
         initDataset();
@@ -59,9 +62,48 @@ public class ChildAlertFragment extends Fragment {
         noAlertSelected = (TextView)view.findViewById(R.id.no_alert_selected);
         noAlertSelected.setVisibility(View.VISIBLE);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                R.array.child_alert_array, R.layout.spinner_item);
+        /*
+        * Populate the spinner items based on notifications.
+        */
+        int locationNotification = dbHelper.getAlertTypeCountForChild(childName,
+                FamilyProtectorConstants.ALERT_TYPE_GEOFENCE);
+        int webNotification = dbHelper.getAlertTypeCountForChild(childName,
+                FamilyProtectorConstants.ALERT_TYPE_WEB_HISTORY);
+        int deviceAdminNotification = dbHelper.getAlertTypeCountForChild(childName,
+                FamilyProtectorConstants.ALERT_TYPE_DEVICE_ADMIN);
+        Log.v("not count device", deviceAdminNotification+"");
+        int currentLocNotification = dbHelper.getAlertTypeCountForChild(childName,
+                FamilyProtectorConstants.ALERT_TYPE_CURRENT_LOC);
+
+        List<String> spinnerArray =  new ArrayList<String>();
+        spinnerArray.add("See alerts for...");
+        if(locationNotification>0)
+            spinnerArray.add("Location ("+ locationNotification+ ")");
+        else
+            spinnerArray.add("Location");
+        if(webNotification>0)
+            spinnerArray.add("Web Access ("+ webNotification+ ")");
+        else
+            spinnerArray.add("Web Access");
+
+        if(deviceAdminNotification>0)
+            spinnerArray.add("Uninstallation Attempt ("+ deviceAdminNotification+ ")");
+        else
+            spinnerArray.add("Uninstallation Attempt");
+        if(currentLocNotification>0)
+            spinnerArray.add("Current Loc inaccessible ("+ currentLocNotification+ ")");
+        else
+            spinnerArray.add("Current Loc inaccessible");
+
+
+
+
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+//                R.array.child_alert_array, R.layout.spinner_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,R.layout.spinner_item,spinnerArray);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         childAlertSpinner.setAdapter(adapter);
         childAlertSpinner.setOnItemSelectedListener(new SpinnerItemSelectedListener());
         return view;
@@ -75,7 +117,7 @@ public class ChildAlertFragment extends Fragment {
     }
 
     private void getChildLocationAlertFromParse() {
-        final String alertType = "loc";
+        final String alertType = FamilyProtectorConstants.ALERT_TYPE_GEOFENCE;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ChildAlerts");
         query.whereEqualTo("userName", user.getUsername());
         query.whereEqualTo("childName", childName);
@@ -109,7 +151,7 @@ public class ChildAlertFragment extends Fragment {
 
     private void getChildWebAlertFromParse(){
 
-        final String alertType = "web";
+        final String alertType = FamilyProtectorConstants.ALERT_TYPE_WEB_HISTORY;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ChildWebsiteAlerts");
         query.whereEqualTo("userName", user.getUsername());
         query.whereEqualTo("childName", childName);
@@ -120,6 +162,66 @@ public class ChildAlertFragment extends Fragment {
 
                 if (e == null) {
 
+
+                    if (childAlertsFromParse.size() > 0) {
+                        mAdapter = new ChildAlertRecylerAdapter(getActivity(), childAlertsFromParse, childName, alertType);
+                        // Set CustomAdapter as the adapter for RecyclerView.
+                        mRecyclerView.setAdapter(mAdapter);
+
+                    } else {
+
+                    }
+                } else {
+                    Log.d("childAlertfragment", "Error in fetching data from parse" + e.toString());
+                }
+
+            }
+        });
+
+    }
+
+    private void getChildDeviceAdminAlertFromParse(){
+
+        final String alertType = FamilyProtectorConstants.ALERT_TYPE_DEVICE_ADMIN;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ChildDeviceAdminAlerts");
+        query.whereEqualTo("userName", user.getUsername());
+        query.whereEqualTo("childName", childName);
+        query.orderByDescending("createdAt");
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> childAlertsFromParse, ParseException e) {
+
+                if (e == null) {
+
+                    if (childAlertsFromParse.size() > 0) {
+                        mAdapter = new ChildAlertRecylerAdapter(getActivity(), childAlertsFromParse, childName, alertType);
+                        // Set CustomAdapter as the adapter for RecyclerView.
+                        mRecyclerView.setAdapter(mAdapter);
+
+                    } else {
+
+                    }
+                } else {
+                    Log.d("childAlertfragment", "Error in fetching data from parse" + e.toString());
+                }
+
+            }
+        });
+
+    }
+
+    private void getChildCurrentLocationAlertFromParse(){
+
+        final String alertType = FamilyProtectorConstants.ALERT_TYPE_CURRENT_LOC;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ChildCurrentLocationAlerts");
+        query.whereEqualTo("userName", user.getUsername());
+        query.whereEqualTo("childName", childName);
+        query.orderByDescending("createdAt");
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> childAlertsFromParse, ParseException e) {
+
+                if (e == null) {
 
                     if (childAlertsFromParse.size() > 0) {
                         mAdapter = new ChildAlertRecylerAdapter(getActivity(), childAlertsFromParse, childName, alertType);
@@ -151,6 +253,20 @@ public class ChildAlertFragment extends Fragment {
                 noAlertSelected.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
                 getChildWebAlertFromParse();
+
+            }
+            else if (selected.equals("Uninstallation Attempt")){
+                noAlertSelected.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                Log.v("Database", "deleting device type alert");
+                dbHelper.deleteNotificationEntry(childName,FamilyProtectorConstants.ALERT_TYPE_DEVICE_ADMIN);
+                getChildDeviceAdminAlertFromParse();
+
+            }
+            else if (selected.equals("Current Loc inaccessible")){
+                noAlertSelected.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                getChildCurrentLocationAlertFromParse();
 
             }
             else if (selected.equals("See alerts for...")){

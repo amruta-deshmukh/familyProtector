@@ -66,7 +66,7 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
     @Override
     public void onBindViewHolder(ChildAlertViewHolder holder, int position) {
 
-        if(alertType.equals("loc")) {
+        if(alertType.equals(FamilyProtectorConstants.ALERT_TYPE_GEOFENCE)) {
 
             ParseObject alert = mChildAlerts.get(position);
             Date date = alert.getCreatedAt();
@@ -109,7 +109,7 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
             holder.getTextView().setOnClickListener(clickListener);
         }
 
-        else if(alertType.equals("web")) {
+        else if(alertType.equals(FamilyProtectorConstants.ALERT_TYPE_WEB_HISTORY)) {
 
             ParseObject alert = mChildAlerts.get(position);
 
@@ -139,6 +139,69 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
 
             //Handle click event on both title and image click
             holder.getTextView().setOnClickListener(clickListener);
+        }
+
+        else if(alertType.equals(FamilyProtectorConstants.ALERT_TYPE_DEVICE_ADMIN)) {
+
+            ParseObject alert = mChildAlerts.get(position);
+
+
+            // Get element from your dataset at this position and replace the contents of the view
+            // with that element
+            holder.getTextView().setText(mChildName + " tried to uninstall app" +
+                    " on " + alert.getString("alertDate") + " at " + alert.getString("alertTime"));
+            holder.getTextView().setTag(holder);
+
+
+//            View.OnClickListener clickListener = new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    ChildAlertViewHolder rowHolder = (ChildAlertViewHolder) view.getTag();
+//                    int position = rowHolder.getPosition();
+//
+//                    ParseObject alert = mChildAlerts.get(position);
+//                    Intent intent = new Intent(context, ChildWebAlertDetailActivity.class);
+//                    intent.putExtra("urlName", alert.getString("urlName"));
+//                    intent.putExtra("categoriesList", alert.getString("categoriesList"));
+//                    intent.putExtra("visitedDate", alert.getString("visitedDate"));
+//                    intent.putExtra("visitedTime", alert.getString("visitedTime"));
+//                    context.startActivity(intent);
+//                }
+//            };
+//
+//            //Handle click event on both title and image click
+//            holder.getTextView().setOnClickListener(clickListener);
+        }
+        else if(alertType.equals(FamilyProtectorConstants.ALERT_TYPE_CURRENT_LOC)) {
+
+            ParseObject alert = mChildAlerts.get(position);
+
+
+            // Get element from your dataset at this position and replace the contents of the view
+            // with that element
+            holder.getTextView().setText(mChildName + "'s phone is inaccessible since " +
+                    alert.getString("timeSinceLastOnline") + " on " + alert.getString("dateSinceLastOnline"));
+            holder.getTextView().setTag(holder);
+
+
+//            View.OnClickListener clickListener = new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    ChildAlertViewHolder rowHolder = (ChildAlertViewHolder) view.getTag();
+//                    int position = rowHolder.getPosition();
+//
+//                    ParseObject alert = mChildAlerts.get(position);
+//                    Intent intent = new Intent(context, ChildWebAlertDetailActivity.class);
+//                    intent.putExtra("urlName", alert.getString("urlName"));
+//                    intent.putExtra("categoriesList", alert.getString("categoriesList"));
+//                    intent.putExtra("visitedDate", alert.getString("visitedDate"));
+//                    intent.putExtra("visitedTime", alert.getString("visitedTime"));
+//                    context.startActivity(intent);
+//                }
+//            };
+//
+//            //Handle click event on both title and image click
+//            holder.getTextView().setOnClickListener(clickListener);
         }
 
     }

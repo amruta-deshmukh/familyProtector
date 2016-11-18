@@ -161,6 +161,7 @@ public class UserLocalStore {
 
 
 
+
     public void clearUserData(){
         SharedPreferences.Editor spEditor = userLocalDatabase.edit();
         spEditor.clear();

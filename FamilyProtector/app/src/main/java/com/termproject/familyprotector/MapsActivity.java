@@ -33,7 +33,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -228,11 +227,11 @@ public class MapsActivity extends AppCompatActivity implements
         return true;
     }
 
-    private void getAutocompleteResults(String queryText) {
-        LatLng latLng = new LatLng(latitude,longitude);
-        LatLngBounds latLngBounds = new LatLngBounds(new LatLng(32.5342622,-124.415165),new LatLng(42.0095169,-114.1313927));
-
-    }
+//    private void getAutocompleteResults(String queryText) {
+//        LatLng latLng = new LatLng(latitude,longitude);
+//        LatLngBounds latLngBounds = new LatLngBounds(new LatLng(32.5342622,-124.415165),new LatLng(42.0095169,-114.1313927));
+//
+//    }
 
     public static void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -274,22 +273,22 @@ public class MapsActivity extends AppCompatActivity implements
         @Override
         protected HashMap<String, String> doInBackground(String... params) {
             HashMap<String, String> location = new HashMap<String, String>();
-            String apiKey = "AIzaSyAUSETHO5_4d_lGrGfjX4vAowf6DrqaNmk";
-            try {
-                final String GOOGLE_BASE_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?";
-                final String QUERY_PARAM = "query";
-                final String APIKEY_PARAM = "key";
+                            String apiKey = "AIzaSyAUSETHO5_4d_lGrGfjX4vAowf6DrqaNmk";
+                try {
+                    final String GOOGLE_BASE_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?";
+                    final String QUERY_PARAM = "query";
+                    final String APIKEY_PARAM = "key";
 
-                Uri builtUri = Uri.parse(GOOGLE_BASE_URL).buildUpon()
-                        .appendQueryParameter(QUERY_PARAM, params[0])
-                        .appendQueryParameter(APIKEY_PARAM, apiKey)
-                        .build();
+                    Uri builtUri = Uri.parse(GOOGLE_BASE_URL).buildUpon()
+                            .appendQueryParameter(QUERY_PARAM, params[0])
+                            .appendQueryParameter(APIKEY_PARAM, apiKey)
+                            .build();
 
-                URL url = new URL(builtUri.toString());
+                    URL url = new URL(builtUri.toString());
 
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.connect();
 
 
                 // Read the input stream into a String

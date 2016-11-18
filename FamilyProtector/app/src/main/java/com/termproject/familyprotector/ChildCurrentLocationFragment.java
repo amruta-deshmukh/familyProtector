@@ -86,23 +86,9 @@ public class ChildCurrentLocationFragment extends Fragment {
                                     .target(new LatLng(latitude, longitude)).zoom(12).build();
                             googleMap.animateCamera(CameraUpdateFactory
                                     .newCameraPosition(cameraPosition));
-//                    gps = new GPSTracker(getActivity().getApplicationContext());
-//                    if (gps.canGetLocationCheck()) {
-//                        latitude = gps.getLatitudeVal();
-//                        Log.v("got latitude", latitude + "");
-//                        longitude = gps.getLongitudeVal();
-//                        Log.v("got longitude", longitude+"");
-//                    }
                         }
                     }
                 });
-//                MarkerOptions marker = new MarkerOptions().position(
-//                        new LatLng(latitude, longitude)).title("Hello Maps");
-//                googleMap.addMarker(marker);
-//                CameraPosition cameraPosition = new CameraPosition.Builder()
-//                        .target(new LatLng(latitude, longitude)).zoom(12).build();
-//                googleMap.animateCamera(CameraUpdateFactory
-//                        .newCameraPosition(cameraPosition));
 
             }
         });
@@ -133,47 +119,6 @@ public class ChildCurrentLocationFragment extends Fragment {
         mMapView.onLowMemory();
     }
 
-
-    private void getChildCurrentLocationFromParse(){
-//        User user = userLocalStore.getLoggedInUser();
-//        final String childName = userLocalStore.getChildForThisPhone();
-//        final String userName = user.getUsername();
-//        ParseQuery<ParseObject> queryClass = ParseQuery.getQuery("childCurrentLocation");
-//        queryClass.whereEqualTo("userName", userName);
-//        queryClass.whereEqualTo("childName", childName);
-
-//        queryClass.getFirstInBackground(new GetCallback<ParseObject>() {
-//            @Override
-//            public void done(ParseObject parseObject, ParseException e) {
-//                if (e == null) {
-//                    if (parseObject != null) {
-//                        currLocLatLng = (ParseGeoPoint) parseObject.get("currentLocGeo");
-//                        latitude = currLocLatLng.getLatitude();
-//                        longitude = currLocLatLng.getLongitude();
-//                        resultFound = true;
-//                        MarkerOptions marker = new MarkerOptions().position(
-//                                new LatLng(latitude, longitude)).title("Hello Maps");
-//                        googleMap.addMarker(marker);
-//                        CameraPosition cameraPosition = new CameraPosition.Builder()
-//                                .target(new LatLng(latitude, longitude)).zoom(12).build();
-//                        googleMap.animateCamera(CameraUpdateFactory
-//                                .newCameraPosition(cameraPosition));
-//                    }
-//                } else {
-//                    latitude = 37.7238566;
-//                    longitude = -122.4762807;
-////                    gps = new GPSTracker(getActivity().getApplicationContext());
-////                    if (gps.canGetLocationCheck()) {
-////                        latitude = gps.getLatitudeVal();
-////                        Log.v("got latitude", latitude + "");
-////                        longitude = gps.getLongitudeVal();
-////                        Log.v("got longitude", longitude+"");
-////                    }
-//                }
-//            }
-//        });
-
-    }
 
     private void setupMapFrag(){
 

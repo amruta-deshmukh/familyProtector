@@ -9,12 +9,16 @@ import android.content.Intent;
  */
 public class BootReceiver extends BroadcastReceiver {
 
+    UserLocalStore userLocalStore;
+
     AlarmReceiver alarm = new AlarmReceiver();
     @Override
     public void onReceive(Context context, Intent intent) {
+        userLocalStore = new UserLocalStore(context);
+        String appMode = userLocalStore.getAppMode();
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED"))
         {
-            alarm.setAlarm(context);
+            alarm.setAlarm(context, appMode);
         }
     }
 }

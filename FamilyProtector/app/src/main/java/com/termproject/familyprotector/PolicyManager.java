@@ -20,7 +20,7 @@ public class PolicyManager {
         mDPM = (DevicePolicyManager) mContext
                 .getSystemService(Context.DEVICE_POLICY_SERVICE);
         adminComponent = new ComponentName(mContext.getPackageName(),
-                mContext.getPackageName() + ".SampleDeviceAdminReceiver");
+                mContext.getPackageName() + ".ChildDeviceAdminReceiver");
     }
 
     public boolean isAdminActive() {
@@ -31,7 +31,5 @@ public class PolicyManager {
         return adminComponent;
     }
 
-    public void disableAdmin() {
-        mDPM.removeActiveAdmin(adminComponent);
-    }
+
 }

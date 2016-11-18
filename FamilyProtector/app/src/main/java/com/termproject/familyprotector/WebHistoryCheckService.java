@@ -237,7 +237,7 @@ public class WebHistoryCheckService extends IntentService {
 
         String encodedURL = encodedUrl;
         Log.v("encodedUrl",encodedURL);
-        String authCredentials = SafeBrowsingConstants.WEB_SHRINKER_ENCODED_KEY;
+        String authCredentials = FamilyProtectorConstants.WEB_SHRINKER_ENCODED_KEY;
         String output = null;
         StringBuffer buffer = new StringBuffer();
         String[] categoryStrArray = null;

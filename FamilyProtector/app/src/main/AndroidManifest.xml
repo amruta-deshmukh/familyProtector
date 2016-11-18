@@ -212,13 +212,9 @@
             android:label="@string/title_activity_child_web_alert_detail"
             android:parentActivityName=".ChildDetailActivity" >
         </activity>
-        <activity
-            android:name=".TestForDeviceAdmin"
-            android:label="@string/title_activity_test_for_device_admin" >
-        </activity>
 
         <receiver
-            android:name=".SampleDeviceAdminReceiver"
+            android:name=".ChildDeviceAdminReceiver"
             android:permission="android.permission.BIND_DEVICE_ADMIN" >
             <meta-data
                 android:name="android.app.device_admin"
@@ -230,6 +226,11 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".ParentCurrentLocationCheckService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

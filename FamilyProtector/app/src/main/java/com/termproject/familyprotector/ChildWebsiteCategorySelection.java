@@ -224,6 +224,7 @@ public class ChildWebsiteCategorySelection extends AppCompatActivity {
         ParseQuery<ParseObject> queryClass = ParseQuery.getQuery("ChildRuleWebsite");
         queryClass.whereEqualTo("userName", userName);
         queryClass.whereEqualTo("childName", childName);
+        Log.v("childName",childName);
         queryClass.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
@@ -232,9 +233,11 @@ public class ChildWebsiteCategorySelection extends AppCompatActivity {
 
                         Log.v("inside parseObject","parseobject ot null");
                         if(catGambling.isChecked()){
+                            Log.v("gambling","checked");
                             parseObject.put("gambling", "Yes");
                         }
                         else{
+                            Log.v("gambling"," not checked");
                             parseObject.put("gambling", "No");
                         }
                         if(catHacking.isChecked()){
@@ -327,6 +330,7 @@ public class ChildWebsiteCategorySelection extends AppCompatActivity {
                         else{
                             parseObject.put("virtualReality", "No");
                         }
+                        Log.v("saving to parse","saving");
                         parseObject.saveInBackground();
                     }
                 } else {

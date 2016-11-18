@@ -30,6 +30,7 @@
     <string name="title_activity_child_home_screen_after_setup">ChildHomeScreenAfterSetup</string>
     <string name="title_activity_child_profile_settings">ChildProfileSettings</string>
     <string name="title_activity_child_alert_detail">ChildAlertDetailActivity</string>
+    <string name="title_activity_child_web_alert_detail">ChildWebAlertDetailActivity</string>
 
 
     <!-- Action Strings -->
@@ -177,6 +178,7 @@
 
 
 
+
     <!--String Arrays-->
     <string-array name="child_rule_array">
         <item>See rules for...</item>
@@ -188,9 +190,9 @@
         <item>See alerts for...</item>
         <item>Location</item>
         <item>Web Access</item>
+        <item>Uninstallation Attempt</item>
+        <item>Current Loc inaccessible</item>
     </string-array>
-    <string name="title_activity_child_web_alert_detail">ChildWebAlertDetailActivity</string>
-    <string name="title_activity_test_for_device_admin">TestForDeviceAdmin</string>
 
 
 </resources>
