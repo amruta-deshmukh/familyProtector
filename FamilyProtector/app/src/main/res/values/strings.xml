@@ -53,6 +53,8 @@
     <string name="btn_child_mode">Child Mode</string>
     <string name="btn_enter">Enter</string>
     <string name="dialog_title_profile_name">Change Profile Name</string>
+    <string name="dialog_title_profile_password">Change Profile Password</string>
+    <string name="dialog_title_profile_sec_ans">Change Security Answer</string>
 
     <!-- Preference Screen Strings-->
     <string name="pref_child_name_key" translatable="false">childNamePref</string>
