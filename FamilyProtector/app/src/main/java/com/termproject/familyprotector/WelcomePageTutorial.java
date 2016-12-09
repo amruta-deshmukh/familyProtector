@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class WelcomePageTutorial extends AppCompatActivity
         implements ViewPager.OnPageChangeListener, View.OnClickListener {
@@ -18,6 +20,7 @@ public class WelcomePageTutorial extends AppCompatActivity
     protected View view;
     private ImageButton btnNext;
     private Button btnFinish;
+    private TextView textTutorial,textOr;
     private ViewPager intro_images;
     private LinearLayout pager_indicator;
     private int dotsCount;
@@ -54,11 +57,14 @@ public class WelcomePageTutorial extends AppCompatActivity
         btnNext = (ImageButton) view.findViewById(R.id.btn_next);
         //btnSkip = (Button) view.findViewById(R.id.btn_skip);
         btnFinish = (Button) view.findViewById(R.id.btn_finish);
+        textTutorial = (TextView)view.findViewById(R.id.text_view_tutorial);
+        textOr = (TextView)view.findViewById(R.id.text_view_or);
 
         pager_indicator = (LinearLayout) view.findViewById(R.id.viewPagerCountDots);
 
         btnNext.setOnClickListener(this);
         btnFinish.setOnClickListener(this);
+        textTutorial.setOnClickListener(this);
 
         mAdapter = new WelcomeTutorialViewPagerAdapter(WelcomePageTutorial.this, mImageResources);
         intro_images.setAdapter(mAdapter);
@@ -68,6 +74,8 @@ public class WelcomePageTutorial extends AppCompatActivity
             btnNext.setVisibility(View.GONE);
             pager_indicator.setVisibility(View.GONE);
             btnFinish.setVisibility(View.VISIBLE);
+            textTutorial.setVisibility(View.VISIBLE);
+            textOr.setVisibility(View.VISIBLE);
 
         }
         else{
@@ -110,7 +118,12 @@ public class WelcomePageTutorial extends AppCompatActivity
             case R.id.btn_finish:
                 userLocalStore.setTutorialViewed(true);
                 boolean userRegistered = userLocalStore.getUserRegistered();
-                if(userRegistered){
+                boolean userLoggedIn = userLocalStore.getUserLoggedIn();
+                if (userLoggedIn){
+                    Intent intent = new Intent(this, ParentHomeScreen.class);
+                    startActivity(intent);
+                }
+                else if(userRegistered){
                     Intent intent = new Intent(this, Login.class);
                     startActivity(intent);
                 }
@@ -119,6 +132,8 @@ public class WelcomePageTutorial extends AppCompatActivity
                     startActivity(intent);
                 }
                 break;
+            case R.id.text_view_tutorial:
+                Toast.makeText(this, "The tutorial link", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -140,10 +155,14 @@ public class WelcomePageTutorial extends AppCompatActivity
             btnNext.setVisibility(View.GONE);
             pager_indicator.setVisibility(View.GONE);
             btnFinish.setVisibility(View.VISIBLE);
+            textTutorial.setVisibility(View.VISIBLE);
+            textOr.setVisibility(View.VISIBLE);
         } else {
             btnNext.setVisibility(View.VISIBLE);
             pager_indicator.setVisibility(View.VISIBLE);
             btnFinish.setVisibility(View.GONE);
+            textTutorial.setVisibility(View.GONE);
+            textOr.setVisibility(View.GONE);
         }
 
     }

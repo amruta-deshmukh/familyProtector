@@ -23,7 +23,8 @@ public class ChildWebAlertDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_web_alert_detail);
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
         userLocalStore = new UserLocalStore(this);
         childName = userLocalStore.getChildDetails();

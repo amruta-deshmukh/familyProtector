@@ -14,7 +14,8 @@ public class Help extends AppCompatActivity {
         setContentView(R.layout.activity_help);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

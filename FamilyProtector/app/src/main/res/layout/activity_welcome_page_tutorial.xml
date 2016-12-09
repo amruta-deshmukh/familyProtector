@@ -36,18 +36,39 @@
             android:layout_marginRight="15dip"
             android:background="@drawable/btn_round_semitransperant"
             android:src="@mipmap/ic_navigation_arrow_forward" />
-
-
     </RelativeLayout>
 
     <Button
         android:id="@+id/btn_finish"
-        android:layout_width="200dip"
-        android:layout_height="50dip"
-        android:layout_marginRight="15dip"
-        android:text="@string/btn_get_started"
+        android:layout_width="150dip"
+        android:layout_height="60dip"
+        android:text="@string/btn_get_started_with_register"
         android:textColor="@color/white"
-        android:layout_above="@+id/welcome_view_pager_indicator"
+        android:layout_above="@+id/text_view_or"
         android:layout_centerHorizontal="true"
-        android:visibility="gone" />
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/text_view_or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/text_or"
+        android:layout_above="@+id/text_view_tutorial"
+        android:textSize="18sp"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/text_view_tutorial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/text_tutorial_link"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        />
+
 </RelativeLayout>

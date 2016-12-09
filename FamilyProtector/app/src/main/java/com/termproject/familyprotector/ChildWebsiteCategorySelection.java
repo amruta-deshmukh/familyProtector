@@ -43,7 +43,8 @@ public class ChildWebsiteCategorySelection extends AppCompatActivity {
         getChildCheckedWebsiteFromParse();
         setTitle(childName + "'s web rules");
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_child_website_category_selection);
         init();
 //        getChildCheckedWebsiteFromParse();

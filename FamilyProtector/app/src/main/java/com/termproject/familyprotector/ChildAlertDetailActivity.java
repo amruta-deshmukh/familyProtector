@@ -24,7 +24,8 @@ public class ChildAlertDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child_alert_detail);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
         userLocalStore = new UserLocalStore(this);
         childName = userLocalStore.getChildDetails();

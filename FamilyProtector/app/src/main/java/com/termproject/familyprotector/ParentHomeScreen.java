@@ -72,13 +72,19 @@ public class ParentHomeScreen extends AppCompatActivity implements View.OnClickL
                     case R.id.logout_drawer:
                         userLocalStore.setUserLoggedIn(false);
                         userLocalStore.setAppMode("");
-                        startActivity(new Intent(ParentHomeScreen.this, Login.class));
+                        userLocalStore.setChildDetails("");
+                        Intent intent = new Intent(ParentHomeScreen.this, Login.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                         break;
                     case R.id.about_drawer:
                         startActivity(new Intent(ParentHomeScreen.this, AboutActivity.class));
                         break;
                     case R.id.help_drawer:
                         startActivity(new Intent(ParentHomeScreen.this,Help.class));
+                        break;
+                    case R.id.settings_drawer:
+                        startActivity(new Intent(ParentHomeScreen.this,ParentProfileSettings.class));
                         break;
 
                     default:

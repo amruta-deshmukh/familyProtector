@@ -68,7 +68,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ChooseMode"
-            android:label="Family Protector" />
+            android:label="Family Protector"
+            android:noHistory="true" />
         <activity
             android:name=".ParentHomeScreen"
             android:label="@string/title_activity_parent_home_screen"
@@ -81,7 +82,8 @@
             android:name=".Login"
             android:label="@string/title_activity_login"
             android:noHistory="true"
-            android:parentActivityName=".WelcomePageTutorial" />
+            android:parentActivityName=".WelcomePageTutorial"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ChildHomeScreen"
             android:label="@string/title_activity_child_home_screen" />
@@ -170,10 +172,12 @@
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
+            android:noHistory="true"
             android:parentActivityName=".ParentHomeScreen" />
         <activity
             android:name=".Help"
             android:label="@string/title_activity_help"
+            android:noHistory="true"
             android:parentActivityName=".ParentHomeScreen" />
         <activity
             android:name=".Settings"
@@ -231,6 +235,26 @@
             android:name=".ParentCurrentLocationCheckService"
             android:exported="false" >
         </service>
+
+        <activity
+            android:name=".PrivacyPolicy"
+            android:label="@string/title_activity_privacy_policy"
+            android:noHistory="true"
+            android:parentActivityName=".Register" >
+        </activity>
+        <activity
+            android:name=".ForgotPassword"
+            android:label="@string/title_activity_forgot_password"
+            android:noHistory="true"
+            android:parentActivityName=".Login"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".ParentProfileSettings"
+            android:label="@string/title_activity_parent_profile_settings"
+            android:parentActivityName=".ParentHomeScreen"
+            android:noHistory="true">
+        </activity>
     </application>
 
 </manifest>

@@ -38,7 +38,8 @@ public class ChildDetailActivity extends AppCompatActivity {
         setTitle(childNameTitle + " Details");
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
 //        actionBar.setHomeAsUpIndicator(resize(drawable));
 
         final ViewPager mViewPager = (ViewPager) findViewById(R.id.child_detail_pager);

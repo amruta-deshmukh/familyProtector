@@ -25,9 +25,9 @@ import java.util.regex.Pattern;
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
     Button bRegister;
-    EditText etUsername, etPassword, etFullName;
-    String username, password, fullName;
-    TextView textSignIn;
+    EditText etUsername, etPassword, etFullName, etSecQuestion, etSecAnswer;
+    String username, password, fullName, secQuestion, secAnswer;
+    TextView textSignIn,textPrivacy;
     User registeredUser;
     User messageObj;
     UserLocalStore userLocalStore;
@@ -44,11 +44,13 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
         bRegister.setOnClickListener(this);
         textSignIn.setOnClickListener(this);
+        textPrivacy.setOnClickListener(this);
         String regex = "^(.+)@(.+)$";
         pattern = Pattern.compile(regex);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
 
     }
@@ -59,6 +61,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         textSignIn = (TextView) findViewById(R.id.text_sign_in);
+        textPrivacy = (TextView) findViewById(R.id.text_privacy_policy);
+        etSecQuestion = (EditText) findViewById(R.id.et_secret_question);
+        etSecAnswer = (EditText) findViewById(R.id.et_secret_answer);
 
     }
 
@@ -70,34 +75,49 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 fullName = etFullName.getText().toString();
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
+                secQuestion = etSecQuestion.getText().toString();
+                secAnswer = etSecAnswer.getText().toString().toLowerCase();
                 int blankFieldCheck = checkForBlankFields();
                 if (blankFieldCheck != 0) {
                     switch (blankFieldCheck) {
-                        case 7:
+                        case 1:
                             etFullName.setError("Please enter a name for the account");
+                            etUsername.setError("Email address is required");
+                            etPassword.setError("Password id required");
+                            etSecQuestion.setError("Question is required for account recovery");
+                            etSecAnswer.setError("Recovery answer is required");
+                            break;
+                        case 2:
+                            etFullName.setError("Please enter a name for the account");
+                            etUsername.setError("Email address is required");
+                            etPassword.setError("Password id required");
+                            break;
+                        case 3:
+                            etFullName.setError("Please enter a name for the account");
+                            etUsername.setError("Email address is required");
+                            break;
+                        case 4:
+                            etFullName.setError("Please enter a name for the account");
+                            etPassword.setError("Password id required");
+                            break;
+                        case 5:
                             etUsername.setError("Email address is required");
                             etPassword.setError("Password id required");
                             break;
                         case 6:
-                            etUsername.setError("Email address is required");
                             etPassword.setError("Password id required");
                             break;
-                        case 5:
-                            etFullName.setError("Please enter a name for the account");
-                            etPassword.setError("Password id required");
-                            break;
-                        case 4:
-                            etFullName.setError("Please enter a name for the account");
+                        case 7:
                             etUsername.setError("Email address is required");
                             break;
-                        case 3:
-                            etPassword.setError("Password id required");
-                            break;
-                        case 2:
-                            etUsername.setError("Email address is required");
-                            break;
-                        case 1:
+                        case 8:
                             etFullName.setError("Please enter a name for the account");
+                            break;
+                        case 9:
+                            etSecQuestion.setError("Question is required for account recovery");
+                            break;
+                        case 10:
+                            etSecAnswer.setError("Recovery answer is required");
                             break;
                         default:
                             Toast.makeText(this, "Please enter all details", Toast.LENGTH_LONG).show();
@@ -114,28 +134,38 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 }
                 break;
             case R.id.text_sign_in:
-                userLocalStore.setUserRegistered(true);
+//                userLocalStore.setUserRegistered(true);
                 startActivity(new Intent(this, Login.class));
+                break;
+            case R.id.text_privacy_policy:
+                startActivity(new Intent(this, PrivacyPolicy.class));
                 break;
         }
     }
 
 
     private int checkForBlankFields() {
-        if (fullName.matches("")) {
+        if (fullName.matches("") && username.matches("") && password.matches("")
+                && secQuestion.matches("") && secAnswer.matches("")){
             return 1;
-        } else if (username.matches("")) {
-            return 2;
-        } else if (password.matches("")) {
-            return 3;
-        } else if (fullName.matches("") && username.matches("")) {
-            return 4;
-        } else if (fullName.matches("") && password.matches("")) {
-            return 5;
-        } else if (username.matches("") && password.matches("")) {
-            return 6;
         } else if (fullName.matches("") && username.matches("") && password.matches("")) {
+            return 2;
+        } else if (fullName.matches("") && username.matches("")) {
+            return 3;
+        } else if (fullName.matches("") && password.matches("")) {
+            return 4;
+        } else if (username.matches("") && password.matches("")) {
+            return 5;
+        } else if (password.matches("")) {
+            return 6;
+        } else if (username.matches("")) {
             return 7;
+        } else if (fullName.matches("")) {
+            return 8;
+        } else if (secQuestion.matches("")) {
+            return 9;
+        } else if (secAnswer.matches("")) {
+            return 10;
         }
         return 0;
     }
@@ -180,10 +210,15 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private void storeToParse() {
 
         fullName = fullName.substring(0, 1).toUpperCase() + fullName.substring(1);
+        if(secQuestion.substring(secQuestion.length() - 1)!="?"){
+            secQuestion = secQuestion+"?";
+        }
         ParseObject userCredentials = new ParseObject("UserCredentials");
         userCredentials.put("fullname", fullName);
         userCredentials.put("username", username);
         userCredentials.put("password", password);
+        userCredentials.put("secQuestion", secQuestion);
+        userCredentials.put("secAnswer", secAnswer);
         userCredentials.saveInBackground();
         registeredUser = new User(username, password);
         userLocalStore.storeUserData(registeredUser);

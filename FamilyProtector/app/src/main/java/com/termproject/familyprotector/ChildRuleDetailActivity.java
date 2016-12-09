@@ -22,7 +22,8 @@ public class ChildRuleDetailActivity extends AppCompatActivity {
 
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
         setTitle(userLocalStore.getChildDetails()+" Rule Detail");
 
         Intent intent = getIntent();

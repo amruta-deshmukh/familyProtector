@@ -1,22 +1,20 @@
 package com.termproject.familyprotector;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-public class AboutActivity extends AppCompatActivity {
+public class PrivacyPolicy extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-        setTitle("About");
+        setContentView(R.layout.activity_privacy_policy);
         final ActionBar actionBar = getSupportActionBar();
         if(actionBar !=null)
             actionBar.setDisplayHomeAsUpEnabled(true);
-
     }
 
     @Override
@@ -24,9 +22,11 @@ public class AboutActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                startActivity(new Intent(this, Register.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

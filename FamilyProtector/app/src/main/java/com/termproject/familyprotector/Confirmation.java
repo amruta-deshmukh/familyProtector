@@ -29,7 +29,8 @@ public class Confirmation extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_confirmation);
         final ActionBar actionBar = getSupportActionBar();
         userLocalStore = new UserLocalStore(this);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
         bLogout = (Button) findViewById(R.id.bLogin);
         etUsername = (EditText) findViewById(R.id.confirmationUsername);
         etPassword = (EditText) findViewById(R.id.confirmationPassword);

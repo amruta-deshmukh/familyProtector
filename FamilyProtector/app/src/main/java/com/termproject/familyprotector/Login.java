@@ -2,13 +2,13 @@ package com.termproject.familyprotector;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.GetCallback;
@@ -22,6 +22,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     String username, password;
     User loggenInUser;
     UserLocalStore userLocalStore;
+    TextView txtForgotPass,txtRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +31,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         init();
         userLocalStore = new UserLocalStore(this);
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
         bLogin.setOnClickListener(this);
+        txtForgotPass.setOnClickListener(this);
+        txtRegister.setOnClickListener(this);
     }
 
     private void init() {
         bLogin = (Button) findViewById(R.id.bLogin);
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
+        txtForgotPass = (TextView)findViewById(R.id.text_forgot_password);
+        txtRegister = (TextView)findViewById(R.id.text_register);
 
     }
 
@@ -54,6 +60,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 } else {
                     checkCredentials();
                 }
+                break;
+            case R.id.text_forgot_password:
+                startActivity(new Intent(this,ForgotPassword.class));
+                break;
+            case R.id.text_register:
+                startActivity(new Intent(this,Register.class));
                 break;
         }
     }
@@ -83,6 +95,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     Toast.makeText(Login.this, "Invalid credentials please try again", Toast.LENGTH_LONG).show();
                 } else {
                     loggenInUser = new User(username, password);
+                    userLocalStore.setUserRegistered(true);
                     userLocalStore.storeUserData(loggenInUser);
                     userLocalStore.setUserLoggedIn(true);
                     startActivity(new Intent(Login.this, ChooseMode.class));
@@ -99,7 +112,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                startActivity(new Intent(this,WelcomePageTutorial.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
