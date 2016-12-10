@@ -372,7 +372,7 @@ public class MapsActivity extends AppCompatActivity implements
 
         marker = mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(titleStr));
         marker.showInfoWindow();
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16.9f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16.9f));
 
         if(circle!=null){
             createGeofenceCircle();

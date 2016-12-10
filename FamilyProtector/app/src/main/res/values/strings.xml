@@ -42,7 +42,7 @@
 
 
     <!-- Various widget strings-->
-    <string name="child_details">Child Details</string>
+    <string name="child_details">CHILD PROFILE</string>
     <string name="child_name">Child Name</string>
     <string name="gender">Gender</string>
     <string name="male">Male</string>
@@ -55,6 +55,10 @@
     <string name="dialog_title_profile_name">Change Profile Name</string>
     <string name="dialog_title_profile_password">Change Profile Password</string>
     <string name="dialog_title_profile_sec_ans">Change Security Answer</string>
+    <string name="dialog_title_child_profile_name">Change Child Name</string>
+    <string name="dialog_title_child_profile_gender">Change Child Gender</string>
+    <string name="dialog_title_child_profile_dob">Change Child Date of Birth</string>
+    <string name="btn_delete_account">Delete Account</string>
 
     <!-- Preference Screen Strings-->
     <string name="pref_child_name_key" translatable="false">childNamePref</string>
@@ -149,6 +153,8 @@
     <string name="dialog_perimeter_hint">Enter a radius for location</string>
     <string name="dialog_distance_units">meters</string>
     <string name="action_share">Share</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit_profile">Edit Profile</string>
 
 
 
@@ -233,12 +239,14 @@
     <string name="text_or">Or</string>
     <string name="text_tutorial_link"><u>Click here for tutorial</u></string>
     <string name="text_choose_mode">Please choose the application mode:</string>
+    <string name="text_alert_header">Alert : </string>
 
     <string name="text_please_select_alerts">Please select to see the either \nlocation alerts or web access alerts.</string>
     <string name="text_please_select_rules">Please select to see the either \nlocation rules or web access rules
     \n set for the child.</string>
     <string name="text_privacy_polic_link">Click here for the privacy policy</string>
     <string name="text_my_account">MY ACCOUNT</string>
+    <string name="text_child_account">ACCOUNT INFO</string>
     <string name="text_my_account_hint">(Click on a particular field to edit profile information)</string>
 
 
@@ -264,6 +272,13 @@
         <item>Uninstallation Attempt</item>
         <item>Current Loc inaccessible</item>
     </string-array>
+    <string name="title_activity_child_profile_acc_settings">Child Profile</string>
+    <string name="title_activity_child_device_admin_alert_detail">
+        ChildDeviceAdminAlertDetailActivity
+    </string>
+    <string name="title_activity_child_current_location_alert_detail">
+        ChildCurrentLocationAlertDetailActivity
+    </string>
 
 
 

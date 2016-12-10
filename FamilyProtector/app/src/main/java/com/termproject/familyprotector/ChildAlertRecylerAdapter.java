@@ -26,7 +26,7 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
     private String alertType;
 
     public static class ChildAlertViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textView;
+        private final TextView textViewHeader, textViewDate, textViewTime;
 
         public ChildAlertViewHolder(View v) {
             super(v);
@@ -37,11 +37,21 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
                     Log.d("alert adapter", "Element " + getPosition() + " clicked.");
                 }
             });
-            textView = (TextView) v.findViewById(R.id.child_alert_textView);
+            textViewHeader = (TextView) v.findViewById(R.id.child_alert_text_header);
+            textViewDate = (TextView) v.findViewById(R.id.child_alert_text_date);
+            textViewTime = (TextView) v.findViewById(R.id.child_alert_text_time);
         }
 
-        public TextView getTextView() {
-            return textView;
+        public TextView getTextViewHeader() {
+            return textViewHeader;
+        }
+
+        public TextView getTextViewDate() {
+            return textViewDate;
+        }
+
+        public TextView getTextViewTime() {
+            return textViewTime;
         }
     }
 
@@ -66,21 +76,20 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
     @Override
     public void onBindViewHolder(ChildAlertViewHolder holder, int position) {
 
-        if(alertType.equals(FamilyProtectorConstants.ALERT_TYPE_GEOFENCE)) {
+        if (alertType.equals(FamilyProtectorConstants.ALERT_TYPE_GEOFENCE)) {
 
             ParseObject alert = mChildAlerts.get(position);
             Date date = alert.getCreatedAt();
             SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
-            SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
+            SimpleDateFormat formatTime = new SimpleDateFormat("hh:mm a");
             final String dateStr = formatter.format(date);
             final String timeStr = formatTime.format(date);
-
-
-            // Get element from your dataset at this position and replace the contents of the view
-            // with that element
-            holder.getTextView().setText(mChildName + " " + mChildAlerts.get(position).getString("alert") +
-                    " on " + dateStr + " at " + timeStr + " hrs.");
-            holder.getTextView().setTag(holder);
+            holder.getTextViewHeader().setText("Alert: " + mChildAlerts.get(position).getString("alert"));
+            holder.getTextViewDate().setText("Date: " + dateStr);
+            holder.getTextViewTime().setText("Time: " + timeStr);
+            holder.getTextViewHeader().setTag(holder);
+            holder.getTextViewDate().setTag(holder);
+            holder.getTextViewTime().setTag(holder);
 
 
             View.OnClickListener clickListener = new View.OnClickListener() {
@@ -97,28 +106,28 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
                         alertLocation = alertLocation + alertLocationArr[i];
 
                     }
-                    Intent intent = new Intent(context, ChildAlertDetailActivity.class).putExtra("dateStr", dateStr);
+                    Intent intent = new Intent(context, ChildAlertDetailActivity.class)
+                            .putExtra("dateStr", dateStr);
                     intent.putExtra("alertAddress", alert.getString("alertAddress"));
                     intent.putExtra("timeStr", timeStr);
                     intent.putExtra("location", alertLocation);
+                    intent.putExtra("objectId", alert.getObjectId());
                     context.startActivity(intent);
                 }
             };
-
-            //Handle click event on both title and image click
-            holder.getTextView().setOnClickListener(clickListener);
-        }
-
-        else if(alertType.equals(FamilyProtectorConstants.ALERT_TYPE_WEB_HISTORY)) {
+            holder.getTextViewHeader().setOnClickListener(clickListener);
+            holder.getTextViewDate().setOnClickListener(clickListener);
+            holder.getTextViewTime().setOnClickListener(clickListener);
+        } else if (alertType.equals(FamilyProtectorConstants.ALERT_TYPE_WEB_HISTORY)) {
 
             ParseObject alert = mChildAlerts.get(position);
+            holder.getTextViewHeader().setText("URL: " + alert.getString("urlName"));
+            holder.getTextViewDate().setText("Date: " + alert.getString("visitedDate"));
+            holder.getTextViewTime().setText("Time: " + alert.getString("visitedTime"));
 
-
-            // Get element from your dataset at this position and replace the contents of the view
-            // with that element
-            holder.getTextView().setText(mChildName + " visited \"" + alert.getString("urlName") +
-                    "\" on " + alert.getString("visitedDate") + " at " + alert.getString("visitedTime"));
-            holder.getTextView().setTag(holder);
+            holder.getTextViewHeader().setTag(holder);
+            holder.getTextViewDate().setTag(holder);
+            holder.getTextViewTime().setTag(holder);
 
 
             View.OnClickListener clickListener = new View.OnClickListener() {
@@ -133,75 +142,75 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
                     intent.putExtra("categoriesList", alert.getString("categoriesList"));
                     intent.putExtra("visitedDate", alert.getString("visitedDate"));
                     intent.putExtra("visitedTime", alert.getString("visitedTime"));
+                    intent.putExtra("objectId", alert.getObjectId());
                     context.startActivity(intent);
                 }
             };
 
             //Handle click event on both title and image click
-            holder.getTextView().setOnClickListener(clickListener);
-        }
-
-        else if(alertType.equals(FamilyProtectorConstants.ALERT_TYPE_DEVICE_ADMIN)) {
-
-            ParseObject alert = mChildAlerts.get(position);
-
-
-            // Get element from your dataset at this position and replace the contents of the view
-            // with that element
-            holder.getTextView().setText(mChildName + " tried to uninstall app" +
-                    " on " + alert.getString("alertDate") + " at " + alert.getString("alertTime"));
-            holder.getTextView().setTag(holder);
-
-
-//            View.OnClickListener clickListener = new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    ChildAlertViewHolder rowHolder = (ChildAlertViewHolder) view.getTag();
-//                    int position = rowHolder.getPosition();
-//
-//                    ParseObject alert = mChildAlerts.get(position);
-//                    Intent intent = new Intent(context, ChildWebAlertDetailActivity.class);
-//                    intent.putExtra("urlName", alert.getString("urlName"));
-//                    intent.putExtra("categoriesList", alert.getString("categoriesList"));
-//                    intent.putExtra("visitedDate", alert.getString("visitedDate"));
-//                    intent.putExtra("visitedTime", alert.getString("visitedTime"));
-//                    context.startActivity(intent);
-//                }
-//            };
-//
-//            //Handle click event on both title and image click
-//            holder.getTextView().setOnClickListener(clickListener);
-        }
-        else if(alertType.equals(FamilyProtectorConstants.ALERT_TYPE_CURRENT_LOC)) {
+            holder.getTextViewHeader().setOnClickListener(clickListener);
+            holder.getTextViewDate().setOnClickListener(clickListener);
+            holder.getTextViewTime().setOnClickListener(clickListener);
+        } else if (alertType.equals(FamilyProtectorConstants.ALERT_TYPE_DEVICE_ADMIN)) {
 
             ParseObject alert = mChildAlerts.get(position);
+            holder.getTextViewHeader().setText("Alert: " + "Tried to uninstall app");
+            holder.getTextViewDate().setText("Date: " + alert.getString("alertDate"));
+            holder.getTextViewTime().setText("Time: " + alert.getString("alertTime"));
+
+            holder.getTextViewHeader().setTag(holder);
+            holder.getTextViewDate().setTag(holder);
+            holder.getTextViewTime().setTag(holder);
 
 
-            // Get element from your dataset at this position and replace the contents of the view
-            // with that element
-            holder.getTextView().setText(mChildName + "'s phone is inaccessible since " +
-                    alert.getString("timeSinceLastOnline") + " on " + alert.getString("dateSinceLastOnline"));
-            holder.getTextView().setTag(holder);
+            View.OnClickListener clickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChildAlertViewHolder rowHolder = (ChildAlertViewHolder) view.getTag();
+                    int position = rowHolder.getPosition();
 
+                    ParseObject alert = mChildAlerts.get(position);
+                    Intent intent = new Intent(context, ChildDeviceAdminAlertDetailActivity.class);
+                    intent.putExtra("alertDate", alert.getString("alertDate"));
+                    intent.putExtra("alertTime", alert.getString("alertTime"));
+                    intent.putExtra("objectId", alert.getObjectId());
+                    context.startActivity(intent);
+                }
+            };
 
-//            View.OnClickListener clickListener = new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    ChildAlertViewHolder rowHolder = (ChildAlertViewHolder) view.getTag();
-//                    int position = rowHolder.getPosition();
-//
-//                    ParseObject alert = mChildAlerts.get(position);
-//                    Intent intent = new Intent(context, ChildWebAlertDetailActivity.class);
-//                    intent.putExtra("urlName", alert.getString("urlName"));
-//                    intent.putExtra("categoriesList", alert.getString("categoriesList"));
-//                    intent.putExtra("visitedDate", alert.getString("visitedDate"));
-//                    intent.putExtra("visitedTime", alert.getString("visitedTime"));
-//                    context.startActivity(intent);
-//                }
-//            };
-//
-//            //Handle click event on both title and image click
-//            holder.getTextView().setOnClickListener(clickListener);
+            //Handle click event on both title and image click
+            holder.getTextViewHeader().setOnClickListener(clickListener);
+            holder.getTextViewDate().setOnClickListener(clickListener);
+            holder.getTextViewTime().setOnClickListener(clickListener);
+        } else if (alertType.equals(FamilyProtectorConstants.ALERT_TYPE_CURRENT_LOC)) {
+
+            ParseObject alert = mChildAlerts.get(position);
+            holder.getTextViewHeader().setText("Alert: " + "Current Loc unavailable");
+            holder.getTextViewDate().setText("Date: " + alert.getString("dateSinceLastOnline"));
+            holder.getTextViewTime().setText("Time: " + alert.getString("timeSinceLastOnline"));
+
+            holder.getTextViewHeader().setTag(holder);
+            holder.getTextViewDate().setTag(holder);
+            holder.getTextViewTime().setTag(holder);
+            View.OnClickListener clickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChildAlertViewHolder rowHolder = (ChildAlertViewHolder) view.getTag();
+                    int position = rowHolder.getPosition();
+
+                    ParseObject alert = mChildAlerts.get(position);
+                    Intent intent = new Intent(context, ChildCurrentLocationAlertDetailActivity.class);
+                    intent.putExtra("alertDate", alert.getString("dateSinceLastOnline"));
+                    intent.putExtra("alertTime", alert.getString("timeSinceLastOnline"));
+                    intent.putExtra("objectId", alert.getObjectId());
+                    context.startActivity(intent);
+                }
+            };
+
+            //Handle click event on both title and image click
+            holder.getTextViewHeader().setOnClickListener(clickListener);
+            holder.getTextViewDate().setOnClickListener(clickListener);
+            holder.getTextViewTime().setOnClickListener(clickListener);
         }
 
     }

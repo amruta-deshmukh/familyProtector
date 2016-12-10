@@ -21,11 +21,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ChildL
     private List<ParseObject> children;
     private Context context;
     private NotificationDBHelper dbHelper;
+    private UserLocalStore userLocalStore;
 
     public  RecyclerAdapter(Context context, List<ParseObject> children) {
         this.children = children;
         this.context = context;
         this.dbHelper = new NotificationDBHelper(context);
+        userLocalStore = new UserLocalStore(context);
 
     }
 
@@ -47,7 +49,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ChildL
                     Log.d("alert adapter", childName);
                     Log.v("Database", "updating child notification");
                     dbHelper.updateOpenedChild(childName);
-                    Intent intent = new Intent(context,ChildDetailActivity.class).putExtra(Intent.EXTRA_TEXT, childName);
+                    userLocalStore.setChildDetails(childName);
+
+                    Intent intent = new Intent(context,ChildDetailActivity.class);
+//                            .putExtra(Intent.EXTRA_TEXT, childName);
                     context.startActivity(intent);
 
 
@@ -105,7 +110,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ChildL
                 String childName = child.getString("name");
                 Log.v("Database", "updating child notification");
                 dbHelper.updateOpenedChild(childName);
-                Intent intent = new Intent(context,ChildDetailActivity.class).putExtra(Intent.EXTRA_TEXT, childName);
+                userLocalStore.setChildDetails(childName);
+                Intent intent = new Intent(context,ChildDetailActivity.class);
                 context.startActivity(intent);
             }
         };

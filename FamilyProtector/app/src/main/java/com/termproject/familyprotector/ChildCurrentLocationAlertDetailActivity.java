@@ -17,58 +17,56 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-public class ChildWebAlertDetailActivity extends AppCompatActivity {
-
+public class ChildCurrentLocationAlertDetailActivity extends AppCompatActivity {
     private UserLocalStore userLocalStore;
-    private String childName, userName, ruleIdStr, urlDateStr, urlNameStr,
-            urlCategoriesStr, urlTimeStr, urlAlertStr, objectIdStr;
+    private String childName, userName, alertShareStr, dateStr, timeStr, alertString, objectIdStr;
     private User user;
-    private TextView urlName,urlCategories, urlAlertDate,urlAlertTime;
+    private TextView alertHeader,alertDate,alertTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_child_web_alert_detail);
+        setContentView(R.layout.activity_child_current_location_alert_detail);
         final ActionBar actionBar = getSupportActionBar();
         if(actionBar !=null)
             actionBar.setDisplayHomeAsUpEnabled(true);
 
         userLocalStore = new UserLocalStore(this);
         childName = userLocalStore.getChildDetails();
-        setTitle(childName+"'s Web Alert "+"Details");
+        setTitle(childName+" Alert "+"Details");
         user = userLocalStore.getLoggedInUser();
         userName = user.getUsername();
         Intent intent = getIntent();
         if (intent != null) {
-            urlNameStr = intent.getStringExtra("urlName");
-            urlCategoriesStr = intent.getStringExtra("categoriesList");
-            urlDateStr = intent.getStringExtra("visitedDate");
-            urlTimeStr = intent.getStringExtra("visitedTime");
+            alertString = childName+ "'s phone is offline";
+            dateStr = intent.getStringExtra("alertDate");
+            timeStr = intent.getStringExtra("alertTime");
             objectIdStr = intent.getStringExtra("objectId");
         }
-        urlName = (TextView)findViewById(R.id.text_alert_url_string);
-        urlCategories =  (TextView)findViewById(R.id.text_alert_url_categories_string);
-        urlAlertDate = (TextView)findViewById(R.id.text_alert_url_date_string);
-        urlAlertTime = (TextView)findViewById(R.id.text_alert_url_time_string);
+        alertHeader = (TextView)findViewById(R.id.text_curr_loc_alert_header_string);
+        alertDate = (TextView)findViewById(R.id.text_curr_loc_alert_date_string);
+        alertTime = (TextView)findViewById(R.id.text_curr_loc_alert_Time_string);
 
 
 
-        urlName.setText(urlNameStr);
-        urlCategories.setText(urlCategoriesStr);
-        urlAlertDate.setText(urlDateStr);
-        urlAlertTime.setText(urlTimeStr);
+        alertHeader.setText(alertString);
+        alertDate.setText(dateStr);
+        alertTime.setText(timeStr);
 
-        urlAlertStr = childName+" visited "+ urlNameStr +" (categories: "+ urlCategoriesStr + ") on "+urlDateStr+" at "+urlTimeStr+ ".";
+        //inorder to share with another parent
+
+        alertShareStr = childName+"'s phone is offline "+
+                " since "+dateStr+" from "+timeStr+ ".";
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_child_web_alert_detail, menu);
-        MenuItem menuItem = menu.findItem(R.id.url_action_share);
+        getMenuInflater().inflate(R.menu.menu_child_current_location_alert_detail, menu);
+        MenuItem menuItem = menu.findItem(R.id.curr_loc_action_share);
         ShareActionProvider mshareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
         if(mshareActionProvider!=null){
-            mshareActionProvider.setShareIntent(createUrlAlertIntent());
+            mshareActionProvider.setShareIntent(createAlertIntent());
 
         }
         return true;
@@ -81,28 +79,27 @@ public class ChildWebAlertDetailActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.url_action_delete:
+            case R.id.curr_loc_action_delete:
+//                addWebsiteAlertToParse();
                 deleteItemFromParse();
-                Toast.makeText(this, "Website Alert Deleted", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this,ChildDetailActivity.class));
+                Toast.makeText(this, "Current Location Alert Deleted", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, ChildDetailActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private Intent createUrlAlertIntent(){
+    private Intent createAlertIntent(){
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, urlAlertStr);
+        shareIntent.putExtra(Intent.EXTRA_TEXT,alertShareStr);
         return shareIntent;
     }
 
     private void deleteItemFromParse(){
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("ChildWebsiteAlerts");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ChildCurrentLocationAlerts");
         query.whereEqualTo("objectId", objectIdStr);
-        Log.v("objectId", objectIdStr);
 
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
@@ -123,5 +120,16 @@ public class ChildWebAlertDetailActivity extends AppCompatActivity {
 
     }
 
+    private void addWebsiteAlertToParse(){
+        Log.v("yes","in here");
 
+        ParseObject childWebsiteAlerts = new ParseObject("ChildCurrentLocationAlerts");
+        childWebsiteAlerts.put("userName", userName);
+        childWebsiteAlerts.put("childName", childName);
+        childWebsiteAlerts.put("timeSinceLastOnline", "8:10 PM");
+        childWebsiteAlerts.put("dateSinceLastOnline", "11-05-2016");
+        childWebsiteAlerts.saveInBackground();
+
+
+    }
 }

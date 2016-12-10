@@ -2,7 +2,10 @@ package com.termproject.familyprotector;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -14,7 +17,7 @@ import android.widget.Toast;
 import com.parse.ParseObject;
 
 public class AddChildDetails extends AppCompatActivity implements View.OnClickListener{
-    EditText editTextChildName, editTextBirthDate;
+    EditText editTextChildName;
     RadioButton radioButtonGender;
     Button buttonSave;
     DatePicker childBirthDay;
@@ -25,6 +28,9 @@ public class AddChildDetails extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child_details);
+        final ActionBar actionBar = getSupportActionBar();
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
         userLocalStore = new UserLocalStore(this);
         init();
 
@@ -54,7 +60,7 @@ public class AddChildDetails extends AppCompatActivity implements View.OnClickLi
                 childGenderStr = "Female";
             }
 
-            childBirthDateStr = childBirthDay.getMonth()+"-"+childBirthDay.getDayOfMonth()+"-"+childBirthDay.getYear();
+            childBirthDateStr = (childBirthDay.getMonth()+1)+"-"+childBirthDay.getDayOfMonth()+"-"+childBirthDay.getYear();
             storeToParse();
             startActivity(new Intent(this,ParentHomeScreen.class));
 
@@ -73,6 +79,17 @@ public class AddChildDetails extends AppCompatActivity implements View.OnClickLi
         childDetails.put("birthdate", childBirthDateStr);
         childDetails.saveInBackground();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

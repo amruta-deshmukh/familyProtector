@@ -13,9 +13,9 @@ import android.view.MenuItem;
 
 public class ChildDetailActivity extends AppCompatActivity {
 
-    String childNameStr;
+    private String childNameStr, childNameTitle;
 
-    UserLocalStore userLocalStore;
+    private UserLocalStore userLocalStore;
     private TabLayout mTabLayout;
 
     @Override
@@ -29,12 +29,12 @@ public class ChildDetailActivity extends AppCompatActivity {
         mTabLayout.setTabTextColors(Color.WHITE, Color.BLACK);
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         userLocalStore = new UserLocalStore(this);
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-            childNameStr = intent.getStringExtra(Intent.EXTRA_TEXT);
-            userLocalStore.setChildDetails(childNameStr);
-        }
-        String childNameTitle = userLocalStore.getChildDetails();
+//        Intent intent = getIntent();
+//        if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
+//            childNameStr = intent.getStringExtra(Intent.EXTRA_TEXT);
+//            userLocalStore.setChildDetails(childNameStr);
+//        }
+        childNameTitle = userLocalStore.getChildDetails();
         setTitle(childNameTitle + " Details");
 
         final ActionBar actionBar = getSupportActionBar();
@@ -79,10 +79,12 @@ public class ChildDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
+//                userLocalStore.setChildDetails("");
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
-            case R.id.action_profile:
-                startActivity(new Intent(this, ChildProfileSettings.class));
+            case R.id.action_profile_edit:
+                startActivity(new Intent(this,ChildProfileAccSettings.class));
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
