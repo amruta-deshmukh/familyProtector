@@ -73,45 +73,45 @@ public class UserLocalStore {
         String childName = userLocalDatabase.getString("childName", "");
         return childName;
     }
-    public void setLocationAddress(String addressString){
-        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
-        spEditor.putString("addressString", addressString);
-        spEditor.commit();
-    }
-    public String getLocationAddress(){
-        String addressStr = userLocalDatabase.getString("addressString", "");
-        return addressStr;
-    }
+//    public void setLocationAddress(String addressString){
+//        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
+//        spEditor.putString("addressString", addressString);
+//        spEditor.commit();
+//    }
+//    public String getLocationAddress(){
+//        String addressStr = userLocalDatabase.getString("addressString", "");
+//        return addressStr;
+//    }
 
-    public void setLocationPerimeter( float perimeterValue){
-        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
-        spEditor.putFloat("perimeterValue", perimeterValue);
-        spEditor.commit();
-    }
-    public float getLocationPerimeter(){
-        float perimeterValue = userLocalDatabase.getFloat("perimeterValue", 30.0f);
-        return perimeterValue;
-    }
+//    public void setLocationPerimeter( float perimeterValue){
+//        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
+//        spEditor.putFloat("perimeterValue", perimeterValue);
+//        spEditor.commit();
+//    }
+//    public float getLocationPerimeter(){
+//        float perimeterValue = userLocalDatabase.getFloat("perimeterValue", 30.0f);
+//        return perimeterValue;
+//    }
 
-    public void setLocationLatitude( double latitude){
-        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
-        spEditor.putLong("latitude", Double.doubleToLongBits(latitude));
-        spEditor.commit();
-    }
-    public double getLocationLatitude(){
-        double latitude = Double.longBitsToDouble(userLocalDatabase.getLong("latitude", Double.doubleToLongBits(37.72189700000001)));
-        return latitude;
-    }
+//    public void setLocationLatitude( double latitude){
+//        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
+//        spEditor.putLong("latitude", Double.doubleToLongBits(latitude));
+//        spEditor.commit();
+//    }
+//    public double getLocationLatitude(){
+//        double latitude = Double.longBitsToDouble(userLocalDatabase.getLong("latitude", Double.doubleToLongBits(37.72189700000001)));
+//        return latitude;
+//    }
 
-    public void setLocationLongitude( double longitude){
-        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
-        spEditor.putLong("longitude", Double.doubleToLongBits(longitude));
-        spEditor.commit();
-    }
-    public double getLocationLongitude(){
-        double longitude = Double.longBitsToDouble(userLocalDatabase.getLong("longitude", Double.doubleToLongBits(-122.4782094)));
-        return longitude;
-    }
+//    public void setLocationLongitude( double longitude){
+//        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
+//        spEditor.putLong("longitude", Double.doubleToLongBits(longitude));
+//        spEditor.commit();
+//    }
+//    public double getLocationLongitude(){
+//        double longitude = Double.longBitsToDouble(userLocalDatabase.getLong("longitude", Double.doubleToLongBits(-122.4782094)));
+//        return longitude;
+//    }
     public void setChildForThisPhone(String childName){
         SharedPreferences.Editor spEditor = userLocalDatabase.edit();
         spEditor.putString("childForThisPhone", childName);
@@ -131,15 +131,15 @@ public class UserLocalStore {
         return gender;
     }
 
-    public void setRuleLocationId(int ruleLocationId){
-        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
-        spEditor.putInt("latestLocationId", ruleLocationId);
-        spEditor.commit();
-    }
-    public int getRuleLocationId(){
-        int ruleLocationID = userLocalDatabase.getInt("latestLocationId", 0);
-        return ruleLocationID;
-    }
+//    public void setRuleLocationId(int ruleLocationId){
+//        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
+//        spEditor.putInt("latestLocationId", ruleLocationId);
+//        spEditor.commit();
+//    }
+//    public int getRuleLocationId(){
+//        int ruleLocationID = userLocalDatabase.getInt("latestLocationId", 0);
+//        return ruleLocationID;
+//    }
     public void setTutorialViewed(boolean viewed){
         SharedPreferences.Editor spEditor = userLocalDatabase.edit();
         spEditor.putBoolean("tutorialViewed", viewed);

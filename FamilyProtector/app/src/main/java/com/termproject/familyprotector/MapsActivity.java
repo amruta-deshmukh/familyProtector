@@ -12,13 +12,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -60,10 +61,11 @@ public class MapsActivity extends AppCompatActivity implements
     String locationNameStr, childNameStr;
     float locationPerimeterValue;
     EditText locationNameEditText, locationPerimeterEditText;
-    String queryParam;
+    private String queryParam, childName;
     UserLocalStore userLocalStore;
-    Button continueButton;
+//    Button continueButton;
     GoogleApiClient mGoogleApiClient;
+    private boolean currentLocation = false;
 
 
 
@@ -73,8 +75,15 @@ public class MapsActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_action_button);
-        continueButton = (Button) findViewById(R.id.rule_location_continue_button);
+//        continueButton = (Button) findViewById(R.id.rule_location_continue_button);
         userLocalStore = new UserLocalStore(this);
+
+        final ActionBar actionBar = getSupportActionBar();
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
+        childName = userLocalStore.getChildDetails();
+        setTitle("Search Rule Location");
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, 0, this)
@@ -90,6 +99,7 @@ public class MapsActivity extends AppCompatActivity implements
 
             queryParam = Double.toString(latitude) + "," + Double.toString(longitude);
             Log.v("Lat and long", queryParam);
+            currentLocation = true;
 
 
 
@@ -104,7 +114,7 @@ public class MapsActivity extends AppCompatActivity implements
 
         floatingActionButton.setOnClickListener(this);
         mMap.setOnMapLongClickListener(this);
-        continueButton.setOnClickListener(this);
+//        continueButton.setOnClickListener(this);
 
     }
 
@@ -153,30 +163,42 @@ public class MapsActivity extends AppCompatActivity implements
             AlertDialog alertDialog = dialogPerimeter.create();
             alertDialog.show();
         }
-        else if (view.getId() == R.id.rule_location_continue_button){
-
-            userLocalStore.setLocationAddress(addressString);
-            userLocalStore.setLocationPerimeter(locationPerimeterValue);
-            userLocalStore.setLocationLatitude(latitude);
-            userLocalStore.setLocationLongitude(longitude);
-            startActivity(new Intent(this, ChildLocationRuleSaveActivity.class));
-
-        }
+//        else if (view.getId() == R.id.rule_location_continue_button){
+//
+////            userLocalStore.setLocationAddress(addressString);
+////            userLocalStore.setLocationPerimeter(locationPerimeterValue);
+////            userLocalStore.setLocationLatitude(latitude);
+////            userLocalStore.setLocationLongitude(longitude);
+////            startActivity(new Intent(this, ChildLocationRuleSaveActivity.class));
+//            Intent intent = new Intent(MapsActivity.this, ChildLocationRuleSaveActivity.class);
+//            intent.putExtra("addressStr", addressString);
+//            intent.putExtra("loc perimeter", locationPerimeterValue);
+//            intent.putExtra("locLat", latitude);
+//            intent.putExtra("locLng", longitude);
+//            startActivity(intent);
+//
+//        }
     }
 
     public void showSnackbar(View v){
-        String message = "Press continue to save";
+        String message = "Press continue to add rule details & Save";
         final Snackbar sn = Snackbar.make(v, message, Snackbar.LENGTH_INDEFINITE);
         sn.setAction("Continue", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sn.dismiss();
 
-                userLocalStore.setLocationAddress(addressString);
-                userLocalStore.setLocationPerimeter(locationPerimeterValue);
-                userLocalStore.setLocationLatitude(latitude);
-                userLocalStore.setLocationLongitude(longitude);
-                startActivity(new Intent(MapsActivity.this, ChildLocationRuleSaveActivity.class));
+//                userLocalStore.setLocationAddress(addressString);
+//                userLocalStore.setLocationPerimeter(locationPerimeterValue);
+//                userLocalStore.setLocationLatitude(latitude);
+//                userLocalStore.setLocationLongitude(longitude);
+//                startActivity(new Intent(MapsActivity.this, ChildLocationRuleSaveActivity.class));
+                Intent intent = new Intent(MapsActivity.this, ChildLocationRuleSaveActivity.class);
+                intent.putExtra("addressStr", addressString);
+                intent.putExtra("locPerimeter", locationPerimeterValue);
+                intent.putExtra("locLat", latitude);
+                intent.putExtra("locLng", longitude);
+                startActivity(intent);
             }
 
         });
@@ -192,6 +214,7 @@ public class MapsActivity extends AppCompatActivity implements
         }
         marker = mMap.addMarker(new MarkerOptions().position(new LatLng(point.latitude, point.longitude)).title("New Location"));
         marker.showInfoWindow();
+        currentLocation = false;
         MapSearchTask mapSearchTask = new MapSearchTask();
         queryParam = Double.toString(point.latitude) + "," + Double.toString(point.longitude);
         mapSearchTask.execute(queryParam);
@@ -218,6 +241,7 @@ public class MapsActivity extends AppCompatActivity implements
                 Log.v("LISTENER", "OnQuerySubmit called - " + query);
                 hideSoftKeyboard(MapsActivity.this);
                 MapSearchTask mapSearchTask = new MapSearchTask();
+                currentLocation = false;
                 mapSearchTask.execute(query);
 
                 return true;
@@ -225,6 +249,19 @@ public class MapsActivity extends AppCompatActivity implements
         };
         searchView.setOnQueryTextListener(queryTextListener);
         return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 //    private void getAutocompleteResults(String queryText) {
@@ -252,7 +289,7 @@ public class MapsActivity extends AppCompatActivity implements
 
         if(mMap.getCameraPosition().zoom <=16.9f)
         {
-            mMap.animateCamera(CameraUpdateFactory.zoomBy(2.5f));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(18f));
 
         }
 
@@ -273,7 +310,8 @@ public class MapsActivity extends AppCompatActivity implements
         @Override
         protected HashMap<String, String> doInBackground(String... params) {
             HashMap<String, String> location = new HashMap<String, String>();
-                            String apiKey = "AIzaSyAUSETHO5_4d_lGrGfjX4vAowf6DrqaNmk";
+//                            String apiKey = "AIzaSyAUSETHO5_4d_lGrGfjX4vAowf6DrqaNmk";
+            String apiKey = "AIzaSyCc2q-atFbFq_3fGpaVaf17jX_Z9pIVwI4";
                 try {
                     final String GOOGLE_BASE_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?";
                     final String QUERY_PARAM = "query";
@@ -306,11 +344,18 @@ public class MapsActivity extends AppCompatActivity implements
 
                 JSONObject jsonObject = new JSONObject(buffer.toString());
                 JSONArray resultsArr = jsonObject.getJSONArray("results");
-                if (resultsArr.length() == 1) {
+                if (resultsArr.length() > 0) {
                     location.put("addressStr", resultsArr.getJSONObject(0).getString("formatted_address"));
                     JSONObject locationObject = resultsArr.getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
                     location.put("lat", locationObject.getString("lat"));
                     location.put("lng", locationObject.getString("lng"));
+                    location.put("search","true");
+
+                }
+                    else{
+                    location.put("search","false");
+                    String error = jsonObject.getString("error_message");
+                    location.put("error", error);
 
                 }
 
@@ -327,14 +372,22 @@ public class MapsActivity extends AppCompatActivity implements
 
         @Override
         protected void onPostExecute(HashMap<String, String> locationMap) {
-            String markerTitle = locationMap.get("addressStr");
-            addressString = locationMap.get("addressStr");
-            latitude = Double.parseDouble(locationMap.get("lat"));
-            longitude = Double.parseDouble(locationMap.get("lng"));
-            marker.remove();
 
+            if (locationMap.get("search").matches("true")) {
+                String markerTitle = locationMap.get("addressStr");
+                addressString = locationMap.get("addressStr");
+                latitude = Double.parseDouble(locationMap.get("lat"));
+                longitude = Double.parseDouble(locationMap.get("lng"));
+                marker.remove();
 
-            setUpMap(latitude, longitude, markerTitle);
+                if (currentLocation) {
+                    setUpMap(latitude, longitude, "Current Location");
+                } else {
+                    setUpMap(latitude, longitude, markerTitle);
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Sorry, unable to search. Try again after some time", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

@@ -53,9 +53,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             case R.id.bLogin:
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
-                if (checkForBlankFields()) {
+//                if (checkForBlankFields()) {
+//
+//
+//                    Toast.makeText(this, "Please enter all details", Toast.LENGTH_LONG).show();
+//
+                if (username.matches("")) {
+                    etUsername.setError("Email cannot be blank");
 
-                    Toast.makeText(this, "Please enter all details", Toast.LENGTH_LONG).show();
+                } else if (password.matches("")) {
+                    etPassword.setError("Password cannot be blank");
 
                 } else {
                     checkCredentials();

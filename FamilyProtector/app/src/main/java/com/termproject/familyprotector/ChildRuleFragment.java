@@ -29,7 +29,9 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -114,7 +116,8 @@ public class ChildRuleFragment extends Fragment {
             public void done(List<ParseObject> childRulesFromParse, ParseException e) {
                 if (e == null) {
                     if (childRulesFromParse.size() > 0) {
-                        mAdapter = new ChildRuleRecyclerAdapter(getActivity(), childRulesFromParse, childName, ruleType, null);
+                        mAdapter = new ChildRuleRecyclerAdapter(getActivity(), childRulesFromParse,
+                                childName, ruleType, null, null);
                         // Set CustomAdapter as the adapter for RecyclerView.
                         mRecyclerView.setAdapter(mAdapter);
 
@@ -194,9 +197,12 @@ public class ChildRuleFragment extends Fragment {
                             childWebsiteCategories.add("Virtual Reality");
                         }
 
-                        Log.v("done with parse fetching", "all boolean values set");
+                        Date date = parseObject.getUpdatedAt();
+                        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy  hh:mm a");
+                        final String dateStr = formatter.format(date);
 
-                        mAdapter = new ChildRuleRecyclerAdapter(getActivity(), null, childName, ruleType, childWebsiteCategories);
+                        mAdapter = new ChildRuleRecyclerAdapter(getActivity(), null, childName,
+                                ruleType, childWebsiteCategories, dateStr);
                         // Set CustomAdapter as the adapter for RecyclerView.
                         mRecyclerView.setAdapter(mAdapter);
                     }

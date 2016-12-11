@@ -75,7 +75,7 @@ public class ChildCurrentLocationFragment extends Fragment {
         childNameStr = userLocalStore.getChildDetails();
         final String userName = loggedInUser.getUsername();
         emailAddress = loggedInUser.getUsername();
-        getChildCurrentLocationFromParse();
+//        getChildCurrentLocationFromParse();
         final ParseQuery<ParseObject> queryClass = ParseQuery.getQuery("childCurrentLocation");
         queryClass.whereEqualTo("userName", userName);
         queryClass.whereEqualTo("childName", childName);
@@ -260,12 +260,19 @@ public class ChildCurrentLocationFragment extends Fragment {
 
                 JSONObject jsonObject = new JSONObject(buffer.toString());
                 JSONArray resultsArr = jsonObject.getJSONArray("results");
-                if (resultsArr.length() == 1) {
+                if (resultsArr.length() >0) {
                     currentLocDetails.put("addressStr", resultsArr.getJSONObject(0).getString("formatted_address"));
                     currentLocDetails.put("lastSeenDate", lastSeenDate);
                     currentLocDetails.put("lastSeenTime", lastSeenTime);
+                    currentLocDetails.put("search","true");
 
-
+                }
+                else{
+                    currentLocDetails.put("search","false");
+                    String error = jsonObject.getString("error_message");
+                    currentLocDetails.put("error", error);
+                    currentLocDetails.put("lastSeenDate", lastSeenDate);
+                    currentLocDetails.put("lastSeenTime", lastSeenTime);
                 }
 
 
@@ -283,23 +290,44 @@ public class ChildCurrentLocationFragment extends Fragment {
         protected void onPostExecute(HashMap<String, String> locationMap) {
 
             String textAdd,textDate,textTime;
-            textAdd = "Address: "+ locationMap.get("addressStr");
-            textDate = "Last Seen Date: "+ locationMap.get("lastSeenDate");
-            textTime = "Last Seen Time: "+ locationMap.get("lastSeenTime");
-            if(locationMap.get("lastSeenDate").matches("Current Loc unavailable")){
-                textAdd = childNameStr+"'s current location is unavailable";
-                textCurrLocAddress.setText(textAdd);
-                textCurrLocAddress.setTextSize(25f);
-                textCurrLocAddress.setTextColor(getResources().getColor(R.color.black));
-                currLocLastSeenDate.setText("");
-                currLocLastSeenTime.setText("");
-                linearChildCurrentLoc.setVisibility(View.VISIBLE);
-            } else {
-                textCurrLocAddress.setText(textAdd);
-                currLocLastSeenDate.setText(textDate);
-                currLocLastSeenTime.setText(textTime);
-                linearChildCurrentLoc.setVisibility(View.VISIBLE);
+            if (locationMap.get("search").matches("true")) {
+                textAdd = "Address: " + locationMap.get("addressStr");
+                textDate = "Last Seen Date: " + locationMap.get("lastSeenDate");
+                textTime = "Last Seen Time: " + locationMap.get("lastSeenTime");
+                if (locationMap.get("lastSeenDate").matches("Current Loc unavailable")) {
+                    textAdd = childNameStr + "'s current location is unavailable";
+                    textCurrLocAddress.setText(textAdd);
+                    textCurrLocAddress.setTextSize(25f);
+                    textCurrLocAddress.setTextColor(getResources().getColor(R.color.black));
+                    currLocLastSeenDate.setText("");
+                    currLocLastSeenTime.setText("");
+                    linearChildCurrentLoc.setVisibility(View.VISIBLE);
+                } else {
+                    textCurrLocAddress.setText(textAdd);
+                    currLocLastSeenDate.setText(textDate);
+                    currLocLastSeenTime.setText(textTime);
+                    linearChildCurrentLoc.setVisibility(View.VISIBLE);
 
+                }
+            } else{
+                textAdd = "Address: Address Details Unavailable";
+                textDate = "Last Seen Date: " + locationMap.get("lastSeenDate");
+                textTime = "Last Seen Time: " + locationMap.get("lastSeenTime");
+                if (locationMap.get("lastSeenDate").matches("Current Loc unavailable")) {
+                    textAdd = childNameStr + "'s current location is unavailable";
+                    textCurrLocAddress.setText(textAdd);
+                    textCurrLocAddress.setTextSize(25f);
+                    textCurrLocAddress.setTextColor(getResources().getColor(R.color.black));
+                    currLocLastSeenDate.setText("");
+                    currLocLastSeenTime.setText("");
+                    linearChildCurrentLoc.setVisibility(View.VISIBLE);
+                } else {
+                    textCurrLocAddress.setText(textAdd);
+                    currLocLastSeenDate.setText(textDate);
+                    currLocLastSeenTime.setText(textTime);
+                    linearChildCurrentLoc.setVisibility(View.VISIBLE);
+
+                }
             }
 
 

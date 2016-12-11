@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class WelcomePageTutorial extends AppCompatActivity
         implements ViewPager.OnPageChangeListener, View.OnClickListener {
@@ -133,7 +132,8 @@ public class WelcomePageTutorial extends AppCompatActivity
                 }
                 break;
             case R.id.text_view_tutorial:
-                Toast.makeText(this, "The tutorial link", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "The tutorial link", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this,FamilyProtectorTutorial.class));
         }
 
     }

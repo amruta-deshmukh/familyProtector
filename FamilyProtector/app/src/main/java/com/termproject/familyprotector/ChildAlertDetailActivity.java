@@ -6,7 +6,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -108,7 +107,6 @@ public class ChildAlertDetailActivity extends AppCompatActivity {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ChildAlerts");
         query.whereEqualTo("objectId", objectIdStr);
-        Log.v("objectId", objectIdStr);
 
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override

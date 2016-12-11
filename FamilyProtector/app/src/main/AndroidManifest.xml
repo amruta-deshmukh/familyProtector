@@ -100,6 +100,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
+            android:parentActivityName=".ChildDetailActivity"
             android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -126,7 +127,9 @@
         <activity
             android:name=".ChildLocationRuleSaveActivity"
             android:label="@string/title_activity_child_location_rule_save"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:parentActivityName=".MapsActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ChildHomeScreenAfterSetup"
             android:label="@string/title_activity_child_home_screen_after_setup"
@@ -272,6 +275,16 @@
             android:name=".ChildCurrentLocationAlertDetailActivity"
             android:label="@string/title_activity_child_current_location_alert_detail"
             android:parentActivityName=".ChildDetailActivity" >
+        </activity>
+        <activity
+            android:name=".ChildWebRuleDetailActivity"
+            android:label="@string/title_activity_child_web_rule_detail"
+            android:parentActivityName=".ChildDetailActivity" >
+        </activity>
+        <activity
+            android:name=".FamilyProtectorTutorial"
+            android:label="@string/title_activity_family_protector_tutorial"
+            android:noHistory="true">
         </activity>
     </application>
 

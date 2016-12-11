@@ -87,6 +87,10 @@ public class ParentHomeScreen extends AppCompatActivity implements View.OnClickL
                         startActivity(new Intent(ParentHomeScreen.this,ParentProfileSettings.class));
                         break;
 
+                    case R.id.tutorial_drawer:
+                        startActivity(new Intent(ParentHomeScreen.this,FamilyProtectorTutorial.class));
+                        break;
+
                     default:
                         txt = "Please wait for some time";
                         Toast.makeText(getApplicationContext(), txt, Toast.LENGTH_LONG).show();

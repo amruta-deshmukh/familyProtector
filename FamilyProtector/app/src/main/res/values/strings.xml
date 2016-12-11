@@ -13,7 +13,7 @@
     <string name="title_activity_child_home_screen">Child Home Screen</string>
     <string name="title_activity_main">Main Activity</string>
     <string name="title_activity_rules_setter">Rules Setter</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Location Rule</string>
     <string name="title_activity_geofences">geofencesActivity</string>
     <string name="title_activity_child_detail">ChildDetailActivity</string>
     <string name="title_activity_save_rule_location">SaveRuleLocationActivity</string>
@@ -145,12 +145,13 @@
     <string name="dialog_location_type">Location type :</string>
     <string name="location_name">Location name :</string>
     <string name="dialog_select_days">Select Days :</string>
-    <string name="dialog_location_perimeter">Location perimeter:</string>
+    <string name="dialog_location_perimeter">Loc perimeter (defaults to 30 meters):</string>
+    <string name="text_location_perimeter">Location perimeter :</string>
     <string name="dialog_perimeter">Perimeter:</string>
     <string name="dialog_location_time_from">From :</string>
     <string name="dialog_location_time_to">To :</string>
     <string name="dialog_location_hint">E.g. school, home</string>
-    <string name="dialog_perimeter_hint">Enter a radius for location</string>
+    <string name="dialog_perimeter_hint">Enter perimeter for location </string>
     <string name="dialog_distance_units">meters</string>
     <string name="action_share">Share</string>
     <string name="action_delete">Delete</string>
@@ -248,6 +249,9 @@
     <string name="text_my_account">MY ACCOUNT</string>
     <string name="text_child_account">ACCOUNT INFO</string>
     <string name="text_my_account_hint">(Click on a particular field to edit profile information)</string>
+    <string name="text_web_category_name">Website Category :</string>
+    <string name="text_web_category_desc">Category Description :</string>
+    <string name="text_last_updated_at">Last Updated at :</string>
 
 
     <string name="url_name">Url :</string>
@@ -279,6 +283,8 @@
     <string name="title_activity_child_current_location_alert_detail">
         ChildCurrentLocationAlertDetailActivity
     </string>
+    <string name="title_activity_child_web_rule_detail">ChildWebRuleDetailActivity</string>
+    <string name="title_activity_family_protector_tutorial">Tutorial &amp; Checklist</string>
 
 
 

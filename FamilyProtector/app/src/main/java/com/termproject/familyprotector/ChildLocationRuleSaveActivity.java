@@ -3,14 +3,19 @@ package com.termproject.familyprotector;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 public class ChildLocationRuleSaveActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -21,12 +26,12 @@ public class ChildLocationRuleSaveActivity extends AppCompatActivity implements 
     UserLocalStore userLocalStore;
     private MultiSelectionSpinner multiSelectionSpinner;
     double latitude,longitude;
-    String locationNameStr,addressString,childName,username;
+    private String locationNameStr,addressString,childName,userName;
     float locationPerimeterValue;
     User user;
-    String strStartTime,strEndTime, selectedDays;
-    String[] days;
-    int ruleId;
+    private String strStartTime,strEndTime, selectedDays;
+    private String[] days;
+    private int ruleId;
 
 
     @Override
@@ -34,9 +39,14 @@ public class ChildLocationRuleSaveActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         userLocalStore = new UserLocalStore(this);
         childName = userLocalStore.getChildDetails();
-        addressString = userLocalStore.getLocationAddress();
-        locationPerimeterValue = userLocalStore.getLocationPerimeter();
-        setTitle("Rule for " + childName);
+        user = userLocalStore.getLoggedInUser();
+        userName = user.getUsername();
+        generateRuleId();
+//        addressString = userLocalStore.getLocationAddress();
+//        locationPerimeterValue = userLocalStore.getLocationPerimeter();
+//        addressText.setText(addressString);
+//        perimeterText.setText(locationPerimeterValue + " meters");
+        setTitle(childName+"'s Location Rule Details");
         setContentView(R.layout.activity_child_location_rule_save);
         locationNameEditText = (EditText)findViewById(R.id.edit_location_name);
         ruleLocationFromTime = (TimePicker)findViewById(R.id.location_timepicker_from);
@@ -44,6 +54,19 @@ public class ChildLocationRuleSaveActivity extends AppCompatActivity implements 
         saveButton = (Button)findViewById(R.id.rule_location_save_button);
         addressText = (TextView)findViewById(R.id.text_address_string);
         perimeterText = (TextView)findViewById(R.id.location_perimeter_value);
+
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            addressString = intent.getStringExtra("addressStr");
+            locationPerimeterValue = intent.getFloatExtra("locPerimeter", 30f);
+            latitude = intent.getDoubleExtra("locLat", 37.7238566);
+            longitude = intent.getDoubleExtra("locLng", -122.4784694);
+
+        }
+        if(addressString.matches("")){
+            addressString = "Thornton Hall, Holloway Avenue, San Francisco, CA";
+        }
         addressText.setText(addressString);
         perimeterText.setText(locationPerimeterValue + " meters");
 
@@ -58,42 +81,43 @@ public class ChildLocationRuleSaveActivity extends AppCompatActivity implements 
 
     @Override
     public void onClick(View view){
-        if(ruleLocationFromTime.getCurrentMinute()!=0) {
-            strStartTime = ruleLocationFromTime.getCurrentHour() + ":" + ruleLocationFromTime.getCurrentMinute();
+        if(ruleLocationFromTime.getCurrentMinute()<10) {
+            strStartTime = ruleLocationFromTime.getCurrentHour() + ":0" + ruleLocationFromTime.getCurrentMinute();
         } else{
-            strStartTime = ruleLocationFromTime.getCurrentHour() + ":" + "00";
+            strStartTime = ruleLocationFromTime.getCurrentHour() + ":" + ruleLocationFromTime.getCurrentMinute();;
         }
-        if(ruleLocationToTime.getCurrentMinute()!=0) {
-            strEndTime = ruleLocationToTime.getCurrentHour() + ":" + ruleLocationToTime.getCurrentMinute();
+        if(ruleLocationToTime.getCurrentMinute()<10) {
+            strEndTime = ruleLocationToTime.getCurrentHour() + ":0" + ruleLocationToTime.getCurrentMinute();
         } else{
-            strStartTime = ruleLocationFromTime.getCurrentHour() + ":" + "00";
+            strEndTime = ruleLocationToTime.getCurrentHour() + ":" + ruleLocationToTime.getCurrentMinute();
         }
         selectedDays =  multiSelectionSpinner.getSelectedItemsAsString();
         days = selectedDays.split(",");
-        latitude =userLocalStore.getLocationLatitude();
-        longitude = userLocalStore.getLocationLongitude();
+//        latitude =userLocalStore.getLocationLatitude();
+//        longitude = userLocalStore.getLocationLongitude();
         locationNameStr = locationNameEditText.getText().toString();
-        ruleId = userLocalStore.getRuleLocationId();
-        ruleId = ruleId+1;
-        userLocalStore.setRuleLocationId(ruleId);
+//        ruleId = userLocalStore.getRuleLocationId();
+//        ruleId = ruleId+1;
+//        userLocalStore.setRuleLocationId(ruleId);
+//        generateRuleId();
 
 
 
         if(locationNameStr.matches("")){
-            locationNameStr = "rule location";
-        }
+            locationNameEditText.setError("Location name cannot be blank");
 
-        childName = userLocalStore.getChildDetails();
-        user = userLocalStore.getLoggedInUser();
-        saveRuleLocationToParse();
-        startActivity(new Intent(this,ParentHomeScreen.class));
+        } else {
+
+            saveRuleLocationToParse();
+            startActivity(new Intent(this, ChildDetailActivity.class));
+        }
     }
 
     private void saveRuleLocationToParse (){
 
         ParseObject ruleLocation = new ParseObject("ChildRuleLocation");
         ParseGeoPoint ruleLatLng = new ParseGeoPoint(latitude,longitude);
-        ruleLocation.put("userName",user.getUsername());
+        ruleLocation.put("userName",userName);
         ruleLocation.put("childName",childName);
         ruleLocation.put("locationName",locationNameStr);
         ruleLocation.put("locationAddress", addressString);
@@ -101,6 +125,7 @@ public class ChildLocationRuleSaveActivity extends AppCompatActivity implements 
         ruleLocation.put("ruleFromTime",strStartTime);
         ruleLocation.put("ruleToTime", strEndTime);
         ruleLocation.put("locationRadius", locationPerimeterValue);
+        Log.v("ruleId", ruleId+"");
         ruleLocation.put("ruleLocationId",ruleId);
         for(String day:days){
             switch(day){
@@ -149,6 +174,48 @@ public class ChildLocationRuleSaveActivity extends AppCompatActivity implements 
         }
         ruleLocation.saveInBackground();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+//                NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void generateRuleId() {
+
+        ParseQuery<ParseObject> queryClass = ParseQuery.getQuery("ChildLocationRuleId");
+        queryClass.whereEqualTo("userName", userName);
+        queryClass.whereEqualTo("childName", childName);
+
+        queryClass.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (e == null) {
+                    if (parseObject != null) {
+                        ruleId = (parseObject.getInt("locRuleId"))+1;
+                        parseObject.put("locRuleId",ruleId);
+                        parseObject.saveInBackground();
+                    }
+                } else {
+
+                    ruleId = 1;
+                    ParseObject ruleIdObj = new ParseObject("ChildLocationRuleId");
+                    ruleIdObj.put("userName", userName);
+                    ruleIdObj.put("childName", childName);
+                    ruleIdObj.put("locRuleId",ruleId);
+                    ruleIdObj.saveInBackground();
+
+                }
+                Log.v("ruleId inside", ruleId+"***");
+            }
+        });
     }
 
 }

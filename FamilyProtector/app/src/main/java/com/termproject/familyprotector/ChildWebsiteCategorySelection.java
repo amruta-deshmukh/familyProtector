@@ -234,11 +234,9 @@ public class ChildWebsiteCategorySelection extends AppCompatActivity {
 
                         Log.v("inside parseObject","parseobject ot null");
                         if(catGambling.isChecked()){
-                            Log.v("gambling","checked");
                             parseObject.put("gambling", "Yes");
                         }
                         else{
-                            Log.v("gambling"," not checked");
                             parseObject.put("gambling", "No");
                         }
                         if(catHacking.isChecked()){

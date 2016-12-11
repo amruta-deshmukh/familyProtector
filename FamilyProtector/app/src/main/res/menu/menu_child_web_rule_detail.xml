@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.termproject.familyprotector.ChildRuleDetailActivity">
+    tools:context="com.termproject.familyprotector.ChildWebRuleDetailActivity">
     <item
-        android:id="@+id/location_rule_action_delete"
+        android:id="@+id/web_rule_action_delete"
         android:icon="@drawable/ic_delete_white_24dp"
         android:title="@string/action_delete"
         app:showAsAction="always"/>

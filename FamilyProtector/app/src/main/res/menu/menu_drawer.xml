@@ -5,6 +5,13 @@
             android:id="@+id/settings_drawer"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/action_settings" />
+
+        <item
+            android:id="@+id/tutorial_drawer"
+            android:icon="@drawable/tut_checklist"
+            android:title="@string/title_activity_family_protector_tutorial" />
+
+
         <item
             android:id="@+id/help_drawer"
 
