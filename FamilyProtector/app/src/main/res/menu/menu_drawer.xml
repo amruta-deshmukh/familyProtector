@@ -9,7 +9,7 @@
         <item
             android:id="@+id/tutorial_drawer"
             android:icon="@drawable/tut_checklist"
-            android:title="@string/title_activity_family_protector_tutorial" />
+            android:title="@string/tutorial_and_checklist" />
 
 
         <item

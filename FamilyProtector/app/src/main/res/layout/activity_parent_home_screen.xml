@@ -64,6 +64,17 @@
             android:layout_below="@+id/linear_layout"
             android:layout_centerHorizontal="true"/>
 
+        <TextView
+            android:id="@+id/text_no_child_added"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No child is added to profile."
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:textSize="22sp"
+            android:textStyle="italic"
+            android:textColor="@color/black"/>
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_child_fab"

@@ -238,7 +238,7 @@
     <string name="text_cat_games">Games</string>
     <string name="text_cat_virtual_reality">Virtual Reality</string>
     <string name="text_or">Or</string>
-    <string name="text_tutorial_link"><u>Click here for tutorial</u></string>
+    <string name="text_tutorial_link"><u>Click here for tutorial &amp; checklist</u></string>
     <string name="text_choose_mode">Please choose the application mode:</string>
     <string name="text_alert_header">Alert : </string>
 
@@ -249,6 +249,7 @@
     <string name="text_my_account">MY ACCOUNT</string>
     <string name="text_child_account">ACCOUNT INFO</string>
     <string name="text_my_account_hint">(Click on a particular field to edit profile information)</string>
+    <string name="text_tutorial_hint">(Click on icon on right for tutorial)</string>
     <string name="text_web_category_name">Website Category :</string>
     <string name="text_web_category_desc">Category Description :</string>
     <string name="text_last_updated_at">Last Updated at :</string>
@@ -284,7 +285,9 @@
         ChildCurrentLocationAlertDetailActivity
     </string>
     <string name="title_activity_child_web_rule_detail">ChildWebRuleDetailActivity</string>
-    <string name="title_activity_family_protector_tutorial">Tutorial &amp; Checklist</string>
+    <string name="tutorial_and_checklist">Tutorial &amp; Checklist</string>
+    <string name="title_activity_family_protector_tutorial">Family Protector Guide</string>
+    <string name="title_activity_tutorial_add_achild">Add Child Tutorial</string>
 
 
 

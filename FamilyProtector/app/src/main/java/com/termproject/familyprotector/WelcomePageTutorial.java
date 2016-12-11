@@ -25,7 +25,7 @@ public class WelcomePageTutorial extends AppCompatActivity
     private int dotsCount;
     private ImageView[] dots;
     private WelcomeTutorialViewPagerAdapter mAdapter;
-    UserLocalStore userLocalStore;
+    private UserLocalStore userLocalStore;
 
     private int[] mImageResources = {
             R.mipmap.tutorial_first_page,
@@ -134,6 +134,7 @@ public class WelcomePageTutorial extends AppCompatActivity
             case R.id.text_view_tutorial:
 //                Toast.makeText(this, "The tutorial link", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(this,FamilyProtectorTutorial.class));
+                break;
         }
 
     }

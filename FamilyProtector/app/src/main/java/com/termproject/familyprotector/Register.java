@@ -2,7 +2,6 @@ package com.termproject.familyprotector;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -127,7 +126,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     etUsername.setError("Please enter valid  email address");
 //                    Toast.makeText(this,"Please enter valid  email address",Toast.LENGTH_LONG).show();
                 } else if (checkforDuplicateEmails()) {
-                    etUsername.setError("Email address already in use.");
+//                    etUsername.setError("Email address already in use.");
 //                    Toast.makeText(this,"Email Address already registered",Toast.LENGTH_LONG).show();
                 } else {
                     storeToParse();
@@ -189,6 +188,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 if (e == null) {
                     if (users.size() > 0) {
                         messageObj.setMessage("Sorry, email address already registered!!");
+                        etUsername.setError("Email address already in use.");
 
                     } else {
                         messageObj.setMessage(null);
@@ -233,7 +233,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                startActivity(new Intent(this, WelcomePageTutorial.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);

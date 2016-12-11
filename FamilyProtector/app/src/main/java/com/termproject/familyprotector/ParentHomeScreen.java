@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -22,7 +23,7 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
-public class ParentHomeScreen extends AppCompatActivity implements View.OnClickListener{
+public class ParentHomeScreen extends AppCompatActivity implements View.OnClickListener {
 
     private FloatingActionButton addChildFab;
     private Toolbar mToolBar;
@@ -31,18 +32,20 @@ public class ParentHomeScreen extends AppCompatActivity implements View.OnClickL
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
     UserLocalStore userLocalStore;
+    private TextView textNoChild;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent_home_screen);
-        addChildFab = (FloatingActionButton)findViewById(R.id.add_child_fab);
-        mRecyclerView = (RecyclerView)findViewById(R.id.parent_screen_recycler_view);
+        addChildFab = (FloatingActionButton) findViewById(R.id.add_child_fab);
+        mRecyclerView = (RecyclerView) findViewById(R.id.parent_screen_recycler_view);
         userLocalStore = new UserLocalStore(this);
         setTitle("Parent Mode");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         getChildrenDetailsFromParse();
+        textNoChild = (TextView) findViewById(R.id.text_no_child_added);
 
 
         try {
@@ -81,14 +84,14 @@ public class ParentHomeScreen extends AppCompatActivity implements View.OnClickL
                         startActivity(new Intent(ParentHomeScreen.this, AboutActivity.class));
                         break;
                     case R.id.help_drawer:
-                        startActivity(new Intent(ParentHomeScreen.this,Help.class));
+                        startActivity(new Intent(ParentHomeScreen.this, Help.class));
                         break;
                     case R.id.settings_drawer:
-                        startActivity(new Intent(ParentHomeScreen.this,ParentProfileSettings.class));
+                        startActivity(new Intent(ParentHomeScreen.this, ParentProfileSettings.class));
                         break;
 
                     case R.id.tutorial_drawer:
-                        startActivity(new Intent(ParentHomeScreen.this,FamilyProtectorTutorial.class));
+                        startActivity(new Intent(ParentHomeScreen.this, FamilyProtectorTutorial.class));
                         break;
 
                     default:
@@ -102,13 +105,12 @@ public class ParentHomeScreen extends AppCompatActivity implements View.OnClickL
         });
 
 
-
         addChildFab.setOnClickListener(this);
 
 
     }
 
-    public void onClick(View view){
+    public void onClick(View view) {
         Intent intent = new Intent(ParentHomeScreen.this, AddChildDetails.class);
         startActivity(intent);
 
@@ -124,9 +126,12 @@ public class ParentHomeScreen extends AppCompatActivity implements View.OnClickL
             public void done(List<ParseObject> children, ParseException e) {
                 if (e == null) {
                     if (children.size() > 0) {
+                        textNoChild.setVisibility(View.GONE);
 
-                        mAdapter = new RecyclerAdapter (ParentHomeScreen.this, children);
+                        mAdapter = new RecyclerAdapter(ParentHomeScreen.this, children);
                         mRecyclerView.setAdapter(mAdapter);
+                    } else {
+                        textNoChild.setVisibility(View.VISIBLE);
                     }
                 } else {
                     Log.d("Login", "Error: " + e.getMessage());
@@ -135,7 +140,6 @@ public class ParentHomeScreen extends AppCompatActivity implements View.OnClickL
             }
         });
     }
-
 
 
     @Override

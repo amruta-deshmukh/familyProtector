@@ -283,7 +283,11 @@
         </activity>
         <activity
             android:name=".FamilyProtectorTutorial"
-            android:label="@string/title_activity_family_protector_tutorial"
+            android:label="@string/title_activity_family_protector_tutorial">
+        </activity>
+        <activity
+            android:name=".TutorialAddAChild"
+            android:label="@string/title_activity_tutorial_add_achild"
             android:noHistory="true">
         </activity>
     </application>
