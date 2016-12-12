@@ -38,7 +38,7 @@ public class ChildCurrentLocationAlertDetailActivity extends AppCompatActivity {
         userName = user.getUsername();
         Intent intent = getIntent();
         if (intent != null) {
-            alertString = childName+ "'s phone is offline";
+            alertString = childName+ "'s phone has been offline";
             dateStr = intent.getStringExtra("alertDate");
             timeStr = intent.getStringExtra("alertTime");
             objectIdStr = intent.getStringExtra("objectId");

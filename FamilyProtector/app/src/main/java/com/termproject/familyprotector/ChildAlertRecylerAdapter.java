@@ -186,8 +186,8 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
 
             ParseObject alert = mChildAlerts.get(position);
             holder.getTextViewHeader().setText("Alert: " + "Current Loc unavailable");
-            holder.getTextViewDate().setText("Date: " + alert.getString("dateSinceLastOnline"));
-            holder.getTextViewTime().setText("Time: " + alert.getString("timeSinceLastOnline"));
+            holder.getTextViewDate().setText("Date since: " + alert.getString("dateSinceLastOnline"));
+            holder.getTextViewTime().setText("Time since: " + alert.getString("timeSinceLastOnline"));
 
             holder.getTextViewHeader().setTag(holder);
             holder.getTextViewDate().setTag(holder);

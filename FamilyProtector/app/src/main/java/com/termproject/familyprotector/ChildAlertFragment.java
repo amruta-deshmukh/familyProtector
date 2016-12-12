@@ -38,6 +38,7 @@ public class ChildAlertFragment extends Fragment {
     Spinner childAlertSpinner;
     TextView noAlertSelected;
     private NotificationDBHelper dbHelper;
+    private String spinnerItemLoc, spinnerItemWeb, spinnerItemDevice, spinnerItemCurr;
 
 
     @Override
@@ -78,22 +79,27 @@ public class ChildAlertFragment extends Fragment {
         List<String> spinnerArray =  new ArrayList<String>();
         spinnerArray.add("See alerts for...");
         if(locationNotification>0)
-            spinnerArray.add("Location ("+ locationNotification+ ")");
+            spinnerItemLoc = "Location ("+ locationNotification+ ")";
         else
-            spinnerArray.add("Location");
+            spinnerItemLoc = "Location";
         if(webNotification>0)
-            spinnerArray.add("Web Access ("+ webNotification+ ")");
+            spinnerItemWeb = "Web Access ("+ webNotification+ ")";
         else
-            spinnerArray.add("Web Access");
-
+            spinnerItemWeb = "Web Access";
         if(deviceAdminNotification>0)
-            spinnerArray.add("Uninstallation Attempt ("+ deviceAdminNotification+ ")");
+            spinnerItemDevice = "Uninstallation Attempt ("+ deviceAdminNotification+ ")";
+
         else
-            spinnerArray.add("Uninstallation Attempt");
+            spinnerItemDevice = "Uninstallation Attempt";
         if(currentLocNotification>0)
-            spinnerArray.add("Current Loc inaccessible ("+ currentLocNotification+ ")");
+            spinnerItemCurr = "Current Loc inaccessible ("+ currentLocNotification+ ")";
         else
-            spinnerArray.add("Current Loc inaccessible");
+            spinnerItemCurr = "Current Loc inaccessible";
+
+        spinnerArray.add(spinnerItemLoc);
+        spinnerArray.add(spinnerItemWeb);
+        spinnerArray.add(spinnerItemDevice);
+        spinnerArray.add(spinnerItemCurr);
 
 
 
@@ -243,19 +249,21 @@ public class ChildAlertFragment extends Fragment {
     public class SpinnerItemSelectedListener implements AdapterView.OnItemSelectedListener{
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             String selected = parent.getItemAtPosition(pos).toString();
-            if(selected.equals("Location")){
+            if(selected.equals(spinnerItemLoc)){
                 noAlertSelected.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
+                dbHelper.deleteNotificationEntry(childName, FamilyProtectorConstants.ALERT_TYPE_GEOFENCE);
                 getChildLocationAlertFromParse();
 
             }
-            else if (selected.equals("Web Access")){
+            else if (selected.equals(spinnerItemWeb)){
                 noAlertSelected.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
+                dbHelper.deleteNotificationEntry(childName, FamilyProtectorConstants.ALERT_TYPE_WEB_HISTORY);
                 getChildWebAlertFromParse();
 
             }
-            else if (selected.equals("Uninstallation Attempt")){
+            else if (selected.equals(spinnerItemDevice)){
                 noAlertSelected.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
                 Log.v("Database", "deleting device type alert");
@@ -263,9 +271,10 @@ public class ChildAlertFragment extends Fragment {
                 getChildDeviceAdminAlertFromParse();
 
             }
-            else if (selected.equals("Current Loc inaccessible")){
+            else if (selected.equals(spinnerItemCurr)){
                 noAlertSelected.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
+                dbHelper.deleteNotificationEntry(childName, FamilyProtectorConstants.ALERT_TYPE_CURRENT_LOC);
                 getChildCurrentLocationAlertFromParse();
 
             }

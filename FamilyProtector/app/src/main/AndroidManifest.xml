@@ -283,11 +283,31 @@
         </activity>
         <activity
             android:name=".FamilyProtectorTutorial"
-            android:label="@string/title_activity_family_protector_tutorial">
+            android:label="@string/title_activity_family_protector_tutorial" >
         </activity>
         <activity
             android:name=".TutorialAddAChild"
             android:label="@string/title_activity_tutorial_add_achild"
+            android:noHistory="true" >
+        </activity>
+        <activity
+            android:name=".TutorialAddLocationRule"
+            android:label="@string/title_activity_tutorial_add_location_rule"
+            android:noHistory="true" >
+        </activity>
+        <activity
+            android:name=".TutorialAddWebRule"
+            android:label="@string/title_activity_tutorial_add_web_rule"
+            android:noHistory="true" >
+        </activity>
+        <activity
+            android:name=".TutorialAddAppChild"
+            android:label="@string/title_activity_tutorial_add_app_child"
+            android:noHistory="true">
+        </activity>
+        <activity
+            android:name=".TutorialCheckAlerts"
+            android:label="@string/title_activity_tutorial_check_alerts"
             android:noHistory="true">
         </activity>
     </application>

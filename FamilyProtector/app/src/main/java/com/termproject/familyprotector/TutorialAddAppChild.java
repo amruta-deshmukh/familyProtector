@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class TutorialAddAChild extends AppCompatActivity implements
+public class TutorialAddAppChild extends AppCompatActivity implements
         ViewPager.OnPageChangeListener, View.OnClickListener{
 
     protected View view;
@@ -26,28 +25,29 @@ public class TutorialAddAChild extends AppCompatActivity implements
     private ImageView[] dots;
 
     private int[] mImageResources = {
-            R.mipmap.tut_add_child_1 ,
-            R.mipmap.tut_add_child_2,
-            R.mipmap.tut_add_child_3,
-            R.mipmap.tut_add_child_4,
-            R.mipmap.tut_add_child_5,
-            R.mipmap.tut_add_child_6,
-            R.mipmap.tut_add_child_7,
-            R.mipmap.tut_add_child_8,
-            R.mipmap.tut_add_child_9,
-            R.mipmap.tut_add_child_10
+            R.mipmap.tut_add_loc_rule_1,
+            R.mipmap.tut_add_loc_rule_2,
+            R.mipmap.tut_add_loc_rule_3,
+            R.mipmap.tut_add_loc_rule_4,
+            R.mipmap.tut_add_loc_rule_5,
+            R.mipmap.tut_add_loc_rule_6,
+            R.mipmap.tut_add_loc_rule_7,
+            R.mipmap.tut_add_loc_rule_8,
+            R.mipmap.tut_add_loc_rule_9,
+            R.mipmap.tut_add_loc_rule_10,
+            R.mipmap.tut_add_loc_rule_11,
+            R.mipmap.tut_add_loc_rule_12
 
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_tutorial_add_achild);
+//        setContentView(R.layout.activity_tutorial_add_app_child);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
-
-        Toast.makeText(this,"Swipe Left or click on icon to proceed",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Swipe Left or click on icon to proceed", Toast.LENGTH_SHORT).show();
 
         setReference();
     }
@@ -67,16 +67,16 @@ public class TutorialAddAChild extends AppCompatActivity implements
 
     public void setReference() {
         ViewGroup container = (ViewGroup) findViewById(android.R.id.content);
-        view = LayoutInflater.from(this).inflate(R.layout.activity_tutorial_add_achild, container);
+        view = LayoutInflater.from(this).inflate(R.layout.activity_tutorial_add_app_child, container);
 
-        intro_images = (ViewPager) view.findViewById(R.id.tut_add_child_pager_intro);
-        btnNext = (ImageButton) view.findViewById(R.id.tut_add_child_btn_next);
+        intro_images = (ViewPager) view.findViewById(R.id.tut_add_app_child_pager_intro);
+        btnNext = (ImageButton) view.findViewById(R.id.tut_add_app_child_btn_next);
 
-        pager_indicator = (LinearLayout) view.findViewById(R.id.tut_add_child_viewPagerCountDots);
+        pager_indicator = (LinearLayout) view.findViewById(R.id.tut_add_app_child_viewPagerCountDots);
 
         btnNext.setOnClickListener(this);
 
-        mAdapter = new WelcomeTutorialViewPagerAdapter(TutorialAddAChild.this, mImageResources);
+        mAdapter = new WelcomeTutorialViewPagerAdapter(TutorialAddAppChild.this, mImageResources);
         intro_images.setAdapter(mAdapter);
 
         intro_images.setCurrentItem(0);
@@ -109,8 +109,7 @@ public class TutorialAddAChild extends AppCompatActivity implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tut_add_child_btn_next:
-                Log.v("in here", "check");
+            case R.id.tut_add_app_child_btn_next:
                 intro_images.setCurrentItem((intro_images.getCurrentItem() < dotsCount)
                         ? intro_images.getCurrentItem() + 1 : 0);
                 break;

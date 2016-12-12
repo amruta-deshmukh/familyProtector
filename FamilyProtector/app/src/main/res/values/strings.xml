@@ -288,7 +288,9 @@
     <string name="tutorial_and_checklist">Tutorial &amp; Checklist</string>
     <string name="title_activity_family_protector_tutorial">Family Protector Guide</string>
     <string name="title_activity_tutorial_add_achild">Add Child Tutorial</string>
-
-
+    <string name="title_activity_tutorial_add_location_rule">Add Location Rule Tutorial</string>
+    <string name="title_activity_tutorial_add_web_rule">Add Web Rule Tutorial</string>
+    <string name="title_activity_tutorial_add_app_child">Add App on Child Phone Tutorial</string>
+    <string name="title_activity_tutorial_check_alerts">Check Child Alerts Tutorial</string>
 
 </resources>

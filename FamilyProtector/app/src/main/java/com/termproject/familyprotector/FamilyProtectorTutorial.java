@@ -10,6 +10,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 public class FamilyProtectorTutorial extends AppCompatActivity implements View.OnClickListener{
 
     private CheckBox chkAddChild,chkAddLoc,chkAddWeb,chkAppChild, chkChildAlerts;
@@ -17,6 +22,10 @@ public class FamilyProtectorTutorial extends AppCompatActivity implements View.O
     private Button btnSaveProgress;
     private UserLocalStore userLocalStore;
     private boolean isUserLogged;
+    private User user;
+    private String userName;
+    private boolean boolAddChild = false,boolAddLoc = false,boolAddWeb =false,
+            boolAppChild = false, boolChildAlerts = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +36,8 @@ public class FamilyProtectorTutorial extends AppCompatActivity implements View.O
             actionBar.setDisplayHomeAsUpEnabled(true);
         userLocalStore = new UserLocalStore(this);
         isUserLogged = userLocalStore.getUserLoggedIn();
+        user = userLocalStore.getLoggedInUser();
+        userName = user.getUsername();
         init();
         btnSaveProgress.setOnClickListener(this);
         imgAddChild.setOnClickListener(this);
@@ -51,6 +62,7 @@ public class FamilyProtectorTutorial extends AppCompatActivity implements View.O
         if(isUserLogged){
             btnSaveProgress.setVisibility(View.VISIBLE);
         }
+        checkTheCheckBoxes();
 
 
     }
@@ -74,20 +86,156 @@ public class FamilyProtectorTutorial extends AppCompatActivity implements View.O
     public void onClick(View view){
         switch (view.getId()) {
             case R.id.button_tut_save_progress:
+                saveProgressToParse();
+                startActivity(new Intent(this, ParentHomeScreen.class));
+
                 break;
             case R.id.image_button_add_child:
                 startActivity(new Intent(this,TutorialAddAChild.class));
                 break;
             case R.id.image_button_add_loc_rule:
+                startActivity(new Intent(this,TutorialAddLocationRule.class));
                 break;
             case R.id.image_button_add_web_rule:
+                startActivity(new Intent(this,TutorialAddWebRule.class));
                 break;
             case R.id.image_button_add_app_to_child:
+                startActivity(new Intent(this,TutorialAddAppChild.class));
                 break;
             case R.id.image_button_check_alerts:
+                startActivity(new Intent(this,TutorialCheckAlerts.class));
                 break;
 
         }
+
+    }
+
+    private void checkTheCheckBoxes(){
+        ParseQuery<ParseObject> queryClass = ParseQuery.getQuery("TutorialCheckList");
+        queryClass.whereEqualTo("userName", userName);
+        queryClass.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (e == null) {
+                    if (parseObject != null) {
+
+                        if(parseObject.getString("addChild").equals("Yes")){
+                            boolAddChild = true;
+                        }
+                        if(parseObject.getString("addLocRule").equals("Yes")){
+                            boolAddLoc = true;
+                        }
+                        if(parseObject.getString("addWebRule").equals("Yes")){
+                            boolAddWeb = true;
+                        }
+                        if(parseObject.getString("addAppChild").equals("Yes")) {
+                            boolAppChild = true;
+                        }
+                        if(parseObject.getString("checkAlerts").equals("Yes")) {
+                            boolChildAlerts = true;
+                        }
+
+                    }
+                }
+
+                setCheckBox();
+
+            }
+        });
+
+    }
+
+    private void setCheckBox(){
+        if(boolAddChild){
+            chkAddChild.setChecked(true);
+        }
+        if(boolAddLoc){
+            chkAddLoc.setChecked(true);
+        }
+        if(boolAddWeb){
+            chkAddWeb.setChecked(true);
+        }
+        if(boolAppChild) {
+            chkAppChild.setChecked(true);
+        }
+        if(boolChildAlerts) {
+            chkChildAlerts.setChecked(true);
+        }
+    }
+
+    private void saveProgressToParse(){
+
+        ParseQuery<ParseObject> queryClass = ParseQuery.getQuery("TutorialCheckList");
+        queryClass.whereEqualTo("userName", userName);
+        queryClass.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (e == null) {
+                    if (parseObject != null) {
+                        if (chkAddChild.isChecked()) {
+                            parseObject.put("addChild", "Yes");
+                        } else {
+                            parseObject.put("addChild", "No");
+                        }
+                        if (chkAddLoc.isChecked()) {
+                            parseObject.put("addLocRule", "Yes");
+                        } else {
+                            parseObject.put("addLocRule", "No");
+                        }
+                        if (chkAddWeb.isChecked()) {
+                            parseObject.put("addWebRule", "Yes");
+                        } else {
+                            parseObject.put("addWebRule", "No");
+                        }
+                        if (chkAppChild.isChecked()) {
+                            parseObject.put("addAppChild", "Yes");
+                        } else {
+                            parseObject.put("addAppChild", "No");
+                        }
+                        if (chkChildAlerts.isChecked()) {
+                            parseObject.put("checkAlerts", "Yes");
+                        } else {
+                            parseObject.put("checkAlerts", "No");
+                        }
+                        parseObject.saveInBackground();
+                    }
+                } else {
+                    ParseObject tutorialCheckList = new ParseObject("TutorialCheckList");
+
+                    tutorialCheckList.put("userName", userName);
+
+                    if (chkAddChild.isChecked()) {
+                        tutorialCheckList.put("addChild", "Yes");
+                    } else {
+                        tutorialCheckList.put("addChild", "No");
+                    }
+                    if (chkAddLoc.isChecked()) {
+                        tutorialCheckList.put("addLocRule", "Yes");
+                    } else {
+                        tutorialCheckList.put("addLocRule", "No");
+                    }
+                    if (chkAddWeb.isChecked()) {
+                        tutorialCheckList.put("addWebRule", "Yes");
+                    } else {
+                        tutorialCheckList.put("addWebRule", "No");
+                    }
+                    if (chkAppChild.isChecked()) {
+                        tutorialCheckList.put("addAppChild", "Yes");
+                    } else {
+                        tutorialCheckList.put("addAppChild", "No");
+                    }
+                    if (chkChildAlerts.isChecked()) {
+                        tutorialCheckList.put("checkAlerts", "Yes");
+                    } else {
+                        tutorialCheckList.put("checkAlerts", "No");
+                    }
+
+
+                    tutorialCheckList.saveInBackground();
+                }
+
+            }
+        });
 
     }
 }
