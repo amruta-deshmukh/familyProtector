@@ -199,9 +199,13 @@ public class ChildAlertRecylerAdapter extends RecyclerView.Adapter<ChildAlertRec
                     int position = rowHolder.getPosition();
 
                     ParseObject alert = mChildAlerts.get(position);
+                    Date date = alert.getCreatedAt();
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy, hh:mm a");
+                    final String dateStr = formatter.format(date);
                     Intent intent = new Intent(context, ChildCurrentLocationAlertDetailActivity.class);
                     intent.putExtra("alertDate", alert.getString("dateSinceLastOnline"));
                     intent.putExtra("alertTime", alert.getString("timeSinceLastOnline"));
+                    intent.putExtra("alertCreateDate", dateStr);
                     intent.putExtra("objectId", alert.getObjectId());
                     context.startActivity(intent);
                 }

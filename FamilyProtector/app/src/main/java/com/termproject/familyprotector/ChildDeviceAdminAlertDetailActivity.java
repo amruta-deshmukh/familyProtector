@@ -110,6 +110,8 @@ public class ChildDeviceAdminAlertDetailActivity extends AppCompatActivity {
                 } else {
                     try {
                         parseObject.delete();
+                        parseObject.saveInBackground();
+
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }

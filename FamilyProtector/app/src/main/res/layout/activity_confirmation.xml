@@ -60,7 +60,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="36dp"
-                android:text="@string/logout" />
+                android:text="@string/logout"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/btn_change_child"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="36dp"
+                android:text="Update the phone owner"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

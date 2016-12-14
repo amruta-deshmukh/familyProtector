@@ -45,7 +45,7 @@ public class GeofenceCreationService extends IntentService implements
 
     //setting the geofence for one hour
     public static final long GEOFENCE_EXPIRATION_IN_MILLISECONDS =
-             60 * 60 * 1000;
+             15 * 60 * 1000;
     UserLocalStore userLocalStore;
 
     //    UserLocalStore userLocalStore;

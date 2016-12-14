@@ -2,7 +2,6 @@ package com.termproject.familyprotector;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -17,11 +16,12 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 public class Confirmation extends AppCompatActivity implements View.OnClickListener{
-    Button bLogout;
-    EditText etUsername, etPassword;
-    String username, password;
-    UserLocalStore userLocalStore;
-    User loggenInUser;
+    private Button bLogout, bUpdateProfile, bChangeChild;
+    private EditText etUsername, etPassword;
+    private String username, password;
+    private UserLocalStore userLocalStore;
+    private User loggenInUser;
+    private String navFromStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +31,29 @@ public class Confirmation extends AppCompatActivity implements View.OnClickListe
         userLocalStore = new UserLocalStore(this);
         if(actionBar !=null)
             actionBar.setDisplayHomeAsUpEnabled(true);
-        bLogout = (Button) findViewById(R.id.bLogin);
+        Intent intent = getIntent();
+        if (intent != null) {
+            navFromStr = intent.getStringExtra("navFrom");
+        }
         etUsername = (EditText) findViewById(R.id.confirmationUsername);
         etPassword = (EditText) findViewById(R.id.confirmationPassword);
         bLogout = (Button)findViewById(R.id.bLogout);
+//        bUpdateProfile = (Button)findViewById(R.id.btn_child_profile);
+        bChangeChild = (Button)findViewById(R.id.btn_change_child);
         bLogout.setOnClickListener(this);
+//        bUpdateProfile.setOnClickListener(this);
+        bChangeChild.setOnClickListener(this);
+        if(navFromStr.matches("logout")){
+            bLogout.setVisibility(View.VISIBLE);
+//            bUpdateProfile.setVisibility(View.GONE);
+            bChangeChild.setVisibility(View.GONE);
+        } else if (navFromStr.matches("changeChild")){
+            bLogout.setVisibility(View.GONE);
+//            bUpdateProfile.setVisibility(View.GONE);
+            bChangeChild.setVisibility(View.VISIBLE);
+
+        }
+
 
     }
 
@@ -46,7 +64,7 @@ public class Confirmation extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
                 return true;
         }
 
@@ -67,6 +85,18 @@ public class Confirmation extends AppCompatActivity implements View.OnClickListe
                     checkCredentials();
                 }
                 break;
+            case R.id.btn_change_child:
+                username = etUsername.getText().toString();
+                password = etPassword.getText().toString();
+                if (checkForBlankFields()) {
+
+                    Toast.makeText(this, "Please enter all details", Toast.LENGTH_LONG).show();
+
+                } else {
+                    checkCredentials1();
+                }
+                break;
+
         }
     }
 
@@ -98,6 +128,30 @@ public class Confirmation extends AppCompatActivity implements View.OnClickListe
                     userLocalStore.setUserLoggedIn(false);
                     userLocalStore.setChildForThisPhone("");
                     startActivity(new Intent(Confirmation.this, Login.class));
+
+                }
+            }
+        });
+
+    }
+
+    private void checkCredentials1() {
+
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("UserCredentials");
+        query.whereEqualTo("username", username);
+        query.whereEqualTo("password", password);
+
+
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (parseObject == null) {
+                    Toast.makeText(Confirmation.this, "Invalid credentials please try again", Toast.LENGTH_LONG).show();
+                } else {
+//                    userLocalStore.setUserLoggedIn(false);
+//                    userLocalStore.setChildForThisPhone("");
+                    startActivity(new Intent(Confirmation.this, ChildHomeScreen.class));
 
                 }
             }

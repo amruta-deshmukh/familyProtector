@@ -7,11 +7,16 @@ import android.util.Log;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -108,6 +113,10 @@ public class ParentCurrentLocationCheckService extends IntentService {
     private void saveToParseChildCurrentLocAlert(String childName, String dateStr, String timeStr) {
 
         ParseObject childCurrentLocationAlerts = new ParseObject("ChildCurrentLocationAlerts");
+        ParseACL postACL = new ParseACL(ParseUser.getCurrentUser());
+        postACL.setPublicReadAccess(true);
+        postACL.setPublicWriteAccess(true);
+        childCurrentLocationAlerts.setACL(postACL);
         childCurrentLocationAlerts.put("userName", userName);
         childCurrentLocationAlerts.put("childName", childName);
         childCurrentLocationAlerts.put("dateSinceLastOnline", dateStr);
@@ -133,11 +142,19 @@ public class ParentCurrentLocationCheckService extends IntentService {
         ParseQuery pushWebQuery = ParseInstallation.getQuery();
         String parentName = "parent:" + userName;
         pushWebQuery.whereEqualTo("email", parentName);
+        JSONObject data = new JSONObject();
+        try {
+            data.put("childName",childName);
+            data.put("alertType",FamilyProtectorConstants.ALERT_TYPE_CURRENT_LOC);
+            data.put("title",childName+ "'s phone has been offline");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // Send push notification to query
         ParsePush pushWeb = new ParsePush();
         pushWeb.setQuery(pushWebQuery); // Set our Installation query
-        pushWeb.setMessage(childName + " has been offline since " + dateStr + " " + timeStr);
+        pushWeb.setData(data);
         pushWeb.sendInBackground();
 
     }

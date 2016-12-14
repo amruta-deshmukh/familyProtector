@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.parse.GetCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 
 public class CurrentLocationWriterService extends IntentService {
@@ -66,7 +68,10 @@ public class CurrentLocationWriterService extends IntentService {
                 } else {
                     Log.v("error is not null", "error is not null");
                     ParseObject childCurrentLocation = new ParseObject("childCurrentLocation");
-
+                    ParseACL postACL = new ParseACL(ParseUser.getCurrentUser());
+                    postACL.setPublicReadAccess(true);
+                    postACL.setPublicWriteAccess(true);
+                    childCurrentLocation.setACL(postACL);
                     childCurrentLocation.put("childName", childName);
                     childCurrentLocation.put("userName", userName);
                     childCurrentLocation.put("currentLocGeo", currLocLatLng);

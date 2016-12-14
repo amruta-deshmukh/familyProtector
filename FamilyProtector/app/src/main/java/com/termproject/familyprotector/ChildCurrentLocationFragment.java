@@ -75,7 +75,7 @@ public class ChildCurrentLocationFragment extends Fragment {
         childNameStr = userLocalStore.getChildDetails();
         final String userName = loggedInUser.getUsername();
         emailAddress = loggedInUser.getUsername();
-//        getChildCurrentLocationFromParse();
+        getChildCurrentLocationFromParse();
         final ParseQuery<ParseObject> queryClass = ParseQuery.getQuery("childCurrentLocation");
         queryClass.whereEqualTo("userName", userName);
         queryClass.whereEqualTo("childName", childName);

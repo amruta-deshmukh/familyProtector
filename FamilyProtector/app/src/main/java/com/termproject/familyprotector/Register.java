@@ -13,9 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -214,6 +216,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             secQuestion = secQuestion+"?";
         }
         ParseObject userCredentials = new ParseObject("UserCredentials");
+        ParseACL postACL = new ParseACL(ParseUser.getCurrentUser());
+        postACL.setPublicReadAccess(true);
+        postACL.setPublicWriteAccess(true);
+        userCredentials.setACL(postACL);
         userCredentials.put("fullname", fullName);
         userCredentials.put("username", username);
         userCredentials.put("password", password);

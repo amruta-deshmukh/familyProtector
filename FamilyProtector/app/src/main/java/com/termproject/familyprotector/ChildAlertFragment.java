@@ -72,7 +72,7 @@ public class ChildAlertFragment extends Fragment {
                 FamilyProtectorConstants.ALERT_TYPE_WEB_HISTORY);
         int deviceAdminNotification = dbHelper.getAlertTypeCountForChild(childName,
                 FamilyProtectorConstants.ALERT_TYPE_DEVICE_ADMIN);
-        Log.v("not count device", deviceAdminNotification+"");
+//        Log.v("not count device", deviceAdminNotification+"");
         int currentLocNotification = dbHelper.getAlertTypeCountForChild(childName,
                 FamilyProtectorConstants.ALERT_TYPE_CURRENT_LOC);
 

@@ -10,13 +10,16 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.parse.GetCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -192,7 +195,7 @@ public class WebHistoryCheckService extends IntentService {
                 url = mCur.getString(mCur.getColumnIndex(Browser.BookmarkColumns.URL));
                 Log.v("url",url);
                 date = mCur.getLong(mCur.getColumnIndex(Browser.BookmarkColumns.DATE));
-                String bookmarkDateTime[] = getDate(date, "dd/MM/yyyy::::hh:mm:ss a").split("::::");
+                String bookmarkDateTime[] = getDate(date, "MM-dd-yyyy::::hh:mm a").split("::::");
                 String encodedURL = encodingStrToBase64(url);
                 String[] categoryStrArray = getUrlCategoryFromApi(encodedURL);
 //                String[] categoryStrArray = new String[] {"health","personals"};
@@ -469,6 +472,10 @@ public class WebHistoryCheckService extends IntentService {
     private void addWebsiteAlertToParse(BookMark bookMark, String categoriesStr){
 
         ParseObject childWebsiteAlerts = new ParseObject("ChildWebsiteAlerts");
+        ParseACL postACL = new ParseACL(ParseUser.getCurrentUser());
+        postACL.setPublicReadAccess(true);
+        postACL.setPublicWriteAccess(true);
+        childWebsiteAlerts.setACL(postACL);
         childWebsiteAlerts.put("userName", userName);
         childWebsiteAlerts.put("childName", childName);
         childWebsiteAlerts.put("urlName",bookMark.bookmarkUrl);
@@ -478,8 +485,6 @@ public class WebHistoryCheckService extends IntentService {
         childWebsiteAlerts.put("websiteTitle",bookMark.bookmarkTitle);
         childWebsiteAlerts.saveInBackground();
         Log.v("website added to parse",bookMark.bookmarkUrl);
-
-
     }
 
     private void sendParsePushNotification(){
@@ -487,11 +492,20 @@ public class WebHistoryCheckService extends IntentService {
         ParseQuery pushWebQuery = ParseInstallation.getQuery();
         pushWebQuery.whereEqualTo("email", "parent:" + userName);
 
+        JSONObject data = new JSONObject();
+        try {
+            data.put("childName",childName);
+            data.put("alertType",FamilyProtectorConstants.ALERT_TYPE_WEB_HISTORY);
+            data.put("title",childName+ ": Unintended website visited.");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         // Send push notification to query
         ParsePush pushWeb = new ParsePush();
         pushWeb.setQuery(pushWebQuery); // Set our Installation query
 
-        pushWeb.setMessage("Web History alert for: " + childName);
+        pushWeb.setData(data);
         pushWeb.sendInBackground();
 
         done = true;

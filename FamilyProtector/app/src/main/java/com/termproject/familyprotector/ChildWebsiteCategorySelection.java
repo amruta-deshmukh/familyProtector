@@ -14,9 +14,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.parse.GetCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class ChildWebsiteCategorySelection extends AppCompatActivity {
 
@@ -335,6 +337,10 @@ public class ChildWebsiteCategorySelection extends AppCompatActivity {
                 } else {
                     Log.v("inside error","error not null");
                     ParseObject childRuleWebsite = new ParseObject("ChildRuleWebsite");
+                    ParseACL postACL = new ParseACL(ParseUser.getCurrentUser());
+                    postACL.setPublicReadAccess(true);
+                    postACL.setPublicWriteAccess(true);
+                    childRuleWebsite.setACL(postACL);
 
                     childRuleWebsite.put("childName", childName);
                     childRuleWebsite.put("userName", userName);

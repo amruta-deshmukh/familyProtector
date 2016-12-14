@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -92,7 +93,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("UserCredentials");
         query.whereEqualTo("username", username);
+        Log.v("username", username);
         query.whereEqualTo("password", password);
+        Log.v("password",password);
 
 
         query.getFirstInBackground( new GetCallback<ParseObject>() {

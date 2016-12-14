@@ -25,18 +25,12 @@ public class TutorialAddAppChild extends AppCompatActivity implements
     private ImageView[] dots;
 
     private int[] mImageResources = {
-            R.mipmap.tut_add_loc_rule_1,
-            R.mipmap.tut_add_loc_rule_2,
-            R.mipmap.tut_add_loc_rule_3,
-            R.mipmap.tut_add_loc_rule_4,
-            R.mipmap.tut_add_loc_rule_5,
-            R.mipmap.tut_add_loc_rule_6,
-            R.mipmap.tut_add_loc_rule_7,
-            R.mipmap.tut_add_loc_rule_8,
-            R.mipmap.tut_add_loc_rule_9,
-            R.mipmap.tut_add_loc_rule_10,
-            R.mipmap.tut_add_loc_rule_11,
-            R.mipmap.tut_add_loc_rule_12
+            R.mipmap.tut_add_app_child_1,
+            R.mipmap.tut_add_app_child_2,
+            R.mipmap.tut_add_app_child_3,
+            R.mipmap.tut_add_app_child_4,
+            R.mipmap.tut_add_app_child_5,
+            R.mipmap.tut_add_app_child_6
 
     };
 

@@ -36,8 +36,11 @@ public class TutorialAddLocationRule extends AppCompatActivity implements
             R.mipmap.tut_add_loc_rule_9,
             R.mipmap.tut_add_loc_rule_10,
             R.mipmap.tut_add_loc_rule_11,
-            R.mipmap.tut_add_loc_rule_12
-
+            R.mipmap.tut_add_loc_rule_12,
+            R.mipmap.tut_add_loc_rule_13,
+            R.mipmap.tut_add_loc_rule_14,
+            R.mipmap.tut_add_loc_rule_15,
+            R.mipmap.tut_add_loc_rule_16
     };
 
     @Override

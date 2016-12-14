@@ -14,7 +14,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.parse.ParseACL;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 public class AddChildDetails extends AppCompatActivity implements View.OnClickListener{
     EditText editTextChildName;
@@ -73,6 +75,10 @@ public class AddChildDetails extends AppCompatActivity implements View.OnClickLi
     private void storeToParse (){
         User storedUser = userLocalStore.getLoggedInUser();
         ParseObject childDetails = new ParseObject("ChildDetails");
+        ParseACL postACL = new ParseACL(ParseUser.getCurrentUser());
+        postACL.setPublicReadAccess(true);
+        postACL.setPublicWriteAccess(true);
+        childDetails.setACL(postACL);
         childDetails.put("username", storedUser.getUsername());
         childDetails.put("name",childNameStr);
         childDetails.put("gender", childGenderStr);

@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.parse.ParseACL;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,6 +63,10 @@ public class ChildDeviceAdminReceiver extends DeviceAdminReceiver {
         Calendar calendar = Calendar.getInstance();
         String alertDateTime[] = formatter.format(calendar.getTime()).split("::::");
         ParseObject childDeviceAdminAlerts = new ParseObject("ChildDeviceAdminAlerts");
+        ParseACL postACL = new ParseACL(ParseUser.getCurrentUser());
+        postACL.setPublicReadAccess(true);
+        postACL.setPublicWriteAccess(true);
+        childDeviceAdminAlerts.setACL(postACL);
         childDeviceAdminAlerts.put("userName", userName);
         childDeviceAdminAlerts.put("childName", childName);
         childDeviceAdminAlerts.put("alertDate",alertDateTime[0]);
@@ -78,7 +84,7 @@ public class ChildDeviceAdminReceiver extends DeviceAdminReceiver {
         try {
             data.put("childName",childName);
             data.put("alertType",FamilyProtectorConstants.ALERT_TYPE_DEVICE_ADMIN);
-            data.put("title","Uninstallation Attempt of Family Protector for: " + childName);
+            data.put("title",childName+ ": Uninstallation Attempt of Family Protector");
         } catch (JSONException e) {
             e.printStackTrace();
         }

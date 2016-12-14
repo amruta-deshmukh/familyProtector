@@ -11,9 +11,11 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 
 import com.parse.GetCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class FamilyProtectorTutorial extends AppCompatActivity implements View.OnClickListener{
 
@@ -201,6 +203,10 @@ public class FamilyProtectorTutorial extends AppCompatActivity implements View.O
                     }
                 } else {
                     ParseObject tutorialCheckList = new ParseObject("TutorialCheckList");
+                    ParseACL postACL = new ParseACL(ParseUser.getCurrentUser());
+                    postACL.setPublicReadAccess(true);
+                    postACL.setPublicWriteAccess(true);
+                    tutorialCheckList.setACL(postACL);
 
                     tutorialCheckList.put("userName", userName);
 

@@ -73,7 +73,7 @@ public class ChildHomeScreenAfterSetup extends AppCompatActivity {
             setSupportActionBar(mToolBar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } catch (Exception e) {
-            Log.e("Parent screen", e.toString());
+            Log.e("Child Home screen", e.toString());
         }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerRoot_child);
@@ -93,18 +93,23 @@ public class ChildHomeScreenAfterSetup extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 String txt;
                 switch (menuItem.getItemId()) {
-                    case R.id.settings_drawer_child:
-                        startActivity(new Intent(ChildHomeScreenAfterSetup.this,ChildProfileSettings.class));
-                        return true;
+//                    case R.id.settings_drawer_child:
+//                        startActivity(new Intent(ChildHomeScreenAfterSetup.this,ChildProfileSettings.class));
+//                        return true;
                     case R.id.drawer_change_child:
-                        startActivity(new Intent(ChildHomeScreenAfterSetup.this, ChildHomeScreen.class));
+                        Intent changeIntent = new Intent(ChildHomeScreenAfterSetup.this, Confirmation.class);
+                        changeIntent.putExtra("navFrom", "changeChild");
+                        startActivity(changeIntent);
+//                        startActivity(new Intent(ChildHomeScreenAfterSetup.this, ChildHomeScreen.class));
 
 //                        userLocalStore.setUserLoggedIn(false);
 //
 //                        startActivity(new Intent(ChildHomeScreenAfterSetup.this, Login.class));
                         break;
                     case R.id.logout_drawer_child:
-                        startActivity(new Intent(ChildHomeScreenAfterSetup.this, Confirmation.class));
+                        Intent logoutIntent = new Intent(ChildHomeScreenAfterSetup.this, Confirmation.class);
+                        logoutIntent.putExtra("navFrom", "logout");
+                        startActivity(logoutIntent);
                         break;
                     default:
                         txt = "Invalid Item Selected";
@@ -121,8 +126,8 @@ public class ChildHomeScreenAfterSetup extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Progress progress = new Progress(this);
-        progress.execute();
+//        Progress progress = new Progress(this);
+//        progress.execute();
 
     }
 

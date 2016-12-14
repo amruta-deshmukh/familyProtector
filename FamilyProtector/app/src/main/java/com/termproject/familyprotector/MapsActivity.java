@@ -310,8 +310,8 @@ public class MapsActivity extends AppCompatActivity implements
         @Override
         protected HashMap<String, String> doInBackground(String... params) {
             HashMap<String, String> location = new HashMap<String, String>();
-//                            String apiKey = "AIzaSyAUSETHO5_4d_lGrGfjX4vAowf6DrqaNmk";
-            String apiKey = "AIzaSyCc2q-atFbFq_3fGpaVaf17jX_Z9pIVwI4";
+                            String apiKey = "AIzaSyAUSETHO5_4d_lGrGfjX4vAowf6DrqaNmk";
+//            String apiKey = "AIzaSyCc2q-atFbFq_3fGpaVaf17jX_Z9pIVwI4";
                 try {
                     final String GOOGLE_BASE_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?";
                     final String QUERY_PARAM = "query";

@@ -12,10 +12,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.parse.GetCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class ChildLocationRuleSaveActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -116,6 +118,10 @@ public class ChildLocationRuleSaveActivity extends AppCompatActivity implements 
     private void saveRuleLocationToParse (){
 
         ParseObject ruleLocation = new ParseObject("ChildRuleLocation");
+        ParseACL postACL = new ParseACL(ParseUser.getCurrentUser());
+        postACL.setPublicReadAccess(true);
+        postACL.setPublicWriteAccess(true);
+        ruleLocation.setACL(postACL);
         ParseGeoPoint ruleLatLng = new ParseGeoPoint(latitude,longitude);
         ruleLocation.put("userName",userName);
         ruleLocation.put("childName",childName);
@@ -207,6 +213,10 @@ public class ChildLocationRuleSaveActivity extends AppCompatActivity implements 
 
                     ruleId = 1;
                     ParseObject ruleIdObj = new ParseObject("ChildLocationRuleId");
+                    ParseACL postACL = new ParseACL(ParseUser.getCurrentUser());
+                    postACL.setPublicReadAccess(true);
+                    postACL.setPublicWriteAccess(true);
+                    ruleIdObj.setACL(postACL);
                     ruleIdObj.put("userName", userName);
                     ruleIdObj.put("childName", childName);
                     ruleIdObj.put("locRuleId",ruleId);

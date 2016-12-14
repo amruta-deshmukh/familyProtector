@@ -19,9 +19,9 @@ import com.parse.ParseQuery;
 
 public class ChildCurrentLocationAlertDetailActivity extends AppCompatActivity {
     private UserLocalStore userLocalStore;
-    private String childName, userName, alertShareStr, dateStr, timeStr, alertString, objectIdStr;
+    private String childName, userName, alertShareStr, dateStr, timeStr, alertString, objectIdStr, alertCreateDateStr;
     private User user;
-    private TextView alertHeader,alertDate,alertTime;
+    private TextView alertHeader,alertDate,alertTime, alertCreatedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +41,20 @@ public class ChildCurrentLocationAlertDetailActivity extends AppCompatActivity {
             alertString = childName+ "'s phone has been offline";
             dateStr = intent.getStringExtra("alertDate");
             timeStr = intent.getStringExtra("alertTime");
+            alertCreateDateStr = intent.getStringExtra("alertCreateDate");
             objectIdStr = intent.getStringExtra("objectId");
         }
         alertHeader = (TextView)findViewById(R.id.text_curr_loc_alert_header_string);
         alertDate = (TextView)findViewById(R.id.text_curr_loc_alert_date_string);
         alertTime = (TextView)findViewById(R.id.text_curr_loc_alert_Time_string);
+        alertCreatedDate = (TextView) findViewById(R.id.text_curr_loc_alert_created_date_string);
 
 
 
         alertHeader.setText(alertString);
         alertDate.setText(dateStr);
         alertTime.setText(timeStr);
+        alertCreatedDate.setText(alertCreateDateStr);
 
         //inorder to share with another parent
 
